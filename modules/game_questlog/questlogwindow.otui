@@ -56,7 +56,6 @@ QuestLogWindow < MainWindow
     id: toggleDoneQuests
     anchors.top: parent.top
     anchors.left: parent.left
-    anchors.bottom: questList.top
     anchors.right: parent.right
     margin-left: 50
     margin-right: 250
@@ -68,11 +67,12 @@ QuestLogWindow < MainWindow
   Button
     id: toggleNotDoneQuests
     anchors.top: parent.top
+    anchors.bottom: questList.top
     anchors.left: toggleDoneQuests.right
     anchors.right: parent.right
     !text: tr('Niewykonane Questy')
     margin-right: 50
     margin-left: 30
-    margin-bottom: 10
+    margin-bottom: 8
     width: 120
     @onClick: modules.game_questlog.toggleNotDoneQuests()
