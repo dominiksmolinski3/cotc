@@ -33,6 +33,25 @@ function destroyWindows()
     if questLineWindow then questLineWindow:destroy() end
 end
 
+function toggleDoneQuests()
+    if showDone == true then
+        showDone = nil 
+    else
+        showDone = true
+    end
+    g_game.requestQuestLog()
+end
+
+function toggleNotDoneQuests()
+    if showDone == false then
+        showDone = nil
+    else
+        showDone = false
+    end
+    g_game.requestQuestLog()
+end
+
+
 function onGameQuestLog(quests)
     destroyWindows()
 
@@ -41,20 +60,22 @@ function onGameQuestLog(quests)
 
     for i, questEntry in pairs(quests) do
         local id, name, completed = unpack(questEntry)
-
-        local questLabel = g_ui.createWidget('QuestLabel', questList)
-        questLabel:setOn(completed)
-        questLabel:setText(name)
-        questLabel.onDoubleClick = function()
-            questLogWindow:hide()
-            g_game.requestQuestLine(id)
+        
+        if showDone == nil or (showDone and completed) or (not showDone and not completed) then
+            local questLabel = g_ui.createWidget('QuestLabel', questList)
+            questLabel:setOn(completed)
+            questLabel:setText(name)
+            questLabel.onDoubleClick = function()
+                questLogWindow:hide()
+                g_game.requestQuestLine(id)
+            end
         end
     end
 
     questLogWindow.onDestroy = function() questLogWindow = nil end
-
     questList:focusChild(questList:getFirstChild())
 end
+
 
 function onGameQuestLine(questId, questMissions)
     if questLogWindow then questLogWindow:hide() end
