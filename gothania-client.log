@@ -1,0 +1,161 @@
+== application started at Feb 01 2024 15:54:57
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 01 2024 16:09:35
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 01 2024 16:09:48
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 03 2024 19:47:38
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 04 2024 17:23:54
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 04 2024 18:09:20
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+== application started at Feb 04 2024 18:12:40
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+Exiting application..
+== application started at Feb 04 2024 18:15:05
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+== application started at Feb 04 2024 23:39:30
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+== application started at Feb 04 2024 23:43:21
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+== application started at Feb 04 2024 23:43:47
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+Exiting application..
+Exiting application..
+== application started at Feb 05 2024 01:31:28
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 05 2024 01:33:43
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+Exiting application..
+== application started at Feb 05 2024 04:19:31
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 06 2024 05:39:09
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 06 2024 19:51:32
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 06 2024 20:06:26
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 06 2024 20:25:00
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+== application started at Feb 06 2024 21:07:53
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+battleWindow
+Exiting application..
+== application started at Feb 07 2024 04:06:23
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+skillWindow
+combatControlsWindow
+combatControlsWindow
+cooldownWindow
+inventoryWindow
+Exiting application..
+Exiting application..
+== application started at Feb 07 2024 20:11:07
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+ERROR: too many things, pos=1190 846 10, stackpos=11
+at:
+	[C++]: ?setTileDescription@ProtocolGame@@QAEHABV?$shared_ptr@VInputMessage@@@std@@VPosition@@@Z
+ERROR: too many things, pos=1190 841 10, stackpos=11
+at:
+	[C++]: ?setTileDescription@ProtocolGame@@QAEHABV?$shared_ptr@VInputMessage@@@std@@VPosition@@@Z
+Exiting application..
+== application started at Feb 08 2024 18:31:17
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+== application started at Feb 08 2024 18:32:57
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+Exiting application..
+== application started at Feb 10 2024 06:10:56
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 10 2024 08:33:07
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 10 2024 10:30:32
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 10 2024 10:31:00
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 10 2024 10:31:20
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 10 2024 10:32:08
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 10 2024 10:33:39
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+healthInfoWindow
+Exiting application..
+== application started at Feb 10 2024 10:38:02
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 10 2024 11:09:13
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+battleWindow
+vipWindow
+healthInfoWindow
+battleWindow
+vipWindow
+minimapWindow
+minimapWindow
+battleWindow
+combatControlsWindow
+minimapWindow
+unjustifiedPointsWindow
+battleWindow
+vipWindow
+Exiting application..
+== application started at Feb 10 2024 11:11:32
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86
+Exiting application..
+== application started at Feb 11 2024 21:09:02
+== operating system: Windows
+Gothania 3.7.0 rev 0.000 (main) built on Jan 28 2024 for arch x86

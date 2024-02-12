@@ -1,0 +1,9 @@
+Module
+  name: game_lootcontainer
+  description: Manage Loot Container
+  author: mevvez
+  website: https://gothania.pl
+  sandboxed: true
+  scripts: [ lootcontainer.lua ]
+  @onLoad: init()
+  @onUnload: terminate()

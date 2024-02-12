@@ -1,0 +1,285 @@
+ItemBox < UICheckBox
+  color: #aaaaaa
+  height: 42
+  margin-left: 5
+  focusable: true
+  background-color: alpha
+
+  $focus:
+    background-color: #ffffff22
+    color: #ffffff
+
+  Item
+    id: itemPreview
+    phantom: true
+    width: 32
+    anchors.top: parent.top
+    anchors.left: parent.left
+    image-color: #ffffffff
+    margin-top: 3
+
+  Label
+    id: itemLabel
+    anchors.left: prev.right
+    anchors.top: parent.top
+    anchors.verticalCenter: prev.verticalCenter
+    margin-left: 10
+    margin-top: 2
+
+ItemListLabel < Label
+  font: verdana-11px-monochrome
+  background-color: alpha
+  text-offset: 42 3
+  focusable: true
+  height: 36
+
+ItemInfoLabel < Label
+  font: verdana-11px-monochrome
+  text-align: left
+  margin-left: 10
+  margin-top: 5
+
+MainWindow
+  !text: tr('Manage Loot Containers')
+  id: lootContainerWindow
+  @onEscape: toggle()
+
+  Label
+    id: labelName
+    anchors.left: parent.left
+    anchors.top: parent.top
+    !text: tr('All items') .. ':'
+    margin-top: 4
+
+  TextList
+    id: itemList
+    vertical-scrollbar: itemsScrollBar
+    anchors.top: prev.bottom
+    anchors.left: prev.left
+    anchors.bottom: next.top
+    margin-top: 4
+    margin-bottom: 10
+    padding: 1
+    width: 300
+    focusable: false
+
+  Button
+    id: buttonCancel
+    !text: tr('Close')
+    width: 64
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    @onClick: toggle()
+
+  VerticalScrollBar
+    id: itemsScrollBar
+    anchors.top: itemList.top
+    anchors.bottom: itemList.bottom
+    anchors.right: itemList.right
+    step: 50
+    pixels-scroll: true
+
+  Item
+    id: itemSearchPreview
+    phantom: true
+    width: 32
+    anchors.top: itemList.bottom
+    anchors.left: itemList.left
+    image-color: #ffffffff
+    margin-top: 5
+    margin-left: 3
+    virtual: true
+
+  Label
+    id: searchLabel
+    anchors.left: prev.right
+    anchors.top: prev.top
+    !text: tr('Search') .. ':'
+    !tooltip: tr('Search all items')
+    margin-left: 5
+
+  TextEdit
+    id: searchEdit
+    anchors.left: prev.left
+    anchors.top: prev.bottom
+    margin-left: 3
+    width: 250
+    text-wrap: true
+    @onTextChange: LootContainer.updateList()
+
+
+  ItemInfoLabel
+    id: basicItemDetails
+    anchors.left: itemsScrollBar.right
+    anchors.top: parent.top
+    !text: tr('Basic Item Details') .. ':'
+    width: 280
+    margin-top: 4
+
+  ItemInfoLabel
+    id: nameLabel
+    anchors.top: prev.bottom
+    text-wrap: true
+    text-auto-resize:true
+    anchors.left: itemsScrollBar.right
+    margin-top: 4
+    width: 200
+
+  ItemInfoLabel
+    id: weightLabel
+    anchors.top: prev.bottom
+    text-wrap: true
+    text-auto-resize:true
+    anchors.left: itemsScrollBar.right
+    margin-top: 4
+    width: 200
+
+  ItemInfoLabel
+    id: desc
+    anchors.top: prev.bottom
+    anchors.left: itemsScrollBar.right
+    margin-top: 4
+    !text: tr('Description') .. ":"
+    width: 200
+
+  ItemInfoLabel
+    id: descriptionLabel
+    anchors.top: prev.bottom
+    anchors.left: itemsScrollBar.right
+    text-wrap: true
+    text-auto-resize:true
+    margin-top: 4
+    anchors.right: basicItemDetails.right
+    width: 200
+    height: 50
+
+  CheckBox
+    id: convertGoldToPlatinums
+    anchors.left: itemsScrollBar.right
+    anchors.bottom: parent.bottom
+    margin-top: 4
+    margin-left: 8
+    !text: tr('Convert gold into platinum coins')
+    text-wrap: true
+    text-auto-resize:true
+    width: 280
+    @onCheckChange: LootContainer.setConvertGold()
+
+  CheckBox
+    id: addToSkippedLoot
+    anchors.left: itemsScrollBar.right
+    anchors.bottom: prev.top
+    margin-top: 3
+    margin-left: 8
+    margin-bottom: 4
+    !text: tr('Skip when Quick Looting')
+    text-wrap: true
+    text-auto-resize:true
+    width: 275
+    @onCheckChange: LootContainer.addToSkippedLoot()
+
+  ItemInfoLabel
+    id: desc
+    anchors.left: itemsScrollBar.right
+    anchors.bottom: prev.top
+    margin-top: 10
+    margin-bottom: 5
+    !text: tr('Premium Account features') .. ":"
+    width: 200
+
+  Label
+    id: lootBackpackLabel
+    !text: tr('Stackable Backpack:')
+    phantom: false
+    anchors.left: itemsScrollBar.right
+    anchors.bottom: prev.top
+    margin-left: 8
+    margin-top: 5
+    margin-bottom: 5
+
+  ComboBox
+    id: stackBackpack
+    width: 150
+    anchors.left: prev.right
+    anchors.top: prev.top
+    margin-top: -4
+    margin-left: 8
+    mouse-scroll: false
+
+  Label
+    id: lootBackpackLabel
+    !text: tr('Gold backpack:')
+    phantom: false
+    anchors.left: itemsScrollBar.right
+    anchors.bottom: prev.top
+    margin-left: 8
+    margin-top: 5
+    margin-bottom: 5
+
+  ComboBox
+    id: goldBackpack
+    width: 170
+    anchors.left: prev.right
+    anchors.top: prev.top
+    margin-top: -4
+    margin-left: 8
+    mouse-scroll: false
+
+  Label
+    id: lootBackpackLabel
+    !text: tr('Loot backpack:')
+    phantom: false
+    anchors.left: itemsScrollBar.right
+    anchors.bottom: prev.top
+    margin-left: 8
+    margin-top: 5
+    margin-bottom: 8
+
+  ComboBox
+    id: lootBackpack
+    width: 170
+    anchors.left: prev.right
+    anchors.top: prev.top
+    margin-top: -4
+    margin-left: 8
+    margin-bottom: 4
+    mouse-scroll: false
+
+
+  ItemInfoLabel
+    id: desc
+    anchors.left: itemsScrollBar.right
+    anchors.bottom: prev.top
+    margin-left: 8
+    margin-top: 5
+    margin-bottom: 8
+    !text: tr('Quick Looting configuration') .. ":"
+    width: 280
+
+  ItemInfoLabel
+    id: skippedListLabel
+    anchors.left: basicItemDetails.right
+    anchors.top: parent.top
+    !text: tr('Skipped list') .. ' ' .. '(Premium Account only)' .. ':'
+    width: 300
+    margin-top: 4
+
+  TextList
+    id: skipItemList
+    vertical-scrollbar: skipItemListScrollBar
+    anchors.top: prev.bottom
+    anchors.left: prev.left
+    anchors.bottom: itemList.bottom
+    margin-top: 4
+    margin-bottom: 10
+    padding: 1
+    width: 300
+    focusable: false
+
+  VerticalScrollBar
+    id: skipItemListScrollBar
+    anchors.top: skipItemList.top
+    anchors.bottom: skipItemList.bottom
+    anchors.right: skipItemList.right
+    step: 50
+    pixels-scroll: true
