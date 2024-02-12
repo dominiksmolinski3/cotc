@@ -56,6 +56,7 @@ QuestLogWindow < MainWindow
     id: toggleDoneQuests
     anchors.top: parent.top
     anchors.left: parent.left
+    anchors.bottom: questList.top
     anchors.right: parent.right
     margin-left: 50
     margin-right: 250
