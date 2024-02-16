@@ -36,6 +36,7 @@ BattleSkulls < BattleIcon
 BattleParty < BattleIcon
   image-source: /images/game/battle/battle_party
 
+
 MiniWindow
   id: battleWindow
   !text: tr('Battle')

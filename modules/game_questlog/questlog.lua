@@ -33,48 +33,79 @@ function destroyWindows()
     if questLineWindow then questLineWindow:destroy() end
 end
 
-function toggleDoneQuests()
-    if showDone == true then
-        showDone = nil 
-    else
-        showDone = true
-    end
-    g_game.requestQuestLog()
-end
-
 function toggleNotDoneQuests()
-    if showDone == false then
-        showDone = nil
-    else
+    if showDone ~= false then
         showDone = false
+    else
+        showDone = nil
     end
     g_game.requestQuestLog()
 end
 
+
+function toggleDoneQuests()
+    if showDone ~= true then
+        showDone = true
+    else
+        showDone = nil
+    end
+    g_game.requestQuestLog()
+end
+
+
+function updateButtonStates()
+    local doneButton = questLogWindow:getChildById('toggleDoneQuests')
+    local notDoneButton = questLogWindow:getChildById('toggleNotDoneQuests')
+
+    if showDone == true then
+        doneButton:setOn(true)
+        notDoneButton:setOn(false)
+    elseif showDone == false then
+        doneButton:setOn(false)
+        notDoneButton:setOn(true)
+    else
+        doneButton:setOn(false)
+        notDoneButton:setOn(false)
+    end
+end
 
 function onGameQuestLog(quests)
-    destroyWindows()
-
+-- Check if questLogWindow already exists and simply show it instead of recreating it
+if not questLogWindow then
     questLogWindow = g_ui.createWidget('QuestLogWindow', rootWidget)
-    local questList = questLogWindow:getChildById('questList')
+    -- Initialization code for questLogWindow goes here
+else
+    questLogWindow:show()
+end
 
-    for i, questEntry in pairs(quests) do
-        local id, name, completed = unpack(questEntry)
-        
-        if showDone == nil or (showDone and completed) or (not showDone and not completed) then
-            local questLabel = g_ui.createWidget('QuestLabel', questList)
-            questLabel:setOn(completed)
-            questLabel:setText(name)
-            questLabel.onDoubleClick = function()
-                questLogWindow:hide()
-                g_game.requestQuestLine(id)
-            end
+-- Update the quest list every time without resetting the window position
+local questList = questLogWindow:getChildById('questList')
+if questList then
+    questList:destroyChildren()
+end
+
+
+for i, questEntry in pairs(quests) do
+    local id, name, completed = unpack(questEntry)
+    
+    if showDone == nil or (showDone and completed) or (not showDone and not completed) then
+        local questLabel = g_ui.createWidget('QuestLabel', questList)
+        questLabel:setOn(completed)
+        questLabel:setText(name)
+        questLabel.onDoubleClick = function()
+            questLogWindow:hide()
+            g_game.requestQuestLine(id)
         end
     end
-
-    questLogWindow.onDestroy = function() questLogWindow = nil end
-    questList:focusChild(questList:getFirstChild())
 end
+
+questLogWindow.onDestroy = function() questLogWindow = nil end
+questList:focusChild(questList:getFirstChild())
+updateButtonStates()
+end
+
+
+
 
 
 function onGameQuestLine(questId, questMissions)
