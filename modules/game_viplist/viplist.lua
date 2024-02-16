@@ -3,6 +3,7 @@ vipButton = nil
 addVipWindow = nil
 editVipWindow = nil
 vipInfo = {}
+refreshEvent = nil
 
 function init()
     connect(g_game, {
@@ -27,7 +28,11 @@ function init()
     if g_game.isOnline() then
         vipWindow:setupOnStart()
     end
+
+
 end
+
+
 
 function terminate()
     g_keyboard.unbindKeyDown('Ctrl+P')
@@ -55,7 +60,25 @@ function terminate()
 
     vipWindow = nil
     vipButton = nil
+
+    if refreshEvent then
+        removeEvent(refreshEvent)
+        refreshEvent = nil
+    end
 end
+
+function startRefreshingVipList()
+    if refreshEvent then
+        removeEvent(refreshEvent)
+    end
+    refreshEvent = scheduleEvent(refreshVipList, 30000) -- 30 seconds
+end
+
+function refreshVipList()
+    refresh()
+    startRefreshingVipList() -- Schedule the next refresh
+end
+
 
 function loadVipInfo()
     local settings = g_settings.getNode('VipList')
@@ -75,11 +98,16 @@ end
 function online()
     vipWindow:setupOnStart() -- load character window configuration
     refresh()
+    startRefreshingVipList()
 end
 
 function offline()
     vipWindow:setParent(nil, true)
     clear()
+    if refreshEvent then
+        removeEvent(refreshEvent)
+        refreshEvent = nil
+    end
 end
 
 function refresh()
@@ -272,6 +300,7 @@ function sortBy(state)
 end
 
 function onAddVip(id, name, state, description, iconId, notify)
+
     local vipList = vipWindow:getChildById('contentsPanel')
 
     local label = g_ui.createWidget('VipListLabel')
@@ -304,7 +333,13 @@ function onAddVip(id, name, state, description, iconId, notify)
         label:setColor('#00ff00')
     elseif state == VipState.Pending then
         label:setColor('#ffca38')
-    else
+    elseif state == VipState.Training then
+        label:setColor('#ffff00') -- training (yellow)
+    elseif state == VipState.OfflineTraining then
+        label:setColor('#ffa500') -- offline training (orange)
+    elseif state == VipState.Xlog then
+        label:setColor('#000000') -- xlog (black)
+    else 
         label:setColor('#ff0000')
     end
 

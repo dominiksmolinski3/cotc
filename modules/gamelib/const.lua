@@ -322,7 +322,10 @@ PathFindFlags = {
 VipState = {
     Offline = 0,
     Online = 1,
-    Pending = 2
+    Pending = 2,
+    Training = 3,
+    OfflineTraining = 4,
+    Xlog = 5
 }
 
 ExtendedIds = {
