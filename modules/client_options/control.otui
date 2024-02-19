@@ -75,7 +75,7 @@ Panel
     id: chooseQuickLootHotkeyLabel
     !text: tr('Quick Loot Hotkey:')
     phantom: false
-    anchors.left: prev.left
+    anchors.left: parent.left
     anchors.top: prev.bottom
     margin-top: 13
 
@@ -84,6 +84,23 @@ Panel
     width: 200
     anchors.left: prev.left
     anchors.top: prev.bottom
+    margin-top: 10
+    margin-left: 3
+    mouse-scroll: false
+
+  Label
+    id: chooseFloorViewModeLabel
+    !text: tr('Dynamic Floor View Mode Hotkey:')
+    phantom: false
+    anchors.left: parent.left
+    anchors.top: prev.bottom
     margin-top: 13
-    margin-left: 5
+
+  ComboBox
+    id: dynamicFloorViewModeHotkey
+    width: 200
+    anchors.left: prev.left
+    anchors.top: prev.bottom
+    margin-top: 10
+    margin-left: 3
     mouse-scroll: false
