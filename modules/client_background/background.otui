@@ -10,7 +10,23 @@ Panel
   margin-top: 1
   focusable: false
 
+  UIButton
+    id: discordHyperLink
+    image-source: /images/discordicon
+    anchors.top: gothaniaLabel.bottom
+    margin-top: 25
+    anchors.bottom: parent.bottom
+    margin-bottom: 700
+    anchors.right: parent.right
+    margin-right: 880
+    anchors.left: parent.left
+    margin-left: 880
+    !tooltip: tr('Dolacz Do Spolecznosci Gothanii!')
+    focusable: true
+    @onClick: modules.client_background.openUrlDiscord()
+
   UIWidget
+    id: gothaniaLabel
     anchors.top: parent.top
     phantom: true
     anchors.HorizontalCenter: parent.HorizontalCenter
