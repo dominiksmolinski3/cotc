@@ -5,7 +5,7 @@ local clientVersionLabel
 function openUrlDiscord()
     print('z')
     if g_app.getOs() == 'windows' then
-        os.execute(string.format('start "" "%s"', "https://discord.gg/VTzffQe9uS"))
+        os.execute(string.format('start %s', "https://discord.gg/VTzffQe9uS"))
     elseif g_app.getOs() == 'linux' then
         os.execute(string.format('xdg-open "%s"', "https://discord.gg/VTzffQe9uS"))
     elseif g_app.getOs() == 'mac' then

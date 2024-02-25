@@ -4,7 +4,7 @@ VipListLabel < GameLabel
   image-rect: 0 0 12 12
   image-clip: 0 0 12 12
   image-source: /images/game/viplist/icons
-  font: verdana-11px-monochrome
+  font: verdana-11px-antialised
   phantom: false
 
   $first:

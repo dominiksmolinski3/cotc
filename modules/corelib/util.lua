@@ -271,6 +271,10 @@ function resolvepath(filePath, depth)
     end
 end
 
+local function trim(s)
+  return s:match'^()%s*$' and '' or s:match'^%s*(.*%S)'
+end
+
 function toboolean(v)
     if type(v) == 'string' then
         v = v:trim():lower()

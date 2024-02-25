@@ -22,6 +22,8 @@ ConsolePhantomLabel < UILabel
   text-auto-resize: true
   selection-color: #111416
   selection-background-color: #999999
+  draggable: true
+
 
 ConsoleTabBar < MoveableTabBar
   height: 28

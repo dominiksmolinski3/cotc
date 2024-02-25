@@ -28,6 +28,7 @@ function destroyDialog()
     end
 end
 
+
 function onModalDialog(id, title, message, buttons, enterButton, escapeButton, choices, priority)
     -- priority parameter is unused, not sure what its use is.
     if modalDialog then return end
@@ -44,8 +45,8 @@ function onModalDialog(id, title, message, buttons, enterButton, escapeButton, c
     local choiceScrollbar = modalDialog:getChildById('choiceScrollBar')
     local buttonsPanel = modalDialog:getChildById('buttonsPanel')
 
-    modalDialog:setText(title)
-    messageLabel:setText(message)
+    modalDialog:setText(title .. "óć")
+    messageLabel:setText(message .. "ąść")
 
     local labelHeight
     for i = 1, #choices do
@@ -54,7 +55,9 @@ function onModalDialog(id, title, message, buttons, enterButton, escapeButton, c
 
         local label = g_ui.createWidget('ChoiceListLabel', choiceList)
         label.choiceId = choiceId
-        label:setText(choiceName)
+        coMozeszMi = "Co możesz mi"
+        replaceBuggedChars(coMozeszmi)
+        label:setText(coMozeszMi)
         label:setPhantom(false)
         if not labelHeight then labelHeight = label:getHeight() end
     end

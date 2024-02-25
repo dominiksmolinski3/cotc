@@ -17,12 +17,22 @@ MessageSettings = {
         consoleTab = 'Server Log',
         screenTarget = 'lowCenterLabel'
     },
+
     centerGreen = {
         color = TextColors.green,
         consoleTab = 'Server Log',
         screenTarget = 'highCenterLabel',
         consoleOption = 'showInfoMessagesInConsole'
     },
+
+    centerLoot = {
+      color = TextColors.white,
+      consoleTab = 'Server Log',
+      screenTarget = 'highCenterLabel',
+      consoleOption = 'showInfoMessagesInConsole',
+      highLightItems = true,
+    },
+
     centerWhite = {
         color = TextColors.white,
         consoleTab = 'Server Log',
@@ -62,7 +72,7 @@ MessageTypes = {
     [MessageModes.Status] = MessageSettings.status,
     [MessageModes.Warning] = MessageSettings.centerRed,
     [MessageModes.Look] = MessageSettings.centerGreen,
-    [MessageModes.Loot] = MessageSettings.centerGreen,
+    [MessageModes.Loot] = MessageSettings.centerLoot,
     [MessageModes.Red] = MessageSettings.consoleRed,
     [MessageModes.Blue] = MessageSettings.consoleBlue,
     [MessageModes.PrivateFrom] = MessageSettings.consoleBlue,
@@ -116,6 +126,44 @@ end
 
 function calculateVisibleTime(text) return math.max(#text * 100, 4000) end
 
+local function getItemColor(name)
+  local search = string.match(name, "%D+")
+
+  if search then
+    search = search:gsub("%+", ""):trim()
+  end
+  print("text search: " .. search)
+
+  local found = getHighLightItems()[search]
+
+  return determineColor(found)
+end
+
+local function getColoredLoot(inputString, delimiter)
+    local result = {}
+    local loot = nil
+    local beginPosition = inputString:find(": ")
+    local lastPosition = inputString:find("%(") or nil
+
+    table.insert(result, { text = inputString:sub(0, beginPosition + 1), color = "white"})
+
+    if lastPosition then
+      loot = inputString:sub(beginPosition + 1, lastPosition)
+    else
+      loot = inputString:sub(beginPosition + 1)
+    end
+
+    local pattern = string.format("([^%s]+)", delimiter)
+
+    for match in loot:gmatch(pattern) do
+      local itemName = match:trim()
+
+      table.insert(result, { text = itemName, color = getItemColor(itemName)})
+    end
+
+    return result
+end
+
 function displayMessage(mode, text)
     if not g_game.isOnline() then return end
 
@@ -127,10 +175,29 @@ function displayMessage(mode, text)
     if msgtype.consoleTab ~= nil and
         (msgtype.consoleOption == nil or modules.client_options.getOption(msgtype.consoleOption)) then
         modules.game_console.addText(text, msgtype, tr(msgtype.consoleTab))
-        -- TODO move to game_console
     end
 
-    if msgtype.screenTarget then
+    if msgtype.highLightItems then
+      local label = messagesPanel:recursiveGetChildById(msgtype.screenTarget)
+      local coloredText = ""
+      local coloredParts = getColoredLoot(text, ",")
+
+      for i, item in pairs(coloredParts) do
+        coloredText = coloredText .. "{" .. item.text .. "," .. item.color .."}"
+
+        if i < #coloredParts and i > 1 then
+          coloredText = coloredText .. "{, ,white}"
+        end
+      end
+
+       label:setColoredText(coloredText)
+
+      label:setVisible(true)
+      removeEvent(label.hideEvent)
+      label.hideEvent = scheduleEvent(function() label:setVisible(false) end, calculateVisibleTime(text))
+    end
+
+    if not msgtype.highLightItems and msgtype.screenTarget then
         local label = messagesPanel:recursiveGetChildById(msgtype.screenTarget)
         label:setText(text)
         label:setColor(msgtype.color)

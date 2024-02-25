@@ -89,7 +89,7 @@ TabBarVertical < UITabBar
     id: buttonsPanel
     anchors.top: parent.top
     anchors.left: parent.left
-    anchors.right: scrollBar.left
+    anchors.right: parent.right
     anchors.bottom: parent.bottom
     vertical-scrollbar: scrollBar
   VerticalScrollBar
@@ -126,3 +126,48 @@ TabBarVerticalButton < UIButton
     color: #80c7f8
   $on !checked:
     color: #F55E5E
+
+TabBarHorizontal < UITabBar
+  height: 180
+  ScrollableFlatPanel
+    id: buttonsPanel
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.bottom: optionsTabContent.top
+    horizontal-scrollbar: scrollBar
+  VerticalScrollBar
+    id: scrollBar
+    anchors.top: parent.top
+    anchors.bottom: optionsTabContent.top
+    anchors.right: parent.right
+    step: 16
+    pixels-scroll: true
+    $!on:
+      width: 0
+TabBarHorizontalPanel < Panel
+TabBarHorizontalButton < UIButton
+  size: 96 32
+  color: #aaaaaa
+  anchors.top: parent.top
+  anchors.bottom: parent.bottom
+  text-align: center
+  icon-align: left
+  icon-offset-x: 2
+  icon-color: #888888
+  $first:
+    anchors.left: parent.left
+  $!first:
+    anchors.left: prev.right
+    margin-left: 16
+  $hover !checked:
+    color: white
+    icon-color: #dfdfdf
+  $disabled:
+    icon-color: #333333
+  $checked:
+    icon-color: #ffffff
+    color: #80c7f8
+  $on !checked:
+    color: #F55E5E
+

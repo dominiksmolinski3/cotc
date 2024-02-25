@@ -95,6 +95,17 @@ function init()
     })
 end
 
+function reinstallFonts()
+    -- Assuming all required fonts are directly in the /fonts/ directory
+    local fontFiles = g_resources.listDirectoryFiles('/fonts/')
+    for _, file in pairs(fontFiles) do
+      if g_resources.isFileType(file, 'otfont') then
+        g_fonts.importFont('/fonts/' .. file)
+      end
+    end
+end
+  
+
 function terminate()
     installedLocales = nil
     currentLocale = nil
@@ -234,13 +245,4 @@ function _G.tr(text, ...)
         end
     end
     return text
-end
-
-function reinstallFonts()
-  files = g_resources.listDirectoryFiles('/fonts/' .. currentLocale.charset)
-  for _,file in pairs(files) do
-    if g_resources.isFileType(file, 'otfont') then
-      g_fonts.importFont('/fonts/' .. currentLocale.charset .. '/' .. file)
-    end
-  end
 end

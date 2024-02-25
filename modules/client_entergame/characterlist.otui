@@ -37,7 +37,7 @@ CharacterWidget < UIWidget
     color: #bbbbbb
     anchors.top: parent.top
     anchors.left: parent.left
-    font: verdana-11px-monochrome
+    font: verdana-11px-antialised
     text-auto-resize: true
     background-color: alpha
     text-offset: 2 0
@@ -97,7 +97,7 @@ CharacterWidget < UIWidget
     anchors.top: parent.top
     anchors.left: parent.left
     margin-left: 300
-    font: verdana-11px-monochrome
+    font: verdana-11px-antialised
     text-auto-resize: true
     background-color: alpha
     text-offset: 2 0
@@ -115,7 +115,7 @@ CharacterWidget < UIWidget
     anchors.top: parent.top
     anchors.left: parent.left
     margin-left: 350
-    font: verdana-11px-monochrome
+    font: verdana-11px-antialised
     text-auto-resize: true
     background-color: alpha
     text-offset: 2 0
@@ -131,7 +131,7 @@ CharacterWidget < UIWidget
     id: worldName
     color: #bbbbbb
     anchors.top: parent.top
-    font: verdana-11px-monochrome
+    font: verdana-11px-antialised
     text-auto-resize: true
     background-color: alpha
     &baseText: '(%s)'

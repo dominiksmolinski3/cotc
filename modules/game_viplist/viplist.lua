@@ -4,14 +4,6 @@ addVipWindow = nil
 editVipWindow = nil
 vipInfo = {}
 refreshEvent = nil
-vipStateSortOrder = {
-    [VipState.Online] = 1,
-    [VipState.Training] = 2,
-    [VipState.OfflineTraining] = 3,
-    [VipState.Pending] = 4,
-    [VipState.Disconnected] = 5,
-    [VipState.Offline] = 6,
-}
 
 function init()
     connect(g_game, {
@@ -308,6 +300,7 @@ function sortBy(state)
 end
 
 function onAddVip(id, name, state, description, iconId, notify)
+
     local vipList = vipWindow:getChildById('contentsPanel')
 
     local label = g_ui.createWidget('VipListLabel')
@@ -337,17 +330,17 @@ function onAddVip(id, name, state, description, iconId, notify)
     end
 
     if state == VipState.Online then
-        label:setColor('#00ff00')
+        label:setColor('#60F860')
     elseif state == VipState.Pending then
-        label:setColor('#000000') -- logging in
+        label:setColor('#FF9854') -- xlog
+    elseif state == VipState.RecentlyLogged then
+        label:setColor('#F7F7F7') -- xlog
     elseif state == VipState.Training then
-        label:setColor('#ffff00') -- training (yellow)
+        label:setColor('#9966CC') -- training (yellow)
     elseif state == VipState.OfflineTraining then
-        label:setColor('#ffa500') -- offline training (orange)
-    elseif state == VipState.Disconnected then
-        label:setColor('#3b1010') -- xlog/disconnected
+        label:setColor('#7339ac') -- offline training (orange)
     else
-        label:setColor('#ff0000') -- offline
+        label:setColor('#F86060') -- offline
     end
 
     label.vipState = state
@@ -367,35 +360,36 @@ function onAddVip(id, name, state, description, iconId, notify)
     local nameLower = name:lower()
     local childrenCount = vipList:getChildCount()
 
-    local stateSortOrder = vipStateSortOrder[state] or vipStateSortOrder[VipState.Offline] -- Default to offline sort order
-
-    local sortedBy = getSortedBy() -- Assume this function returns the current sorting criteria: 'name', 'status', or 'type'
-    local insertIndex = nil
-
-    for i = 1, vipList:getChildCount() do
+    for i = 1, childrenCount do
         local child = vipList:getChildByIndex(i)
-        local comparison = false
-
-        if sortedBy == 'status' then
-            local childStateSortOrder = vipStateSortOrder[child.vipState] or vipStateSortOrder[VipState.Offline]
-            comparison = stateSortOrder < childStateSortOrder or (stateSortOrder == childStateSortOrder and name:lower() < child:getText():lower())
-        elseif sortedBy == 'name' then
-            comparison = name:lower() < child:getText():lower()
-        elseif sortedBy == 'type' then
-            comparison = iconId < child.iconId or (iconId == child.iconId and name:lower() < child:getText():lower())
+        if (state ~= VipState.Offline and child.vipState == VipState.Offline and getSortedBy() == 'status') or
+            (label.iconId > child.iconId and getSortedBy() == 'type') then
+            vipList:insertChild(i, label)
+            return
         end
 
-        if comparison then
-            insertIndex = i
-            break
+        if (((state == VipState.Offline and child.vipState == VipState.Offline) or
+            (state ~= VipState.Offline and child.vipState ~= VipState.Offline)) and getSortedBy() == 'status') or
+            (label.iconId == child.iconId and getSortedBy() == 'type') or getSortedBy() == 'name' then
+
+            local childText = child:getText():lower()
+            local length = math.min(childText:len(), nameLower:len())
+
+            for j = 1, length do
+                if nameLower:byte(j) < childText:byte(j) then
+                    vipList:insertChild(i, label)
+                    return
+                elseif nameLower:byte(j) > childText:byte(j) then
+                    break
+                elseif j == nameLower:len() then -- We are at the end of nameLower, and its shorter than childText, thus insert before
+                    vipList:insertChild(i, label)
+                    return
+                end
+            end
         end
     end
 
-    if insertIndex then
-        vipList:insertChild(insertIndex, label)
-    else
-        vipList:addChild(label)
-    end
+    vipList:insertChild(childrenCount + 1, label)
 end
 
 function onVipStateChange(id, state)

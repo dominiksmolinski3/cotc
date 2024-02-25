@@ -27,14 +27,14 @@ ItemBox < UICheckBox
     margin-top: 2
 
 ItemListLabel < Label
-  font: verdana-11px-monochrome
+  font: verdana-11px-antialised
   background-color: alpha
   text-offset: 42 3
   focusable: true
   height: 36
 
 ItemInfoLabel < Label
-  font: verdana-11px-monochrome
+  font: verdana-11px-antialised
   text-align: left
   margin-left: 10
   margin-top: 5

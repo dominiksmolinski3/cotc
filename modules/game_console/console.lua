@@ -883,6 +883,60 @@ function getHighlightedText(text)
     return tmpData
 end
 
+
+
+local function split(inputString, delimiter)
+    local result = {}
+    local loot = nil
+    local beginPosition = inputString:find(": ")
+    local lastPosition = inputString:find("%(") or nil
+
+    if lastPosition then
+      loot = inputString:sub(beginPosition + 1, lastPosition)
+    else
+      loot = inputString:sub(beginPosition + 1)
+    end
+
+    local pattern = string.format("([^%s]+)", delimiter)
+
+    for match in loot:gmatch(pattern) do
+        table.insert(result, match:trim())
+    end
+
+    return result
+end
+
+function extractItems(text, items)
+  local indexes = {}
+
+  for _, item in pairs(items) do
+    -- Użyj wyrażenia regularnego, aby dopasować słowo
+    local search = string.match(item, "%D+")
+
+
+    if search then
+      search = search:gsub("%+", ""):trim()
+    end
+
+    local found = getHighLightItems()[search]
+
+    if found then
+      local startIdx, endIdx = string.find(text, esc(item))
+
+      for i = startIdx, endIdx do
+        local category = determineCategory(found)
+
+        if category > 0 then
+          indexes[i] = category
+        end
+
+      end
+    end
+  end
+
+  return indexes
+end
+
 function addTabText(text, speaktype, tab, creatureName)
     if not tab or tab.locked or not text or #text == 0 then return end
 
@@ -899,6 +953,85 @@ function addTabText(text, speaktype, tab, creatureName)
     label.highlightInfo = {}
 
     -- Overlay for consoleBuffer which shows highlighted words only
+    if speaktype.highLightItems then
+      local items = split(text, ",")
+      local highLightWords = extractItems(text, items)
+
+      local texts = {
+        [1] = "",
+        [2] = "",
+        [3] = "",
+        [4] = "",
+        [5] = "",
+      }
+
+      for letter = 1, #text do
+        local tmpChar = text:sub(letter, letter)
+        local tmpByte = string.byte(tmpChar)
+        local fillChar = (tmpByte == 10 or tmpByte == 32) and string.char(tmpByte) or string.char(127)
+        local type = highLightWords[letter]
+
+
+        if type then
+          for i = 1, #texts do
+            if i == type then
+              texts[i] = texts[i] .. tmpChar
+            else
+              texts[i] = texts[i] .. string.rep(fillChar, letterWidth[tmpByte])
+            end
+          end
+        else
+          for i = 1, #texts do
+            texts[i] = texts[i] .. string.rep(fillChar, letterWidth[tmpByte])
+          end
+
+        end
+
+      end
+
+      label:setText(text)
+
+      if #texts[1] > 0 then
+        local firstHighLight = g_ui.createWidget('ConsolePhantomLabel', label)
+        firstHighLight:setColor('#979797')
+        firstHighLight:fill('parent')
+        firstHighLight:setId('consoleLabelHighlight' .. consoleBuffer:getChildCount())
+        firstHighLight:setText(texts[1])
+      end
+
+      if #texts[2] > 0 then
+        local secondHighLight = g_ui.createWidget('ConsolePhantomLabel', label)
+        secondHighLight:setColor('#00D01C')
+        secondHighLight:fill('parent')
+        secondHighLight:setId('consoleLabelHighlight' .. consoleBuffer:getChildCount())
+        secondHighLight:setText(texts[2])
+      end
+
+      if #texts[3] > 0 then
+        local thirdHighLight = g_ui.createWidget('ConsolePhantomLabel', label)
+        thirdHighLight:setColor('#1f9ffe')
+        thirdHighLight:fill('parent')
+        thirdHighLight:setId('consoleLabelHighlight' .. consoleBuffer:getChildCount())
+        thirdHighLight:setText(texts[3])
+      end
+
+      if #texts[4] > 0 then
+        local fourthHighLight = g_ui.createWidget('ConsolePhantomLabel', label)
+        fourthHighLight:setColor('#B400D0')
+        fourthHighLight:fill('parent')
+        fourthHighLight:setId('consoleLabelHighlight' .. consoleBuffer:getChildCount())
+        fourthHighLight:setText(texts[4])
+      end
+
+      if #texts[5] > 0 then
+        local fifthHighLight = g_ui.createWidget('ConsolePhantomLabel', label)
+        fifthHighLight:setColor('#C9D000')
+        fifthHighLight:fill('parent')
+        fifthHighLight:setId('consoleLabelHighlight' .. consoleBuffer:getChildCount())
+        fifthHighLight:setText(texts[5])
+      end
+
+    end
 
     if speaktype.npcChat and
         (g_game.getCharacterName() ~= creatureName or g_game.getCharacterName() == 'Account Manager') then
@@ -1367,7 +1500,6 @@ function applyMessagePrefixies(name, level, message)
 end
 
 function onTalk(name, level, mode, message, channelId, creaturePos)
-
     if mode == MessageModes.GamemasterBroadcast then
         modules.game_textmessage.displayBroadcastMessage(name .. ': ' .. message)
         return

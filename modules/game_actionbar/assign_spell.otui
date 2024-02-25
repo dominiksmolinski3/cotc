@@ -9,7 +9,7 @@ Spell < UIItem
   background-color: gray
 
 SpellListLabel < Label
-  font: verdana-11px-monochrome
+  font: verdana-11px-antialised
   background-color: alpha
   text-offset: 42 3
   focusable: true

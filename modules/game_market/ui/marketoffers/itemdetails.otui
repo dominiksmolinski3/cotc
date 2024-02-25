@@ -1,5 +1,5 @@
 DetailsTableRow < TableRow
-  font: verdana-11px-monochrome
+  font: verdana-11px-antialised
   focusable: true
   color: #cccccc
   height: 45
@@ -9,7 +9,7 @@ DetailsTableRow < TableRow
   odd-background-color: alpha
 
 DetailsTableColumn < TableColumn
-  font: verdana-11px-monochrome
+  font: verdana-11px-antialised
   background-color: alpha
   text-offset: 5 2
   color: #cccccc

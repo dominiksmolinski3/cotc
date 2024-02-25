@@ -9,14 +9,14 @@ SmallSkillButton < SkillButton
   height: 14
 
 SkillNameLabel < GameLabel
-  font: verdana-11px-monochrome
+  font: verdana-11px-antialised
   anchors.left: parent.left
   anchors.top: parent.top
   anchors.bottom: parent.bottom
 
 SkillValueLabel < GameLabel
   id: value
-  font: verdana-11px-monochrome
+  font: verdana-11px-antialised
   text-align: topright
   anchors.right: parent.right
   anchors.top: parent.top

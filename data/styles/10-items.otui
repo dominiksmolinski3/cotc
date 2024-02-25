@@ -2,7 +2,7 @@ Item < UIItem
   size: 34 34
   padding: 1
   image-source: /images/ui/item
-  font: verdana-11px-rounded
+  font: verdana-11px-antialised
   border-color: white
   color: white
 

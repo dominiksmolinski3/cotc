@@ -50,6 +50,12 @@ local defaultOptions = {
     animatedTextScale = 0,
     setEffectAlphaScroll = 100,
     setMissileAlphaScroll = 100,
+    firstColorHighlight = "#979797",
+    secondColorHighlight = "#00D01C",
+    thirdColorHighlight = "#1f9ffe",
+    fourthColorHighlight = "#B400D",
+    fifthColorHighlight = "#C9D000",
+    highlightCounter = 5,
 }
 
 local previousMode = nil
@@ -63,12 +69,35 @@ local consolePanel
 local graphicsPanel
 local soundPanel
 local audioButton
+local lootPanel
+
 
 local crosshairCombobox
 local quickLootHotkeyCombobox
 local dynamicFloorViewModeHotkeyCombobox
 local antialiasingModeCombobox
 local floorViewModeCombobox
+
+function removeHighlightButton()
+    local selected = missionList:getFocusedChild()
+    if selected then
+      -- Assuming you have a function to remove the rule based on an identifier, like the item's name
+      removeHighlightRule(selected:getText())
+      updateMissionList() -- Refresh the list to remove the entry
+    else
+      g_game.showTextMessage("Please select an item to remove.")
+    end
+end
+  
+
+function addHighlightButton()
+    if (highlightCounter >= 5) then
+        g_game.showTextMessage('You have reached the maximum highlight options')
+    else
+        setOption()
+    end
+end
+
 
 function toggleFloorViewMode()
     local currentMode = getOption('floorViewMode')
@@ -122,6 +151,10 @@ function init()
                                                        function()
         toggleOption('enableAudio')
     end)
+
+    -- custom loot
+    lootPanel = g_ui.loadUI('loot')
+    optionsTabBar:addTab(tr('Loot'), lootPanel, '/images/optionstab/loot')
 
     addEvent(function()
         setup()
@@ -391,6 +424,16 @@ function setOption(key, value, force)
         end, gameRootPanel)
     
         dynamicFloorViewModeHotkey = value
+    elseif key == 'firstColorHighlight' then
+        
+    elseif key == 'secondColorHighlight' then
+    
+    elseif key == 'thirdColorHighlight' then
+    
+    elseif key == 'fourthColorHighlight' then
+    
+    elseif key == 'fifthColorHighlight' then
+
     end
 
     -- change value for keybind updates

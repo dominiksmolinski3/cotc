@@ -16,11 +16,20 @@ function UIMiniWindow:open(dontSave)
 
   self:raise()
 
+  -- print("start---")
+  -- print("opening: " .. self:getId())
   if self:getParent() then
+    -- print("Saving on : " .. self:getParent():getClassName())
     if self:getParent():getClassName() == "UIMiniWindowContainer" then
+      -- print("saved children for " .. self:getId)
       self:getParent():saveChildren()
+    else
+      -- print(self:getId() .. " has parent that is " .. self:getParent():getClassName())
     end
+  else
+    -- print(self:getId() .. " has no parent!")
   end
+  -- print("end ---")
 
   signalcall(self.onOpen, self)
 end
@@ -159,7 +168,7 @@ function UIMiniWindow:setup()
 
   if settings then
     local selfSettings = settings[self:getId()]
-    print("self:getId():" .. self:getId())
+
     if selfSettings then
       if selfSettings.parentId then
         local parent = rootWidget:recursiveGetChildById(selfSettings.parentId)
@@ -212,6 +221,7 @@ function UIMiniWindow:setup()
   end
 
   self:fitOnParent()
+
 end
 
 function UIMiniWindow:setupOnStart()
@@ -239,12 +249,24 @@ function UIMiniWindow:setupOnStart()
     end
   end
 
+  if settings[char] then
+
   local selfSettings = settings[char][self:getId()]
+
   if selfSettings then
     if selfSettings.parentId then
       local parent = rootWidget:recursiveGetChildById(selfSettings.parentId)
+
+      if not parent and selfSettings.position then
+        parent = modules.game_interface.getRootPanel()
+      end
+
       if parent and parent:isVisible() then
         if parent:getClassName() == 'UIMiniWindowContainer' and selfSettings.index and parent:isOn() then
+          if selfSettings.parentId == "gameLeftPanel" then
+            print("Working on " .. self:getId() .. " on index " .. selfSettings.index .. " and his parent is " .. selfSettings.parentId)
+          end
+
           self.miniIndex = selfSettings.index
           parent:scheduleInsert(self, selfSettings.index)
           newParentSet = true
@@ -269,32 +291,33 @@ function UIMiniWindow:setupOnStart()
     end
 
 
-    if selfSettings.closed then
-      self:close(true)
-    else
-      self:open(true)
+      if selfSettings.closed then
+        self:close(true)
+      else
+        self:open(true)
+      end
     end
-  end
 
-  local newParent = self:getParent()
+    local newParent = self:getParent()
 
-  if not oldParent and not newParentSet then
-    oldParent = modules.game_interface.getRightPanel()
-    self:setParent(oldParent)
-  end
-
-  self.miniLoaded = true
-
-  if self.save then
-    if oldParent and oldParent:getClassName() == 'UIMiniWindowContainer' then
-      addEvent(function()
-        oldParent:order()
-      end)
+    if not oldParent and not newParentSet then
+      oldParent = modules.game_interface.getRightPanel()
+      self:setParent(oldParent)
     end
-    if newParent and newParent:getClassName() == 'UIMiniWindowContainer' and newParent ~= oldParent then
-      addEvent(function()
-        newParent:order()
-      end)
+
+    self.miniLoaded = true
+
+    if self.save then
+      if oldParent and oldParent:getClassName() == 'UIMiniWindowContainer' then
+        addEvent(function()
+          oldParent:order()
+        end)
+      end
+      if newParent and newParent:getClassName() == 'UIMiniWindowContainer' and newParent ~= oldParent then
+        addEvent(function()
+          newParent:order()
+        end)
+      end
     end
   end
 

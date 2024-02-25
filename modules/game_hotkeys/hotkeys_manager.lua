@@ -7,6 +7,7 @@ HOTKEY_ACTION_TOGGLE_WASD = 1
 HOTKEY_ACTION_ATTACK_NEXT = 2
 HOTKEY_ACTION_ATTACK_PREV = 3
 HOTKEY_ACTION_TOGGLE_CHASE = 4
+HOTKEY_ACTION_TOGGLE_FLOORVIEWMODE = 5
 
 HotkeyActions = {{
     id = HOTKEY_ACTION_TOGGLE_WASD,
@@ -20,6 +21,9 @@ HotkeyActions = {{
 }, {
     id = HOTKEY_ACTION_TOGGLE_CHASE,
     text = tr('Toggle chase mode')
+},{
+    id = HOTKEY_ACTION_TOGGLE_FLOORVIEWMODE,
+    text = tr('Toggle floor view mode')
 }}
 
 HotkeyColors = {
@@ -429,6 +433,8 @@ function doKeyCombo(keyCombo)
             modules.game_battle.attackNext()
         elseif hotKey.action == HOTKEY_ACTION_ATTACK_PREV then
             modules.game_battle.attackNext(true)
+        elseif hotKey.action == HOTKEY_ACTION_TOGGLE_FLOORVIEWMODE then
+            modules.client_options.toggleFloorViewMode()   
         elseif hotKey.action == HOTKEY_ACTION_TOGGLE_CHASE then
             modules.game_combatcontrols.toggleChaseMode()
         end

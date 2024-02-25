@@ -3,7 +3,7 @@ ProgressBar < UIProgressBar
   background-color: red
   image-source: /images/ui/progressbar
   image-border: 1
-  font: verdana-11px-rounded
+  font: verdana-11px-antialised
   text-offset: 0 2
 
   $!on:
@@ -16,7 +16,7 @@ LifeProgressBar < UIProgressBar
   height: 16
   background-color: green
   border: 1 black
-  font: verdana-11px-rounded
+  font: verdana-11px-antialised
   text-offset: 0 2
   margin: 2
 
@@ -25,4 +25,4 @@ ProgressRect < UIProgressRect
   phantom: true
   color: white
   background-color: #00000088
-  font: verdana-11px-rounded
+  font: verdana-11px-antialised

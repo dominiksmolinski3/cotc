@@ -1,0 +1,65 @@
+Panel
+  TextList
+    id: missionList
+    anchors.top: lootLabel.top
+    anchors.left: parent.left
+    anchors.right: missionListScrollBar.left
+    height: 200
+    margin-top: 15
+    padding: 1
+    focusable: false
+    vertical-scrollbar: missionListScrollBar
+
+  VerticalScrollBar
+    id: missionListScrollBar
+    anchors.top: lootLabel.top
+    anchors.right: parent.right
+    height: 200
+    margin-top: 15
+    step: 14
+    pixels-scroll: true
+
+  Label
+    id: lootLabel
+    !text: tr('Highlight items in different colors (loot channel)')..':'
+    phantom: false
+    anchors.left: parent.left
+    anchors.top: parent.top
+
+  Button
+    id: addHighlightButton
+    !text: tr('Add highlight')
+    width: 110
+    anchors.left: parent.left
+    anchors.top: missionList.bottom
+    margin-top: 10
+    @onClick: modules.client_options.hide()
+
+  Button
+    id: removeHighlightButton
+    !text: tr('Remove highlight')
+    margin-left: 10
+    width: 110
+    anchors.left: addHighlightButton.right
+    anchors.top: missionList.bottom
+    margin-top: 10
+
+  Button
+    id: defaultHighlightButton
+    !text: tr('Default highlights')
+    margin-left: 10
+    width: 110
+    anchors.left: removeHighlightButton.right
+    anchors.top: missionList.bottom
+    margin-top: 10
+    @onClick: modules.client_options.hide()
+
+  Button
+    id: clearHighlightButton
+    !text: tr('Clear highlights')
+    margin-left: 10
+    width: 110
+    anchors.left: defaultHighlightButton.right
+    anchors.top: missionList.bottom
+    margin-top: 10
+    @onClick: modules.client_options.hide()

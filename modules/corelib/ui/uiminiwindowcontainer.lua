@@ -180,9 +180,11 @@ function UIMiniWindowContainer:swapInsert(widget, index)
 end
 
 function UIMiniWindowContainer:scheduleInsert(widget, index)
+  print("Schedule Insert for " .. widget:getId() .. " on index " .. index .. "and children count: " .. self:getChildCount())
+
+
   if index - 1 > self:getChildCount() then
     if self.scheduledWidgets[index] then
-      pdebug('replacing scheduled widget id ' .. widget:getId())
     end
     self.scheduledWidgets[index] = widget
   else
@@ -191,6 +193,7 @@ function UIMiniWindowContainer:scheduleInsert(widget, index)
       if oldParent then
         oldParent:removeChild(widget)
       end
+
       self:insertChild(index, widget)
 
       while true do
@@ -211,10 +214,16 @@ function UIMiniWindowContainer:scheduleInsert(widget, index)
             break
           end
         end
-        if not placed then break end
+
+        if not placed then
+          break
+        end
       end
     end
   end
+
+  print(widget:getPosition().x .. " - " .. widget:getPosition().y)
+  print("------------")
 end
 
 function UIMiniWindowContainer:order()
@@ -238,6 +247,8 @@ function UIMiniWindowContainer:order()
       ignoreIndex = ignoreIndex + 1
     end
   end
+
+
 end
 
 function UIMiniWindowContainer:saveChildren()

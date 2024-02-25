@@ -60,3 +60,10 @@ function inArray(id, elements)
 end
 
 function isInArray(array, value) return table.contains(array, value) end
+
+
+function esc(x)
+   return (x:gsub('%+', '%%+')
+            :gsub('%-', '%%-')
+            )
+end
