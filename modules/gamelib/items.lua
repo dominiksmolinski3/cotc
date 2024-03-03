@@ -3831,24 +3831,29 @@ function getHighLightItems()
   return HighLightItems
 end
 
+function deserializeColorHighlights(serializedString)
+  local result = {}
+  for part in string.gmatch(serializedString, "([^;]+)") do
+      local color, F, T = part:match("([^,]+),([^,]+),([^,]+)")
+      table.insert(result, {color = color, F = tonumber(F), T = tonumber(T)})
+  end
+  return result
+end
+
 function determineColor(price)
   if not price then
     return "white"
   end
-
-  if price == 0 then
-    return "white"
-  elseif price > 0 and price < 1000 then
-    return "#979797" -- grey
-  elseif price >= 1000 and price < 5000 then
-    return "#00D01C" -- green
-  elseif price >= 5000 and price < 25000 then
-    return "#1f9ffe" -- blue
-  elseif price >= 25000 and price < 50000 then
-    return "#B400D0" -- fiolet
-  elseif price >= 50000 then
-    return "#C9D000" -- yellow
-  end
+  local colorHighlights = deserializeColorHighlights(g_settings.get('colorHighlights', colorHighlights))
+  print(type(colorHighlights))
+  print(colorHighlights)
+  dd(colorHighlights)
+  for _, highlight in ipairs(colorHighlights) do
+    if price >= highlight.F and price <= highlight.T then
+        return highlight.color
+    end
+  end 
+  
 end
 
 function determineCategory(price)
@@ -3856,17 +3861,15 @@ function determineCategory(price)
     return 0
   end
 
-  if price == 0 then
-    return 0
-  elseif price > 0 and price < 1000 then
-    return 1
-  elseif price >= 1000 and price < 5000 then
-    return 2
-  elseif price >= 5000 and price < 25000 then
-    return 3
-  elseif price >= 25000 and price < 50000 then
-    return 4
-  elseif price >= 50000 then
-    return 5
-  end
+  local colorHighlights = deserializeColorHighlights(g_settings.get('colorHighlights', colorHighlights))
+  print(type(colorHighlights))
+  print(colorHighlights)
+  dd(colorHighlights)
+  for _, highlight in ipairs(colorHighlights) do
+    if price >= highlight.F and price <= highlight.T then
+        return _
+    end
+  end 
+
+
 end

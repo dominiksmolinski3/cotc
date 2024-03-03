@@ -1,17 +1,37 @@
+lootLabel < Label
+  font: verdana-11px-antialised
+  text-offset: 2 0
+  focusable: true
+  color: #aaaaaa
+  background-color: alpha
+
+  $on:
+    color: #00aa00
+  $!on:
+    color: #aaaaaa
+
+  $focus:
+    background-color: #444444
+
+  $on focus:
+    color: #00ff00
+  $!on focus:
+    color: #ffffff
+
 Panel
   TextList
-    id: missionList
+    id: lootHighlightList
     anchors.top: lootLabel.top
     anchors.left: parent.left
-    anchors.right: missionListScrollBar.left
+    anchors.right: lootHighlightListScrollBar.left
     height: 200
     margin-top: 15
     padding: 1
     focusable: false
-    vertical-scrollbar: missionListScrollBar
+    vertical-scrollbar: lootHighlightListScrollBar
 
   VerticalScrollBar
-    id: missionListScrollBar
+    id: lootHighlightListScrollBar
     anchors.top: lootLabel.top
     anchors.right: parent.right
     height: 200
@@ -31,9 +51,9 @@ Panel
     !text: tr('Add highlight')
     width: 110
     anchors.left: parent.left
-    anchors.top: missionList.bottom
+    anchors.top: lootHighlightList.bottom
     margin-top: 10
-    @onClick: modules.client_options.hide()
+    @onClick: modules.client_options.addHighlightButton()
 
   Button
     id: removeHighlightButton
@@ -41,8 +61,9 @@ Panel
     margin-left: 10
     width: 110
     anchors.left: addHighlightButton.right
-    anchors.top: missionList.bottom
+    anchors.top: lootHighlightList.bottom
     margin-top: 10
+    @onClick: modules.client_options.removeHighlightButton()
 
   Button
     id: defaultHighlightButton
@@ -50,9 +71,9 @@ Panel
     margin-left: 10
     width: 110
     anchors.left: removeHighlightButton.right
-    anchors.top: missionList.bottom
+    anchors.top: lootHighlightList.bottom
     margin-top: 10
-    @onClick: modules.client_options.hide()
+    @onClick: modules.client_options.defaultHighlights()
 
   Button
     id: clearHighlightButton
@@ -60,6 +81,6 @@ Panel
     margin-left: 10
     width: 110
     anchors.left: defaultHighlightButton.right
-    anchors.top: missionList.bottom
+    anchors.top: lootHighlightList.bottom
     margin-top: 10
-    @onClick: modules.client_options.hide()
+    @onClick: modules.client_options.clearHighlights()

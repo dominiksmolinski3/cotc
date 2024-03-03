@@ -180,8 +180,6 @@ function UIMiniWindowContainer:swapInsert(widget, index)
 end
 
 function UIMiniWindowContainer:scheduleInsert(widget, index)
-  print("Schedule Insert for " .. widget:getId() .. " on index " .. index .. "and children count: " .. self:getChildCount())
-
 
   if index - 1 > self:getChildCount() then
     if self.scheduledWidgets[index] then
@@ -222,8 +220,6 @@ function UIMiniWindowContainer:scheduleInsert(widget, index)
     end
   end
 
-  print(widget:getPosition().x .. " - " .. widget:getPosition().y)
-  print("------------")
 end
 
 function UIMiniWindowContainer:order()

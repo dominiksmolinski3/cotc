@@ -1,0 +1,79 @@
+MainWindow
+  id: popupWindow
+  !text: tr('Add new highlight')
+  size: 300 200
+  @onEscape: self:destroy()
+
+  Button
+    id: closeButton
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    !text: tr('Close')
+    width: 90
+    @onClick: self:getParent():destroy()
+
+  Button
+    id: addButton
+    anchors.bottom: parent.bottom
+    anchors.right: closeButton.left
+    !text: tr('Add Highlight')
+    width: 90
+    @onClick: self:getParent():destroy()
+
+  Label
+    id: FLabel
+    !text: tr('From')..':'
+    phantom: false
+    anchors.left: parent.left
+    anchors.top: parent.top  
+
+  Label
+    id: TLabel
+    !text: tr('To')..':'
+    phantom: false
+    anchors.left: parent.left
+    anchors.top: FLabel.bottom 
+    margin-top: 10
+
+  Label
+    id: colorHexLabel
+    !text: tr('Color(#hex)')..':'
+    phantom: false
+    anchors.left: parent.left
+    anchors.top: TLabel.bottom 
+    margin-top: 10
+    
+
+  Label
+    id: colorLabel
+    !text: tr('Color')..':'
+    phantom: false
+    anchors.left: parent.left
+    anchors.top: colorHexLabel.bottom
+    margin-top: 10
+
+  TextEdit
+    id: fTextEdit
+    anchors.left: FLabel.right
+    anchors.top: parent.top
+    margin-left: 10
+
+  TextEdit
+    id: tTextEdit
+    anchors.left: TLabel.right
+    anchors.top: prev.bottom
+    margin-left: 10
+
+  TextEdit
+    id: colorHexTextEdit
+    anchors.left: colorHexLabel.right
+    anchors.top: prev.bottom
+    margin-left: 10
+
+  ComboBox
+    id: colorLabelComboBox
+    width: 80
+    anchors.left: colorLabel.right
+    anchors.top: prev.bottom
+    mouse-scroll: true
+    margin-left: 10

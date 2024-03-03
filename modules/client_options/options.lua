@@ -50,12 +50,13 @@ local defaultOptions = {
     animatedTextScale = 0,
     setEffectAlphaScroll = 100,
     setMissileAlphaScroll = 100,
-    firstColorHighlight = "#979797",
-    secondColorHighlight = "#00D01C",
-    thirdColorHighlight = "#1f9ffe",
-    fourthColorHighlight = "#B400D",
-    fifthColorHighlight = "#C9D000",
-    highlightCounter = 5,
+    colorHighlights = {
+        { color = "#979797", F = 0, T = 1 },
+        { color = "#00D01C", F = 0, T = 0 },
+        { color = "#1f9ffe", F = 0, T = 0 },
+        { color = "#B400D0", F = 0, T = 0 },
+        { color = "#C9D000", F = 0, T = 0 },
+    },
 }
 
 local previousMode = nil
@@ -71,31 +72,193 @@ local soundPanel
 local audioButton
 local lootPanel
 
-
 local crosshairCombobox
 local quickLootHotkeyCombobox
 local dynamicFloorViewModeHotkeyCombobox
 local antialiasingModeCombobox
 local floorViewModeCombobox
 
-function removeHighlightButton()
-    local selected = missionList:getFocusedChild()
-    if selected then
-      -- Assuming you have a function to remove the rule based on an identifier, like the item's name
-      removeHighlightRule(selected:getText())
-      updateMissionList() -- Refresh the list to remove the entry
-    else
-      g_game.showTextMessage("Please select an item to remove.")
+function serializeColorHighlights(highlights)
+    local parts = {}
+    for _, highlight in ipairs(highlights) do
+        table.insert(parts, highlight.color .. "," .. highlight.F .. "," .. highlight.T)
+    end
+    return table.concat(parts, ";")
+end
+
+
+function deserializeColorHighlights(serializedString)
+    local result = {}
+    for part in string.gmatch(serializedString, "([^;]+)") do
+        local color, F, T = part:match("([^,]+),([^,]+),([^,]+)")
+        table.insert(result, {color = color, F = tonumber(F), T = tonumber(T)})
+    end
+    return result
+end
+
+
+function loadHighlightingSettings()
+    colorHighlights = deserializeColorHighlights(g_settings.get('colorHighlights', colorHighlights))
+end
+
+function saveHighlightingSettings()
+    if colorHighlights == nil or next(colorHighlights) == nil then
+        colorHighlights = {
+            { color = "#979797", F = 0, T = 1 },
+            { color = "#00D01C", F = 0, T = 0 },
+            { color = "#1f9ffe", F = 0, T = 0 },
+            { color = "#B400D0", F = 0, T = 0 },
+            { color = "#C9D000", F = 0, T = 0 },
+        }
+    end
+    colorHighlights = serializeColorHighlights(colorHighlights)
+    g_settings.set('colorHighlights', colorHighlights)
+end
+
+function clearHighlights()
+    colorHighlights = {}
+    setupHighlightList()
+end
+
+function setupHighlightList()
+    local lootHighlightList = lootPanel:recursiveGetChildById('lootHighlightList')
+
+    -- Clear the current list to avoid duplicating entries
+    lootHighlightList:destroyChildren()
+    if not colorHighlights then 
+    colorHighlights = {
+        { color = "#979797", F = 0, T = 1 },
+        { color = "#00D01C", F = 0, T = 0 },
+        { color = "#1f9ffe", F = 0, T = 0 },
+        { color = "#B400D0", F = 0, T = 0 },
+        { color = "#C9D000", F = 0, T = 0 },
+    }
+    end
+    -- Iterate over the colorHighlights table and add each highlight to the list
+    for _, highlight in ipairs(colorHighlights) do
+        local text = string.format("Color: %s, From: %d, To: %d", highlight.color, highlight.F, highlight.T)
+        
+        -- Create a new label widget for each highlight option and add it to the lootHighlightList
+        local highlightLabel = g_ui.createWidget('lootLabel')
+        highlightLabel:setText(text)
+        highlightLabel:setMarginLeft(5)
+        lootHighlightList:addChild(highlightLabel)
     end
 end
-  
+
+function defaultHighlights()
+    colorHighlights = {
+        { color = "#979797", F = 0, T = 0 },
+        { color = "#00D01C", F = 0, T = 0 },
+        { color = "#1f9ffe", F = 0, T = 0 }, 
+        { color = "#B400D0", F = 0, T = 0 },
+        { color = "#C9D000", F = 0, T = 0 }, 
+    }
+    setupHighlightList()
+end
+
+function removeHighlightButton()
+    local selected = lootPanel:recursiveGetChildById('lootHighlightList'):getFocusedChild()
+    if selected then
+        local index = selected:getChildIndex()
+        table.remove(colorHighlights, index)
+        setupHighlightList()
+    else
+        modules.game_textmessage.displayInfoBox(tr(''), tr('Please select an highlight to remove.'))
+    end
+end
+
+function convertColorLabelToHex(color)
+    if color == '' then
+        return nil
+    elseif color == Green then
+        return "#00FF00"
+    elseif color == Red then
+        return "#FF0000"
+    elseif color == Gray then
+        return "#808080"
+    elseif color == Blue then
+        return "#0000FF"
+    elseif color == Black then
+        return "#000000"
+    elseif color == White then
+        return "#FFFFFF"
+    elseif color == Yellow then
+        return "#FFFF00"
+    elseif color == Orange then
+        return "#FFA500"
+    elseif color == Brown then
+        return "#964B00"
+    end
+end
+
 
 function addHighlightButton()
-    if (highlightCounter >= 5) then
-        g_game.showTextMessage('You have reached the maximum highlight options')
-    else
-        setOption()
+    local popupWindow = g_ui.displayUI('popupwindow')
+
+    local fTextEdit = popupWindow:getChildById('fTextEdit')
+    local tTextEdit = popupWindow:getChildById('tTextEdit')
+    local colorHexTextEdit = popupWindow:getChildById('colorHexTextEdit')
+    local colorLabelComboBox = popupWindow:getChildById('colorLabelComboBox')
+    colorLabelComboBox:addOption(tr(''), '')
+    colorLabelComboBox:addOption(tr('Red'), '#FF0000')
+    colorLabelComboBox:addOption(tr('Gray'), '#808080')
+    colorLabelComboBox:addOption(tr('Green'), '#00FF00')
+    colorLabelComboBox:addOption(tr('Blue'), '#0000FF')
+    colorLabelComboBox:addOption(tr('Black'), '#000000')
+    colorLabelComboBox:addOption(tr('White'), '#FFFFFF')
+    colorLabelComboBox:addOption(tr('Yellow'), '#FFFF00')
+    colorLabelComboBox:addOption(tr('Orange'), '#FFA500')
+    colorLabelComboBox:addOption(tr('Brown'), '#964B00')
+
+    local addButton = popupWindow:getChildById('addButton')
+    addButton.onClick = function()
+        local F = tonumber(fTextEdit:getText())
+        local T = tonumber(tTextEdit:getText())
+        local colorHex = colorHexTextEdit:getText()
+        local colorComboBox = colorLabelComboBox:getCurrentOption().text
+        print(colorComboBox)
+        
+        if not F or not T or F >= T then
+            modules.game_textmessage.displayInfoBox(tr(''), tr('Invalid From and To values or From is not less than To.'))
+            return
+        end
+
+        -- Check if F and T are within any existing range
+        for _, highlight in ipairs(colorHighlights) do
+            if not (T < highlight.F or F > highlight.T) then
+                modules.game_textmessage.displayInfoBox(tr(''), tr('F and T range overlaps with an existing highlight.'))
+                return
+            end
+        end
+
+        local color = nil
+
+        if (colorHex == "" and colorComboBox == "") or (colorHex ~= "" and colorComboBox ~= "") then
+            modules.game_textmessage.displayInfoBox(tr(''), tr('Specify either a Color Hex or select a Color Label, not both or neither.'))
+            return
+        elseif colorHex ~= "" then
+            if not colorHex:match("^#%x%x%x%x%x%x$") then
+                modules.game_textmessage.displayInfoBox(tr(''), tr('Invalid hex color.'))
+                return
+            end
+            color = colorHex
+        else
+            color = convertColorLabelToHex(colorLabel)
+        end
+
+        table.insert(colorHighlights, {color = color, F = F, T = T})
+
+        setupHighlightList()
+        popupWindow:destroy()
     end
+
+    local closeButton = popupWindow:getChildById('closeButton')
+    closeButton.onClick = function()
+        popupWindow:destroy()
+    end
+
+
 end
 
 
@@ -111,7 +274,6 @@ function toggleFloorViewMode()
         setOption('floorViewMode', 2)
     end
 end
-
 
 function init()
     for k, v in pairs(defaultOptions) do
@@ -155,21 +317,23 @@ function init()
     -- custom loot
     lootPanel = g_ui.loadUI('loot')
     optionsTabBar:addTab(tr('Loot'), lootPanel, '/images/optionstab/loot')
-
+    
     addEvent(function()
         setup()
     end)
 end
 
 function terminate()
-    g_keyboard.unbindKeyDown('Ctrl+Shift+F')
     g_keyboard.unbindKeyDown('Ctrl+N')
     optionsWindow:destroy()
     optionsButton:destroy()
     audioButton:destroy()
+    saveHighlightingSettings()
 end
 
 function setupComboBox()
+
+
     crosshairCombobox = generalPanel:recursiveGetChildById('crosshair')
 
     crosshairCombobox:addOption(tr('Disabled'), 'disabled')
@@ -227,7 +391,8 @@ end
 
 function setup()
     setupComboBox()
-
+    loadHighlightingSettings()
+    setupHighlightList()
     -- load options
     for k, v in pairs(defaultOptions) do
         if type(v) == 'boolean' then
@@ -424,17 +589,8 @@ function setOption(key, value, force)
         end, gameRootPanel)
     
         dynamicFloorViewModeHotkey = value
-    elseif key == 'firstColorHighlight' then
-        
-    elseif key == 'secondColorHighlight' then
-    
-    elseif key == 'thirdColorHighlight' then
-    
-    elseif key == 'fourthColorHighlight' then
-    
-    elseif key == 'fifthColorHighlight' then
-
     end
+    
 
     -- change value for keybind updates
     for _, panel in pairs(optionsTabBar:getTabsPanel()) do
