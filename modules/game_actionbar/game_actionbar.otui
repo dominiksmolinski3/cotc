@@ -24,7 +24,7 @@ ActionSlot < UIActionSlot
     text-auto-resize: true
     margin-right: 2
     margin-top: -1
-    font: verdana-11px-antialised
+    font: verdana-10px
   Label
     id: text
     anchors.fill: parent
@@ -34,7 +34,7 @@ ActionSlot < UIActionSlot
     margin-left: 1
     margin-right: 1
     margin-top: 6
-    font: verdana-11px-antialised
+    font: verdana-10px
 
 UIWindow
   visible: true

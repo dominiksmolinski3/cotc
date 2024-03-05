@@ -93,7 +93,6 @@ function UIMiniWindowContainer:fitAll(noRemoveChild)
 
   -- close widgets
   for i = 1, #removeChildren do
-    print(removeChildren[i]:getId())
     if removeChildren[i].forceOpen then
       removeChildren[i]:minimize(true)
     else
@@ -180,10 +179,11 @@ function UIMiniWindowContainer:swapInsert(widget, index)
 end
 
 function UIMiniWindowContainer:scheduleInsert(widget, index)
-
   if index - 1 > self:getChildCount() then
     if self.scheduledWidgets[index] then
+        print('replacing scheduled widget id ' .. widget:getId())
     end
+
     self.scheduledWidgets[index] = widget
   else
     local oldParent = widget:getParent()

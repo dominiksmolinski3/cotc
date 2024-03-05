@@ -448,3 +448,9 @@ function tdump(title, input)
     return dump_str
 end
 -- @}
+
+function fixPolishCharacters(word)
+  local replacedString = word:gsub(string.char(-51), string.char(191))
+  return replacedString
+
+end

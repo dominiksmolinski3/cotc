@@ -51,11 +51,11 @@ local defaultOptions = {
     setEffectAlphaScroll = 100,
     setMissileAlphaScroll = 100,
     colorHighlights = {
-        { color = "#979797", F = 0, T = 1 },
-        { color = "#00D01C", F = 0, T = 0 },
-        { color = "#1f9ffe", F = 0, T = 0 },
-        { color = "#B400D0", F = 0, T = 0 },
-        { color = "#C9D000", F = 0, T = 0 },
+        { color = "#979797", F = 0, T = 399 },
+        { color = "#00D01C", F = 400, T = 999 },
+        { color = "#1f9ffe", F = 1000, T = 2499 },
+        { color = "#B400D0", F = 2500, T = 4999 },
+        { color = "#C9D000", F = 5000, T = 5000000 },
     },
 }
 
@@ -78,39 +78,11 @@ local dynamicFloorViewModeHotkeyCombobox
 local antialiasingModeCombobox
 local floorViewModeCombobox
 
-function serializeColorHighlights(highlights)
-    local parts = {}
-    for _, highlight in ipairs(highlights) do
-        table.insert(parts, highlight.color .. "," .. highlight.F .. "," .. highlight.T)
-    end
-    return table.concat(parts, ";")
-end
-
-
-function deserializeColorHighlights(serializedString)
-    local result = {}
-    for part in string.gmatch(serializedString, "([^;]+)") do
-        local color, F, T = part:match("([^,]+),([^,]+),([^,]+)")
-        table.insert(result, {color = color, F = tonumber(F), T = tonumber(T)})
-    end
-    return result
-end
-
-
 function loadHighlightingSettings()
     colorHighlights = deserializeColorHighlights(g_settings.get('colorHighlights', colorHighlights))
 end
 
 function saveHighlightingSettings()
-    if colorHighlights == nil or next(colorHighlights) == nil then
-        colorHighlights = {
-            { color = "#979797", F = 0, T = 1 },
-            { color = "#00D01C", F = 0, T = 0 },
-            { color = "#1f9ffe", F = 0, T = 0 },
-            { color = "#B400D0", F = 0, T = 0 },
-            { color = "#C9D000", F = 0, T = 0 },
-        }
-    end
     colorHighlights = serializeColorHighlights(colorHighlights)
     g_settings.set('colorHighlights', colorHighlights)
 end
@@ -125,34 +97,27 @@ function setupHighlightList()
 
     -- Clear the current list to avoid duplicating entries
     lootHighlightList:destroyChildren()
-    if not colorHighlights then 
-    colorHighlights = {
-        { color = "#979797", F = 0, T = 1 },
-        { color = "#00D01C", F = 0, T = 0 },
-        { color = "#1f9ffe", F = 0, T = 0 },
-        { color = "#B400D0", F = 0, T = 0 },
-        { color = "#C9D000", F = 0, T = 0 },
-    }
-    end
     -- Iterate over the colorHighlights table and add each highlight to the list
     for _, highlight in ipairs(colorHighlights) do
         local text = string.format("Color: %s, From: %d, To: %d", highlight.color, highlight.F, highlight.T)
-        
+
         -- Create a new label widget for each highlight option and add it to the lootHighlightList
         local highlightLabel = g_ui.createWidget('lootLabel')
         highlightLabel:setText(text)
         highlightLabel:setMarginLeft(5)
         lootHighlightList:addChild(highlightLabel)
     end
+    saveHighlightingSettings()
+    loadHighlightingSettings()
 end
 
 function defaultHighlights()
     colorHighlights = {
-        { color = "#979797", F = 0, T = 0 },
-        { color = "#00D01C", F = 0, T = 0 },
-        { color = "#1f9ffe", F = 0, T = 0 }, 
-        { color = "#B400D0", F = 0, T = 0 },
-        { color = "#C9D000", F = 0, T = 0 }, 
+        { color = "#979797", F = 0, T = 399 },
+        { color = "#00D01C", F = 400, T = 999 },
+        { color = "#1f9ffe", F = 1000, T = 2499 },
+        { color = "#B400D0", F = 2500, T = 4999 },
+        { color = "#C9D000", F = 5000, T = 5000000 },
     }
     setupHighlightList()
 end
@@ -171,27 +136,26 @@ end
 function convertColorLabelToHex(color)
     if color == '' then
         return nil
-    elseif color == Green then
+    elseif color == "Green" then
         return "#00FF00"
-    elseif color == Red then
+    elseif color == "Red" then
         return "#FF0000"
-    elseif color == Gray then
+    elseif color == "Gray" then
         return "#808080"
-    elseif color == Blue then
+    elseif color == "Blue" then
         return "#0000FF"
-    elseif color == Black then
+    elseif color == "Black" then
         return "#000000"
-    elseif color == White then
+    elseif color == "White" then
         return "#FFFFFF"
-    elseif color == Yellow then
+    elseif color == "Yellow" then
         return "#FFFF00"
-    elseif color == Orange then
+    elseif color == "Orange" then
         return "#FFA500"
-    elseif color == Brown then
+    elseif color == "Brown" then
         return "#964B00"
     end
 end
-
 
 function addHighlightButton()
     local popupWindow = g_ui.displayUI('popupwindow')
@@ -217,8 +181,8 @@ function addHighlightButton()
         local T = tonumber(tTextEdit:getText())
         local colorHex = colorHexTextEdit:getText()
         local colorComboBox = colorLabelComboBox:getCurrentOption().text
-        print(colorComboBox)
-        
+
+
         if not F or not T or F >= T then
             modules.game_textmessage.displayInfoBox(tr(''), tr('Invalid From and To values or From is not less than To.'))
             return
@@ -244,7 +208,7 @@ function addHighlightButton()
             end
             color = colorHex
         else
-            color = convertColorLabelToHex(colorLabel)
+            color = convertColorLabelToHex(colorComboBox)
         end
 
         table.insert(colorHighlights, {color = color, F = F, T = T})
@@ -317,7 +281,7 @@ function init()
     -- custom loot
     lootPanel = g_ui.loadUI('loot')
     optionsTabBar:addTab(tr('Loot'), lootPanel, '/images/optionstab/loot')
-    
+
     addEvent(function()
         setup()
     end)
@@ -354,7 +318,7 @@ function setupComboBox()
         setOption('quickLootHotkey', comboBox:getCurrentOption().data)
     end
 
-    
+
     dynamicFloorViewModeHotkeyCombobox = controlPanel:recursiveGetChildById('dynamicFloorViewModeHotkey')
 
     dynamicFloorViewModeHotkeyCombobox:addOption('CONTROL + F', 'Ctrl+F')
@@ -585,12 +549,12 @@ function setOption(key, value, force)
         end
 
         g_keyboard.bindKeyPress(value, function()
-            toggleFloorViewMode() 
+            toggleFloorViewMode()
         end, gameRootPanel)
-    
+
         dynamicFloorViewModeHotkey = value
     end
-    
+
 
     -- change value for keybind updates
     for _, panel in pairs(optionsTabBar:getTabsPanel()) do

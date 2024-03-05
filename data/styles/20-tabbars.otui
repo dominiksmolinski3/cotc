@@ -170,4 +170,3 @@ TabBarHorizontalButton < UIButton
     color: #80c7f8
   $on !checked:
     color: #F55E5E
-

@@ -14,22 +14,12 @@ function UIMiniWindow:open(dontSave)
     self:setSettings({ closed = false })
   end
 
-  self:raise()
-
-  -- print("start---")
-  -- print("opening: " .. self:getId())
   if self:getParent() then
-    -- print("Saving on : " .. self:getParent():getClassName())
     if self:getParent():getClassName() == "UIMiniWindowContainer" then
-      -- print("saved children for " .. self:getId)
       self:getParent():saveChildren()
-    else
-      -- print(self:getId() .. " has parent that is " .. self:getParent():getClassName())
     end
-  else
-    -- print(self:getId() .. " has no parent!")
   end
-  -- print("end ---")
+
 
   signalcall(self.onOpen, self)
 end

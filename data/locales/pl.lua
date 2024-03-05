@@ -13,7 +13,7 @@ locale = {
     ["%s has logged in."] = false,
     ["%s has logged out."] = false,
     ["%s of experience left"] = false,
-    ["%s: (use object on target)"] = "%s: (użyj obiektu na celu)",
+    ["%s: (use object on target)"] = "%s: (uzyj obiektu na celu)",
     ["%s: (use object on yourself)"] = "%s: (uzyj obiektu na sobie)",
     ["%s: (use object with crosshair)"] = "%s: (uzyj obiektu z celownikiem)",
     ["%s: (use object)"] = "%s: (uzyj obiekt)",
@@ -652,7 +652,7 @@ locale = {
       ["Choose skill to show in skill circle."] = "Wybierz umiejetnosc do wyswietlenia na kole umiejetnosci.",
       ["Set distance from center."] = "Ustaw odleglosc od srodka.",
       ["Set circle opacity."] = "Ustaw przezroczystosc kola.",
-      ["Circle"] = "Kolo",
+      ["HP/MP Circle"] = "Kolo HP/MP",
       ["Opacity: %s"] = "Przezroczystosc: %s",
       ["Shadow floor Intensity: %s%%"] = "Intensywnosc cienia podlogi: %s%%",
 

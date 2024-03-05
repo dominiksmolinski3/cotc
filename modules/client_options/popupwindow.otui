@@ -25,14 +25,14 @@ MainWindow
     !text: tr('From')..':'
     phantom: false
     anchors.left: parent.left
-    anchors.top: parent.top  
+    anchors.top: parent.top
 
   Label
     id: TLabel
     !text: tr('To')..':'
     phantom: false
     anchors.left: parent.left
-    anchors.top: FLabel.bottom 
+    anchors.top: FLabel.bottom
     margin-top: 10
 
   Label
@@ -40,9 +40,9 @@ MainWindow
     !text: tr('Color(#hex)')..':'
     phantom: false
     anchors.left: parent.left
-    anchors.top: TLabel.bottom 
+    anchors.top: TLabel.bottom
     margin-top: 10
-    
+
 
   Label
     id: colorLabel

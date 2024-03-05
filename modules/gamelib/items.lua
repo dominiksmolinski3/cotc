@@ -3831,29 +3831,44 @@ function getHighLightItems()
   return HighLightItems
 end
 
+function serializeColorHighlights(highlights)
+    local parts = {}
+    for _, highlight in ipairs(highlights) do
+        table.insert(parts, highlight.color .. "," .. highlight.F .. "," .. highlight.T)
+    end
+    return table.concat(parts, ";")
+end
+
+
 function deserializeColorHighlights(serializedString)
-  local result = {}
-  for part in string.gmatch(serializedString, "([^;]+)") do
-      local color, F, T = part:match("([^,]+),([^,]+),([^,]+)")
-      table.insert(result, {color = color, F = tonumber(F), T = tonumber(T)})
-  end
-  return result
+    local result = {}
+    for part in string.gmatch(serializedString, "([^;]+)") do
+        local color, F, T = part:match("([^,]+),([^,]+),([^,]+)")
+        table.insert(result, {color = color, F = tonumber(F), T = tonumber(T)})
+    end
+    return result
+end
+
+
+function loadHighlightingSettings()
+    colorHighlights = deserializeColorHighlights(g_settings.get('colorHighlights', colorHighlights))
 end
 
 function determineColor(price)
   if not price then
     return "white"
   end
+
   local colorHighlights = deserializeColorHighlights(g_settings.get('colorHighlights', colorHighlights))
-  print(type(colorHighlights))
-  print(colorHighlights)
-  dd(colorHighlights)
-  for _, highlight in ipairs(colorHighlights) do
-    if price >= highlight.F and price <= highlight.T then
-        return highlight.color
+
+  for _, colorHighlight in ipairs(colorHighlights) do
+    if price > colorHighlight.F and price <= colorHighlight.T then
+      print("item price: " .. price .. ", color: " .. colorHighlight.color)
+      return colorHighlight.color
     end
-  end 
-  
+  end
+
+  return "white"
 end
 
 function determineCategory(price)
@@ -3862,14 +3877,13 @@ function determineCategory(price)
   end
 
   local colorHighlights = deserializeColorHighlights(g_settings.get('colorHighlights', colorHighlights))
-  print(type(colorHighlights))
-  print(colorHighlights)
-  dd(colorHighlights)
-  for _, highlight in ipairs(colorHighlights) do
-    if price >= highlight.F and price <= highlight.T then
-        return _
+
+  for _, colorHighlight in ipairs(colorHighlights) do
+    if price > colorHighlight.F and price <= colorHighlight.T then
+      print("item price: " .. price .. ", category: " .. _)
+      return _
     end
-  end 
+  end
 
-
+  return 0
 end

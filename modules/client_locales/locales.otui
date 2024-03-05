@@ -1,5 +1,5 @@
 LocalesMainLabel < Label
-  font: verdana-11px-antialised
+  font: sans-bold-16px
 
 LocalesButton < UIWidget
   size: 96 96

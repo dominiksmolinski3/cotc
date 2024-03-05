@@ -87,11 +87,11 @@ end
 
 for i, questEntry in pairs(quests) do
     local id, name, completed = unpack(questEntry)
-    
+
     if showDone == nil or (showDone and completed) or (not showDone and not completed) then
         local questLabel = g_ui.createWidget('QuestLabel', questList)
         questLabel:setOn(completed)
-        questLabel:setText(name)
+        questLabel:setText(name .. " ąść ")
         questLabel.onDoubleClick = function()
             questLogWindow:hide()
             g_game.requestQuestLine(id)

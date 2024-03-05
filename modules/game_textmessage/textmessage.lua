@@ -132,7 +132,6 @@ local function getItemColor(name)
   if search then
     search = search:gsub("%+", ""):trim()
   end
-  print("text search: " .. search)
 
   local found = getHighLightItems()[search]
 
@@ -148,7 +147,7 @@ local function getColoredLoot(inputString, delimiter)
     table.insert(result, { text = inputString:sub(0, beginPosition + 1), color = "white"})
 
     if lastPosition then
-      loot = inputString:sub(beginPosition + 1, lastPosition)
+      loot = inputString:sub(beginPosition + 1, lastPosition - 1)
     else
       loot = inputString:sub(beginPosition + 1)
     end
@@ -159,6 +158,10 @@ local function getColoredLoot(inputString, delimiter)
       local itemName = match:trim()
 
       table.insert(result, { text = itemName, color = getItemColor(itemName)})
+    end
+
+    if lastPosition then
+      table.insert(result, { text = " " .. inputString:sub(lastPosition), color = "white"})
     end
 
     return result
@@ -181,11 +184,24 @@ function displayMessage(mode, text)
       local label = messagesPanel:recursiveGetChildById(msgtype.screenTarget)
       local coloredText = ""
       local coloredParts = getColoredLoot(text, ",")
+      local isBonus = false
+
+
+      if bonus then
+        countColoredParts = countColoredParts - 1
+      end
 
       for i, item in pairs(coloredParts) do
         coloredText = coloredText .. "{" .. item.text .. "," .. item.color .."}"
+        isBonus = false
 
-        if i < #coloredParts and i > 1 then
+        if i + 1 == #coloredParts then
+          if coloredParts[i+1].text:find("%(") ~= nil then
+            isBonus = true
+          end
+        end
+
+        if i < #coloredParts and i > 1 and not isBonus then
           coloredText = coloredText .. "{, ,white}"
         end
       end

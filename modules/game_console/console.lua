@@ -401,8 +401,7 @@ function load()
 end
 
 function isEnabledWASD()
-    local settings = g_settings.getNode('game_console')
-    return settings.wasdMode
+  return consoleToggleChat:isChecked()
 end
 
 function onTabChange(tabBar, tab)
@@ -957,13 +956,17 @@ function addTabText(text, speaktype, tab, creatureName)
       local items = split(text, ",")
       local highLightWords = extractItems(text, items)
 
-      local texts = {
-        [1] = "",
-        [2] = "",
-        [3] = "",
-        [4] = "",
-        [5] = "",
-      }
+      local categories = {}
+
+      local colorHighlights = deserializeColorHighlights(g_settings.get('colorHighlights', colorHighlights))
+
+      for _, colorHighlight in ipairs(colorHighlights) do
+        categories[_] = {
+          color = colorHighlight.color,
+          phantomLabel = g_ui.createWidget('ConsolePhantomLabel', label),
+          texts = ""
+        }
+      end
 
       for letter = 1, #text do
         local tmpChar = text:sub(letter, letter)
@@ -973,16 +976,16 @@ function addTabText(text, speaktype, tab, creatureName)
 
 
         if type then
-          for i = 1, #texts do
+          for i = 1, #categories do
             if i == type then
-              texts[i] = texts[i] .. tmpChar
+              categories[i].texts = categories[i].texts .. tmpChar
             else
-              texts[i] = texts[i] .. string.rep(fillChar, letterWidth[tmpByte])
+              categories[i].texts = categories[i].texts .. string.rep(fillChar, letterWidth[tmpByte])
             end
           end
         else
-          for i = 1, #texts do
-            texts[i] = texts[i] .. string.rep(fillChar, letterWidth[tmpByte])
+          for i = 1, #categories do
+            categories[i].texts = categories[i].texts .. string.rep(fillChar, letterWidth[tmpByte])
           end
 
         end
@@ -991,46 +994,14 @@ function addTabText(text, speaktype, tab, creatureName)
 
       label:setText(text)
 
-      if #texts[1] > 0 then
-        local firstHighLight = g_ui.createWidget('ConsolePhantomLabel', label)
-        firstHighLight:setColor('#979797')
-        firstHighLight:fill('parent')
-        firstHighLight:setId('consoleLabelHighlight' .. consoleBuffer:getChildCount())
-        firstHighLight:setText(texts[1])
+      for _, category in pairs(categories) do
+        if #category.texts > 0 then
+          category.phantomLabel:setColor(category.color)
+          category.phantomLabel:fill('parent')
+          category.phantomLabel:setId('consoleLabelHighlight' .. consoleBuffer:getChildCount())
+          category.phantomLabel:setText(category.texts)
+        end
       end
-
-      if #texts[2] > 0 then
-        local secondHighLight = g_ui.createWidget('ConsolePhantomLabel', label)
-        secondHighLight:setColor('#00D01C')
-        secondHighLight:fill('parent')
-        secondHighLight:setId('consoleLabelHighlight' .. consoleBuffer:getChildCount())
-        secondHighLight:setText(texts[2])
-      end
-
-      if #texts[3] > 0 then
-        local thirdHighLight = g_ui.createWidget('ConsolePhantomLabel', label)
-        thirdHighLight:setColor('#1f9ffe')
-        thirdHighLight:fill('parent')
-        thirdHighLight:setId('consoleLabelHighlight' .. consoleBuffer:getChildCount())
-        thirdHighLight:setText(texts[3])
-      end
-
-      if #texts[4] > 0 then
-        local fourthHighLight = g_ui.createWidget('ConsolePhantomLabel', label)
-        fourthHighLight:setColor('#B400D0')
-        fourthHighLight:fill('parent')
-        fourthHighLight:setId('consoleLabelHighlight' .. consoleBuffer:getChildCount())
-        fourthHighLight:setText(texts[4])
-      end
-
-      if #texts[5] > 0 then
-        local fifthHighLight = g_ui.createWidget('ConsolePhantomLabel', label)
-        fifthHighLight:setColor('#C9D000')
-        fifthHighLight:fill('parent')
-        fifthHighLight:setId('consoleLabelHighlight' .. consoleBuffer:getChildCount())
-        fifthHighLight:setText(texts[5])
-      end
-
     end
 
     if speaktype.npcChat and

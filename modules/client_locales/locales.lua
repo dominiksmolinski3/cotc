@@ -87,24 +87,11 @@ function init()
         end
     end
 
-    reinstallFonts()
-
     ProtocolGame.registerExtendedOpcode(ExtendedIds.Locale, onExtendedLocales)
     connect(g_game, {
         onGameStart = onGameStart
     })
 end
-
-function reinstallFonts()
-    -- Assuming all required fonts are directly in the /fonts/ directory
-    local fontFiles = g_resources.listDirectoryFiles('/fonts/')
-    for _, file in pairs(fontFiles) do
-      if g_resources.isFileType(file, 'otfont') then
-        g_fonts.importFont('/fonts/' .. file)
-      end
-    end
-end
-  
 
 function terminate()
     installedLocales = nil

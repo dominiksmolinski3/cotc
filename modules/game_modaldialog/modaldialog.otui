@@ -1,4 +1,5 @@
 ChoiceListLabel < Label
+  font: verdana-11px-antialised
   background-color: alpha
   text-offset: 2 0
   focusable: true
