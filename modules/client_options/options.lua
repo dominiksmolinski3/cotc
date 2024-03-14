@@ -223,7 +223,7 @@ function addHighlightButton()
     end
 
 
-end
+end 
 
 
 function toggleFloorViewMode()
@@ -257,7 +257,7 @@ function init()
     g_keyboard.bindKeyDown('Ctrl+N', toggleDisplays)
 
     generalPanel = g_ui.loadUI('general')
-    optionsTabBar:addTab(tr('General'), generalPanel, '/images/optionstab/game')
+    optionsTabBar:addTab(tr(''), generalPanel, '/images/optionstab/game')
 
     controlPanel = g_ui.loadUI('control')
     optionsTabBar:addTab(tr('Control'), controlPanel, '/images/optionstab/controls')
