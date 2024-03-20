@@ -223,7 +223,7 @@ function addHighlightButton()
     end
 
 
-end 
+end
 
 
 function toggleFloorViewMode()
@@ -257,19 +257,19 @@ function init()
     g_keyboard.bindKeyDown('Ctrl+N', toggleDisplays)
 
     generalPanel = g_ui.loadUI('general')
-    optionsTabBar:addTab(tr(''), generalPanel, '/images/optionstab/game')
+    optionsTabBar:addTab(tr('A'), generalPanel, '/images/optionstab/game')
 
     controlPanel = g_ui.loadUI('control')
-    optionsTabBar:addTab(tr('Control'), controlPanel, '/images/optionstab/controls')
+    optionsTabBar:addTab(tr('A'), controlPanel, '/images/optionstab/controls')
 
     consolePanel = g_ui.loadUI('console')
-    optionsTabBar:addTab(tr('Console'), consolePanel, '/images/optionstab/console')
+    optionsTabBar:addTab(tr('A'), consolePanel, '/images/optionstab/console')
 
     graphicsPanel = g_ui.loadUI('graphics')
-    optionsTabBar:addTab(tr('Graphics'), graphicsPanel, '/images/optionstab/graphics')
+    optionsTabBar:addTab(tr('A'), graphicsPanel, '/images/optionstab/graphics')
 
     soundPanel = g_ui.loadUI('audio')
-    optionsTabBar:addTab(tr('Audio'), soundPanel, '/images/optionstab/audio')
+    optionsTabBar:addTab(tr('A'), soundPanel, '/images/optionstab/audio')
 
     optionsButton = modules.client_topmenu.addLeftButton('optionsButton', tr('Options'), '/images/topbuttons/options',
                                                          toggle)
@@ -280,7 +280,7 @@ function init()
 
     -- custom loot
     lootPanel = g_ui.loadUI('loot')
-    optionsTabBar:addTab(tr('Loot'), lootPanel, '/images/optionstab/loot')
+    optionsTabBar:addTab(tr('A'), lootPanel, '/images/optionstab/loot')
 
     addEvent(function()
         setup()

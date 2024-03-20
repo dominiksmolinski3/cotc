@@ -43,8 +43,12 @@ function UITabBar:addTab(text, panel, icon)
     tab.tabPanel = panel
     tab.tabBar = self
     tab:setId('tab')
-    tab:setText(text)
-    tab:setWidth(tab:getTextSize().width + tab:getPaddingLeft() + tab:getPaddingRight())
+    if (text == "A") then
+        tab:setText("")
+    else
+        tab:setText(text) 
+    end
+    tab:setWidth(tab:getTextSize().width + tab:getPaddingLeft() + tab:getPaddingRight() + 35)
     tab.onClick = onTabClick
     tab.onMouseRelease = onTabMouseRelease
     tab.onDestroy = function()
