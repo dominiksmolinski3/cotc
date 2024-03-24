@@ -1,7 +1,7 @@
---[[
-    registerThingConfig(thingId, thingType)
-    set(attachedEffectId, config)
-]] --
+
+registerThingConfig(thingId, thingType)
+set(attachedEffectId, config)
+
 local c = AttachedEffectManager.registerThingConfig(ThingCategoryCreature, 618)
 
 c:set(1, {

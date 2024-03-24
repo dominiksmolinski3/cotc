@@ -22,6 +22,10 @@ local defaultOptions = {
     enableAudio = true,
     enableMusicSound = true,
     musicSoundVolume = 75,
+    enableSoundEffects = true,
+    soundEffectsVolume = 100,
+    enableAmbientSound = true,
+    ambientSoundVolume = 100,
     enableLights = true,
     limitVisibleDimension = false,
     floatingEffect = false,
@@ -223,7 +227,7 @@ function addHighlightButton()
     end
 
 
-end
+end 
 
 
 function toggleFloorViewMode()
@@ -257,19 +261,19 @@ function init()
     g_keyboard.bindKeyDown('Ctrl+N', toggleDisplays)
 
     generalPanel = g_ui.loadUI('general')
-    optionsTabBar:addTab(tr('A'), generalPanel, '/images/optionstab/game')
+    optionsTabBar:addTab(tr('null'), generalPanel, '/images/optionstab/game')
 
     controlPanel = g_ui.loadUI('control')
-    optionsTabBar:addTab(tr('A'), controlPanel, '/images/optionstab/controls')
+    optionsTabBar:addTab(tr('null'), controlPanel, '/images/optionstab/controls')
 
     consolePanel = g_ui.loadUI('console')
-    optionsTabBar:addTab(tr('A'), consolePanel, '/images/optionstab/console')
+    optionsTabBar:addTab(tr('null'), consolePanel, '/images/optionstab/console')
 
     graphicsPanel = g_ui.loadUI('graphics')
-    optionsTabBar:addTab(tr('A'), graphicsPanel, '/images/optionstab/graphics')
+    optionsTabBar:addTab(tr('null'), graphicsPanel, '/images/optionstab/graphics')
 
     soundPanel = g_ui.loadUI('audio')
-    optionsTabBar:addTab(tr('A'), soundPanel, '/images/optionstab/audio')
+    optionsTabBar:addTab(tr('null'), soundPanel, '/images/optionstab/audio')
 
     optionsButton = modules.client_topmenu.addLeftButton('optionsButton', tr('Options'), '/images/topbuttons/options',
                                                          toggle)
@@ -280,7 +284,7 @@ function init()
 
     -- custom loot
     lootPanel = g_ui.loadUI('loot')
-    optionsTabBar:addTab(tr('A'), lootPanel, '/images/optionstab/loot')
+    optionsTabBar:addTab(tr('null'), lootPanel, '/images/optionstab/loot')
 
     addEvent(function()
         setup()
@@ -456,7 +460,25 @@ function setOption(key, value, force)
         if g_sounds then
             g_sounds.getChannel(SoundChannels.Music):setGain(value / 100)
         end
-        soundPanel:getChildById('musicSoundVolumeLabel'):setText(tr('Music volume: %d', value))
+        soundPanel:getChildById('musicSoundVolumeLabel'):setText(tr('Music Volume: %d', value))
+    elseif key == 'enableSoundEffects' then
+        if g_sounds then
+            g_sounds.getChannel(SoundChannels.Effect):setEnabled(value)
+        end
+    elseif key == 'soundEffectsVolume' then
+        if g_sounds then
+            g_sounds.getChannel(SoundChannels.Effect):setGain(value / 100)
+        end
+        soundPanel:getChildById('soundEffectsVolumeLabel'):setText(tr('Sound Effects Volume: %d', value))
+    elseif key == 'enableAmbientSound' then
+        if g_sounds then
+            g_sounds.getChannel(SoundChannels.Ambient):setEnabled(value)
+        end
+    elseif key == 'ambientSoundVolume' then
+        if g_sounds then
+            g_sounds.getChannel(SoundChannels.Ambient):setGain(value / 100)
+        end
+        soundPanel:getChildById('ambientSoundVolumeLabel'):setText(tr('Ambient Sound Volume: %d', value))
     elseif key == 'showLeftPanel' then
         modules.game_interface.getLeftPanel():setOn(value)
     elseif key == 'showRightExtraPanel' then

@@ -4,12 +4,23 @@ Panel
     !text: tr('Enable audio')
 
   OptionCheckBox
+    id: enableSoundEffects
+    anchors.top: prev.bottom
+    !text: tr('Enable sound effects')
+
+  OptionCheckBox
+    id: enableAmbientSound
+    anchors.top: prev.bottom
+    !text: tr('Enable ambient effects')
+
+  OptionCheckBox
     id: enableMusicSound
+    anchors.top: prev.bottom
     !text: tr('Enable music sound')
 
   Label
     id: musicSoundVolumeLabel
-    !text: tr('Music volume: %d', 100)
+    !text: tr('Music Volume: %d', 100)
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.top: prev.bottom
@@ -17,9 +28,50 @@ Panel
     @onSetup: |
       local value = modules.client_options.getOption('musicSoundVolume')
       self:setText(tr('Music volume: %d', value))
-
+    
   OptionScrollbar
     id: musicSoundVolume
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin-top: 3
+    minimum: 0
+    maximum: 100
+    margin-bottom: 25
+
+  Label
+    id: soundEffectsVolumeLabel
+    !text: tr('Sound Effects Volume: %d', 100)
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin-top: 6
+    @onSetup: |
+      local value2 = modules.client_options.getOption('soundEffectsVolume')
+      self:setText(tr('Sound Effects Volume: %d', value2))
+
+  OptionScrollbar
+    id: soundEffectsVolume
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin-top: 3
+    minimum: 0
+    maximum: 100
+
+  Label
+    id: ambientSoundVolumeLabel
+    !text: tr('Ambient Sound Volume: %d', 100)
+    anchors.left: parent.left
+    anchors.right: parent.right
+    anchors.top: prev.bottom
+    margin-top: 6
+    @onSetup: |
+      local value2 = modules.client_options.getOption('ambientSoundVolume')
+      self:setText(tr('Ambient Sound Volume: %d', value2))
+
+  OptionScrollbar
+    id: ambientSoundVolume
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.top: prev.bottom

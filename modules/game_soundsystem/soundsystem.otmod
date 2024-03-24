@@ -1,0 +1,9 @@
+Module
+  name: game_soundsystem
+  description: Manage sound for Gothania
+  author: cynio, mevvez
+  website: https://gothania.pl/
+  sandboxed: true
+  scripts: [ soundsystem ]
+  @onLoad: init()
+  @onUnload: terminate()

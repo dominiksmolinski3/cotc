@@ -43,7 +43,7 @@ function UITabBar:addTab(text, panel, icon)
     tab.tabPanel = panel
     tab.tabBar = self
     tab:setId('tab')
-    if (text == "A") then
+    if (text == "null") then
         tab:setText("")
     else
         tab:setText(text) 

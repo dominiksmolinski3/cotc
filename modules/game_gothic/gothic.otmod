@@ -1,0 +1,11 @@
+Module
+  name: game_gothic
+  description: Manage skills window from Gothic
+  author: cynio, mevvez 
+  website: https://gothania.pl/
+  sandboxed: true
+  scripts: [ gothic ]
+  @onLoad: init()
+  @onUnload: terminate()
+  dependencies:
+    - game_interface

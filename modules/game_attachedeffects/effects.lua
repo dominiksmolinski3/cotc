@@ -1,15 +1,14 @@
---[[
-    register(id, name, thingId, thingType, config)
-    config = {
-        speed, disableWalkAnimation, shader, drawOnUI, opacity
-        duration, loop, transform, hideOwner, size{width, height}
-        offset{x, y, onTop}, dirOffset[dir]{x, y, onTop},
-        light { color, intensity}, drawOrder(only for tiles),
-        bounce{minHeight, height, speed}
-        onAttach, onDetach
-    }
-]]
---
+
+register(id, name, thingId, thingType, config)
+config = {
+    speed, disableWalkAnimation, shader, drawOnUI, opacity
+    duration, loop, transform, hideOwner, size{width, height}
+    offset{x, y, onTop}, dirOffset[dir]{x, y, onTop},
+    light { color, intensity}, drawOrder(only for tiles),
+    bounce{minHeight, height, speed}
+    onAttach, onDetach
+}
+
 AttachedEffectManager.register(1, 'Spoke Lighting', 12, ThingCategoryEffect, {
     speed = 0.5,
     onAttach = function(effect, owner)
