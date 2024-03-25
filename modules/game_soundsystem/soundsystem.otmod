@@ -3,7 +3,7 @@ Module
   description: Manage sound for Gothania
   author: cynio, mevvez
   website: https://gothania.pl/
-  sandboxed: true
+  sandboxed: false
   scripts: [ soundsystem ]
   @onLoad: init()
   @onUnload: terminate()

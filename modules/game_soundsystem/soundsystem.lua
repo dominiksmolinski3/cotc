@@ -8,7 +8,13 @@ function setMusic(musicfilename, channelid)
     musicfilename = filename
     channelid = Ambient
     if g_sounds then
-        musicChannel = g_sounds.getChannel(SoundChannels.channelid)
+        if channelid == Ambient then
+            ambientChannel = g_sounds.getChannel(SoundChannels.Ambient)
+        elseif channelid == Effects then
+            effectsChannel = g_sounds.getChannel(SoundChannels.Effects)
+        elseif channelid == Music then
+            musicChannel = g_sounds.getChannel(SoundChannels.Music)
+        end
     end
 
     if not g_game.isOnline() then
@@ -22,3 +28,4 @@ modules.client_options.getOption('musicSoundVolume')
 if modules.client_options.getOption('enableMusicSound')
 
 enableAudio
+g_sounds.stopAll()

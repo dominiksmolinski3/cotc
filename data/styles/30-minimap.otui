@@ -64,7 +64,8 @@ Minimap < UIMinimap
   focusable: false
   cross: true
   color: black
-
+  &save: true
+  
   MinimapFloorUpButton
     id: floorUpButton
     @onClick: self:getParent():floorUp(1)
