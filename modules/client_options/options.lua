@@ -15,6 +15,7 @@ local defaultOptions = {
     showLevelsInConsole = true,
     showPrivateMessagesInConsole = true,
     showPrivateMessagesOnScreen = true,
+    hideGothaniaLabelInGame = false,
     showLeftPanel = true,
     showRightExtraPanel = false,
     openMaximized = false,
@@ -483,6 +484,12 @@ function setOption(key, value, force)
         modules.game_interface.getLeftPanel():setOn(value)
     elseif key == 'showRightExtraPanel' then
         modules.game_interface.getRightExtraPanel():setOn(value)
+    elseif key == 'hideGothaniaLabelInGame' then
+        if modules.client_options.getOption('hideGothaniaLabelInGame') then
+            modules.client_topmenu.showGothaniaLabel()
+        else
+            modules.client_topmenu.hideGothaniaLabel()
+        end
     elseif key == 'backgroundFrameRate' then
         local text, v = value, value
         if value <= 0 or value >= 201 then

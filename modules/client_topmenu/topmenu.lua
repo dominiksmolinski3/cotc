@@ -59,9 +59,9 @@ function init()
     rightGameButtonsPanel = topMenu:getChildById('rightGameButtonsPanel')
     pingLabel = topMenu:getChildById('pingLabel')
     fpsLabel = topMenu:getChildById('fpsLabel')
+    gothaniaLabel = topMenu:getChildById('clickLabel')
 
     g_keyboard.bindKeyDown('Ctrl+Shift+T', toggle)
-
     if g_game.isOnline() then
         online()
     end
@@ -76,13 +76,12 @@ function terminate()
     disconnect(g_app, {
         onFps = updateFps
     })
-
     topMenu:destroy()
 end
 
 function online()
     showGameButtons()
-
+    gothaniaLabel:show()
     addEvent(function()
         if modules.client_options.getOption('showPing') and
             (g_game.getFeature(GameClientPing) or g_game.getFeature(GameExtendedClientPing)) then
@@ -96,6 +95,7 @@ end
 function offline()
     hideGameButtons()
     pingLabel:hide()
+    gothaniaLabel:hide()
     fpsMin = -1
 end
 
@@ -210,6 +210,14 @@ end
 function hideGameButtons()
     leftGameButtonsPanel:hide()
     rightGameButtonsPanel:hide()
+end
+
+function hideGothaniaLabel()
+    gothaniaLabel:hide()
+end
+
+function showGothaniaLabel()
+    gothaniaLabel:show()
 end
 
 function getButton(id)

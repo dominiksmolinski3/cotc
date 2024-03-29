@@ -14,6 +14,18 @@ function openUrlDiscord()
     end
 end
 
+function gothaniaLabelClick()
+    if g_app.getOs() == 'windows' then
+        os.execute(string.format('start %s', "https://gothania.pl/"))
+    elseif g_app.getOs() == 'linux' then
+        os.execute(string.format('xdg-open "%s"', "https://gothania.pl/"))
+    elseif g_app.getOs() == 'mac' then
+        os.execute(string.format('open "%s"', "https://gothania.pl/"))
+    else
+        print("Unsupported OS for direct URL opening.")
+    end
+end
+
 -- public functions
 function init()
     background = g_ui.displayUI('background')

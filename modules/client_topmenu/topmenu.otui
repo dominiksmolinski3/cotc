@@ -44,3 +44,23 @@ TopMenuPanel
     anchors.bottom: parent.bottom
     anchors.right: prev.left
     visible: false
+
+  UIWidget
+    id: centerLabel
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+    anchors.left: leftGameButtonsPanel.right
+    anchors.right: rightGameButtonsPanel.left
+
+  UIWidget
+    id: clickLabel
+    anchors.horizontalCenter: centerLabel.horizontalCenter
+    text-align: center
+    text-auto-resize: true
+    color: #ff0000
+    text: GOTHANIA
+    font: verdana-11px-rounded
+    font-scale: 2.1
+    shader: Map - Party
+    !tooltip: tr('Odwiedz strone Gothanii!')
+    @onClick: modules.client_background.gothaniaLabelClick()

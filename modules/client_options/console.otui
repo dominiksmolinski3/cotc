@@ -26,3 +26,8 @@ Panel
   OptionCheckBox
     id: showPrivateMessagesOnScreen
     !text: tr('Show private messages on screen')
+
+  OptionCheckBox
+    id: hideGothaniaLabelInGame
+    !text: tr('Hide Gothania label in-game')
+    color: #ff0000
