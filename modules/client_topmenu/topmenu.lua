@@ -81,7 +81,9 @@ end
 
 function online()
     showGameButtons()
-    gothaniaLabel:show()
+    if not modules.client_options.getOption('hideGothaniaLabelInGame') then
+        gothaniaLabel:show()
+    end
     addEvent(function()
         if modules.client_options.getOption('showPing') and
             (g_game.getFeature(GameClientPing) or g_game.getFeature(GameExtendedClientPing)) then
