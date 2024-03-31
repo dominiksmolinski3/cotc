@@ -131,7 +131,7 @@ function controller:onGameEnd()
         g_map.saveOtcm('/minimap_' .. g_game.getClientVersion() .. '.otcm')
     end
 
-    self.ui.contentsPanel.minimap:save()
+
 
     g_minimap.clean()
 end

@@ -626,8 +626,13 @@ end
 function setupHotkeys()
     unbindHotkeys()
     for v, slot in pairs(actionBarPanel:getChildren()) do
+
         slot.onMouseRelease = function()
             if g_clock.millis() - lastHotkeyTime < modules.client_options.getOption('hotkeyDelay') then
+                return
+            end
+
+            if not modules.game_hotkeys.canPerformKeyCombo(slot.hotkey) then
                 return
             end
 
@@ -670,6 +675,7 @@ function setupHotkeys()
                 if not modules.game_hotkeys.canPerformKeyCombo(slot.hotkey) then
                     return
                 end
+
                 if g_clock.millis() - lastHotkeyTime < modules.client_options.getOption('hotkeyDelay') then
                     return
                 end

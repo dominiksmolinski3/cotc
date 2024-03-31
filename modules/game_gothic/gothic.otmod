@@ -4,7 +4,7 @@ Module
   author: cynio, mevvez 
   website: https://gothania.pl/
   sandboxed: true
-  scripts: [ gothic ]
+  scripts: [ gothic.lua ]
   @onLoad: init()
   @onUnload: terminate()
   dependencies:

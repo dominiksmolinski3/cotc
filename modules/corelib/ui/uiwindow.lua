@@ -39,11 +39,12 @@ function UIWindow:onDragLeave(droppedWidget, mousePos)
 end
 
 function UIWindow:onDragMove(mousePos, mouseMoved)
-    local pos = {
+    local position = {
         x = mousePos.x - self.movingReference.x,
         y = mousePos.y - self.movingReference.y
     }
-    self:setPosition(pos)
+    self:setPosition(position)
+
     self:bindRectToParent()
 end
 

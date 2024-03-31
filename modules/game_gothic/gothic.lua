@@ -60,10 +60,10 @@ function init()
         onGameEnd = offline
     })
 
-    gothicSkillsButton = modules.client_topmenu.addLeftGameToggleButton('gothicSkillsButton', tr('Gothic Skills') .. ' (Alt+C)',
-    '/images/topbuttons/skills', toggle)
+    --gothicSkillsButton = modules.client_topmenu.addLeftGameToggleButton('gothicSkillsButton', tr('Gothic Skills') .. ' (Alt+C)',
+    --'/images/topbuttons/skills', toggle)
 
-    gothicSkillsWindow = g_ui.loadUI('gothic')
+    --gothicSkillsWindow = g_ui.loadUI('gothic', modules.game_interface.getRootPanel())
     g_keyboard.bindKeyDown('Alt+C', toggle)
 
 end

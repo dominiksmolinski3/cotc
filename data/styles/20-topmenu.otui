@@ -54,3 +54,4 @@ TopMenuFrameCounterLabel < Label
 
 TopMenuPingLabel < Label
   font: verdana-11px-rounded
+

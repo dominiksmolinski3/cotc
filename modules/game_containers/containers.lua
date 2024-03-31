@@ -1,3 +1,5 @@
+x = nil
+
 function init()
     g_ui.importStyle('container')
 
@@ -7,11 +9,6 @@ function init()
         onSizeChange = onContainerChangeSize,
         onUpdateItem = onContainerUpdateItem
     })
-    connect(Game, {
-        onGameEnd = clean()
-    })
-
-    reloadContainers()
 end
 
 function terminate()
@@ -21,17 +18,7 @@ function terminate()
         onSizeChange = onContainerChangeSize,
         onUpdateItem = onContainerUpdateItem
     })
-    disconnect(Game, {
-        onGameEnd = clean()
-    })
 end
-
-function reloadContainers()
-    clean()
-    for _, container in pairs(g_game.getContainers()) do onContainerOpen(container) end
-end
-
-function clean() for containerid, container in pairs(g_game.getContainers()) do destroy(container) end end
 
 function destroy(container)
     if container.window then
@@ -155,7 +142,9 @@ function onContainerOpen(container, previousContainer)
             containerWindow:setContentHeight(filledLines * cellSize.height)
         end
     end
-
+    print(container:getId())
+    print(containerWindow:getId())
+    print(containerWindow:getParent())
     containerWindow:setup()
 end
 

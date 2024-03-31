@@ -6,7 +6,6 @@ MiniWindow
   @onOpen: onMiniWindowOpen()
   @onClose: onMiniWindowClose()
   &save: true
-
   Label
     text: ?
     text-align: center

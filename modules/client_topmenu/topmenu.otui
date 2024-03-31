@@ -57,7 +57,7 @@ TopMenuPanel
     anchors.horizontalCenter: centerLabel.horizontalCenter
     text-align: center
     text-auto-resize: true
-    color: #ff0000
+    color: #C8A862
     text: GOTHANIA
     font: verdana-11px-rounded
     font-scale: 2.1

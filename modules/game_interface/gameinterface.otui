@@ -55,6 +55,7 @@ UIWidget
 
   GameSidePanel
     id: gameLeftPanel
+    image-source: /images/ui/panel_sideleft
     anchors.left: parent.left
     anchors.top: parent.top
     anchors.bottom: parent.bottom

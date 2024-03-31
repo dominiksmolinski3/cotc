@@ -99,9 +99,9 @@ end
 
 local pinging = false
 local function pingBack(ping)
-    if ping < 300 then
+    if ping < 100 then
         color = 'green'
-    elseif ping < 600 then
+    elseif ping < 300 then
         color = 'yellow'
     else
         color = 'red'
