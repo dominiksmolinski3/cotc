@@ -73,6 +73,7 @@ end
 function startRefreshingVipList()
     if refreshEvent then
         removeEvent(refreshEvent)
+        refreshEvent = nil
     end
     refreshEvent = scheduleEvent(refreshVipList, 30000) -- 30 seconds
 end

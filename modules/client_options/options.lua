@@ -99,12 +99,60 @@ end
 
 function setupHighlightList()
     local lootHighlightList = lootPanel:recursiveGetChildById('lootHighlightList')
-
     -- Clear the current list to avoid duplicating entries
     lootHighlightList:destroyChildren()
     -- Iterate over the colorHighlights table and add each highlight to the list
     for _, highlight in ipairs(colorHighlights) do
-        local text = string.format("Color: %s, From: %d, To: %d", highlight.color, highlight.F, highlight.T)
+        local text = "default"
+
+        if g_settings.get('locale') == "pl" then
+            print("pl check")
+            print(highlight.color)
+            print(type(highlight.color))
+            if highlight.color == "#00FF00" then
+                text = tr("Color: %s, From: %d, To: %d", "Zielony", highlight.F, highlight.T)
+            elseif highlight.color == "#FF0000" then
+                text = tr("Color: %s, From: %d, To: %d", "Czerwony", highlight.F, highlight.T)
+            elseif highlight.color == "#808080" then
+                text = tr("Color: %s, From: %d, To: %d", "Szary", highlight.F, highlight.T)
+            elseif highlight.color == "#0000FF" then
+                text = tr("Color: %s, From: %d, To: %d", "Niebieski", highlight.F, highlight.T)
+            elseif highlight.color == "#000000" then
+                text = tr("Color: %s, From: %d, To: %d", "Czarny", highlight.F, highlight.T)
+            elseif highlight.color == "#FFFFFF" then
+                text = tr("Color: %s, From: %d, To: %d", "Bialy", highlight.F, highlight.T)
+            elseif highlight.color == "#FFFF00" then
+                text = tr("Color: %s, From: %d, To: %d", "Zolty", highlight.F, highlight.T)
+            elseif highlight.color == "#FFA500" then
+                text = tr("Color: %s, From: %d, To: %d", "Pomaranczowy", highlight.F, highlight.T)
+            elseif highlight.color == "#964B00" then
+                text = tr("Color: %s, From: %d, To: %d", "Brazowy", highlight.F, highlight.T)
+            end
+        else
+            if highlight.color == "#00FF00" then
+                text = tr("Color: %s, From: %d, To: %d", "Green", highlight.F, highlight.T)
+            elseif highlight.color == "#FF0000" then
+                text = tr("Color: %s, From: %d, To: %d", "Red", highlight.F, highlight.T)
+            elseif highlight.color == "#808080" then
+                text = tr("Color: %s, From: %d, To: %d", "Gray", highlight.F, highlight.T)
+            elseif highlight.color == "#0000FF" then
+                text = tr("Color: %s, From: %d, To: %d", "Blue", highlight.F, highlight.T)
+            elseif highlight.color == "#000000" then
+                text = tr("Color: %s, From: %d, To: %d", "Black", highlight.F, highlight.T)
+            elseif highlight.color == "#FFFFFF" then
+                text = tr("Color: %s, From: %d, To: %d", "White", highlight.F, highlight.T)
+            elseif highlight.color == "#FFFF00" then
+                text = tr("Color: %s, From: %d, To: %d", "Yellow", highlight.F, highlight.T)
+            elseif highlight.color == "#FFA500" then
+                text = tr("Color: %s, From: %d, To: %d", "Orange", highlight.F, highlight.T)
+            elseif highlight.color == "#964B00" then
+                text = tr("Color: %s, From: %d, To: %d", "Brown", highlight.F, highlight.T)
+            end
+        end
+
+        if text == "default" then
+            text = tr("Color: %s, From: %d, To: %d", highlight.color, highlight.F, highlight.T)
+        end
 
         -- Create a new label widget for each highlight option and add it to the lootHighlightList
         local highlightLabel = g_ui.createWidget('lootLabel')
@@ -118,11 +166,11 @@ end
 
 function defaultHighlights()
     colorHighlights = {
-        { color = "#979797", F = 0, T = 399 },
-        { color = "#00D01C", F = 400, T = 999 },
-        { color = "#1f9ffe", F = 1000, T = 2499 },
-        { color = "#B400D0", F = 2500, T = 4999 },
-        { color = "#C9D000", F = 5000, T = 5000000 },
+        { color = "#979797", F = 0, T = 199 },
+        { color = "#00D01C", F = 200, T = 499 },
+        { color = "#1f9ffe", F = 500, T = 999 },
+        { color = "#B400D0", F = 1000, T = 1999 },
+        { color = "#C9D000", F = 2000, T = 50000 },
     }
     setupHighlightList()
 end
@@ -141,23 +189,23 @@ end
 function convertColorLabelToHex(color)
     if color == '' then
         return nil
-    elseif color == "Green" then
+    elseif color == "Green" or color == "Zielony" then
         return "#00FF00"
-    elseif color == "Red" then
+    elseif color == "Red" or color == "Czerwony" then
         return "#FF0000"
-    elseif color == "Gray" then
+    elseif color == "Gray" or color == "Szary" then
         return "#808080"
-    elseif color == "Blue" then
+    elseif color == "Blue" or color == "Niebieski" then
         return "#0000FF"
-    elseif color == "Black" then
+    elseif color == "Black" or color == "Czarny" then
         return "#000000"
-    elseif color == "White" then
+    elseif color == "White" or color == "Bialy" then
         return "#FFFFFF"
-    elseif color == "Yellow" then
+    elseif color == "Yellow" or color == "Zolty" then
         return "#FFFF00"
-    elseif color == "Orange" then
+    elseif color == "Orange" or color == "Pomaranczowy" then
         return "#FFA500"
-    elseif color == "Brown" then
+    elseif color == "Brown" or color == "Brazowy" then
         return "#964B00"
     end
 end
@@ -337,9 +385,9 @@ function setupComboBox()
 
     antialiasingModeCombobox = graphicsPanel:recursiveGetChildById('antialiasingMode')
 
-    antialiasingModeCombobox:addOption('None', 0)
-    antialiasingModeCombobox:addOption('Antialiasing', 1)
-    antialiasingModeCombobox:addOption('Smooth Retro', 2)
+    antialiasingModeCombobox:addOption(tr('None'), 0)
+    antialiasingModeCombobox:addOption(tr('Antialiasing'), 1)
+    antialiasingModeCombobox:addOption(tr('Smooth Retro'), 2)
 
     antialiasingModeCombobox.onOptionChange = function(comboBox, option)
         setOption('antialiasingMode', comboBox:getCurrentOption().data)
@@ -347,11 +395,11 @@ function setupComboBox()
 
     floorViewModeCombobox = graphicsPanel:recursiveGetChildById('floorViewMode')
 
-    floorViewModeCombobox:addOption('Normal', 0)
-    floorViewModeCombobox:addOption('Fade', 1)
-    floorViewModeCombobox:addOption('Locked', 2)
-    floorViewModeCombobox:addOption('Always', 3)
-    floorViewModeCombobox:addOption('Always with transparency', 4)
+    floorViewModeCombobox:addOption(tr('Normal'), 0)
+    floorViewModeCombobox:addOption(tr('Fade'), 1)
+    floorViewModeCombobox:addOption(tr('Locked'), 2)
+    floorViewModeCombobox:addOption(tr('Always'), 3)
+    floorViewModeCombobox:addOption(tr('Always with transparency'), 4)
 
     floorViewModeCombobox.onOptionChange = function(comboBox, option)
         setOption('floorViewMode', comboBox:getCurrentOption().data)

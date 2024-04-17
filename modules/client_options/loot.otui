@@ -41,7 +41,7 @@ Panel
 
   Label
     id: lootLabel
-    !text: tr('Highlight items in different colors (loot channel)')..':'
+    !text: tr('Highlight items in different colors (loot channel):')
     phantom: false
     anchors.left: parent.left
     anchors.top: parent.top
@@ -49,7 +49,7 @@ Panel
   Button
     id: addHighlightButton
     !text: tr('Add highlight')
-    width: 110
+    width: 112
     anchors.left: parent.left
     anchors.top: lootHighlightList.bottom
     margin-top: 10
@@ -59,7 +59,7 @@ Panel
     id: removeHighlightButton
     !text: tr('Remove highlight')
     margin-left: 10
-    width: 110
+    width: 112
     anchors.left: addHighlightButton.right
     anchors.top: lootHighlightList.bottom
     margin-top: 10
@@ -69,7 +69,7 @@ Panel
     id: defaultHighlightButton
     !text: tr('Default highlights')
     margin-left: 10
-    width: 110
+    width: 152
     anchors.left: removeHighlightButton.right
     anchors.top: lootHighlightList.bottom
     margin-top: 10
@@ -79,7 +79,7 @@ Panel
     id: clearHighlightButton
     !text: tr('Clear highlights')
     margin-left: 10
-    width: 110
+    width: 132
     anchors.left: defaultHighlightButton.right
     anchors.top: lootHighlightList.bottom
     margin-top: 10

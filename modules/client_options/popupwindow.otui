@@ -22,14 +22,14 @@ MainWindow
 
   Label
     id: FLabel
-    !text: tr('From')..':'
+    !text: tr('From: ')
     phantom: false
     anchors.left: parent.left
     anchors.top: parent.top
 
   Label
     id: TLabel
-    !text: tr('To')..':'
+    !text: tr('To: ')
     phantom: false
     anchors.left: parent.left
     anchors.top: FLabel.bottom
@@ -37,7 +37,7 @@ MainWindow
 
   Label
     id: colorHexLabel
-    !text: tr('Color(#hex)')..':'
+    !text: tr('Color(#hex): ')
     phantom: false
     anchors.left: parent.left
     anchors.top: TLabel.bottom
@@ -46,7 +46,7 @@ MainWindow
 
   Label
     id: colorLabel
-    !text: tr('Color')..':'
+    !text: tr('Color: ')
     phantom: false
     anchors.left: parent.left
     anchors.top: colorHexLabel.bottom
