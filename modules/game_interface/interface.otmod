@@ -34,5 +34,6 @@ Module
     - game_modaldialog
     - game_unjustifiedpoints
     - game_stash
+    - client_keyboardtracker
   @onLoad: init()
   @onUnload: terminate()

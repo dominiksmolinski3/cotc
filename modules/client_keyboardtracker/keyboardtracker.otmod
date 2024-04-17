@@ -1,0 +1,9 @@
+Module
+  name: client_keyboardtracker
+  description: Catches keyboard and mouse input from players
+  author: cynio, mevvez
+  website: https://gothania.pl/ https://github.com/dominiksmolinski3/cotc 
+  sandboxed: true
+  scripts: [ keyboardtracker ]
+  @onLoad: init()
+  @onUnload: terminate()

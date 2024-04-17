@@ -32,6 +32,14 @@ local function addButton(id, description, icon, callback, panel, toggle, front)
     button:setTooltip(description)
     button:setIcon(resolvepath(icon, 3))
     button.onMouseRelease = function(widget, mousePos, mouseButton)
+        local onButtonClickAudio = '/sounds/mouseclick'
+        local effectsChannel = nil
+        if g_sounds then
+            if modules.client_options.getOption('enableSoundEffects') == true then
+                effectsChannel = g_sounds.getChannel(SoundChannels.Effect)
+                effectsChannel:play(onButtonClickAudio, 1)
+            end
+        end
         if widget:containsPoint(mousePos) and mouseButton ~= MouseMidButton then
             callback()
             return true

@@ -106,9 +106,6 @@ function setupHighlightList()
         local text = "default"
 
         if g_settings.get('locale') == "pl" then
-            print("pl check")
-            print(highlight.color)
-            print(type(highlight.color))
             if highlight.color == "#00FF00" then
                 text = tr("Color: %s, From: %d, To: %d", "Zielony", highlight.F, highlight.T)
             elseif highlight.color == "#FF0000" then

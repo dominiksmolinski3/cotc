@@ -19,7 +19,7 @@ function init()
                                                                 '/images/topbuttons/viplist', toggle)
     vipButton:setOn(true)
     vipWindow = g_ui.loadUI('viplist')
-
+    
     if not g_game.getFeature(GameAdditionalVipInfo) then
         loadVipInfo()
     end

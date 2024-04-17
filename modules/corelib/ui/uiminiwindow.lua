@@ -47,6 +47,15 @@ function UIMiniWindow:minimize(dontSave)
         })
     end
 
+    local onButtonClickAudio = '/sounds/mouseclick'
+    local effectsChannel = nil
+    if g_sounds then
+        if modules.client_options.getOption('enableSoundEffects') == true then
+            effectsChannel = g_sounds.getChannel(SoundChannels.Effect)
+            effectsChannel:play(onButtonClickAudio, 1)
+        end
+    end
+
     signalcall(self.onMinimize, self)
 end
 
