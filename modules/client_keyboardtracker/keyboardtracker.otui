@@ -1,12 +1,25 @@
+keyboardButton < UIButton
+  size: 30 30
+  font: verdana-11px-antialised
+  color: #000000
+  background-color: #ffffff
+  border-width: 1
+  border-color: #000000
+
+  $on:
+    background-color: #ff0000
+    border-color: #666666
+    
 keyboardWindow < UIWindow
   id: keyboardWindow
   font: verdana-11px-antialised
-  size: 1920 1480
+  size: 800 300
   opacity: 1
   color: #dfdfdf
+  !text: tr('Virtual Keyboard')
   text-offset: 0 6
   text-align: top
-  image-source: /images/keyboard
+  image-source: /images/ui/window
   image-border: 6
   image-border-top: 27
   padding-top: 36
@@ -19,3 +32,615 @@ keyboardWindow < UIWindow
 
   $dragging:
     opacity: 0.8
+
+  // F keys
+  keyboardButton
+    id: buttonF1
+    text: "F1"
+    margin-left: 29
+    anchors.top: parent.top
+    anchors.left: buttonEsc.right
+
+  keyboardButton
+    id: buttonF2
+    text: "F2"
+    anchors.top: parent.top
+    anchors.left: buttonF1.right
+
+  keyboardButton
+    id: buttonF3
+    text: "F3"
+    anchors.top: parent.top
+    anchors.left: buttonF2.right
+
+  keyboardButton
+    id: buttonF4
+    text: "F4"
+    anchors.top: parent.top
+    anchors.left: buttonF3.right
+
+  keyboardButton
+    id: buttonF5
+    text: "F5"
+    margin-left: 14
+    anchors.top: parent.top
+    anchors.left: buttonF4.right
+
+  keyboardButton
+    id: buttonF6
+    text: "F6"
+    anchors.top: parent.top
+    anchors.left: buttonF5.right
+
+  keyboardButton
+    id: buttonF7
+    text: "F7"
+    anchors.top: parent.top
+    anchors.left: buttonF6.right
+
+  keyboardButton
+    id: buttonF8
+    text: "F8"
+    anchors.top: parent.top
+    anchors.left: buttonF7.right
+
+  keyboardButton
+    id: buttonF9
+    text: "F9"
+    margin-left: 15
+    anchors.top: parent.top
+    anchors.left: buttonF8.right
+
+  keyboardButton
+    id: buttonF10
+    text: "F10"
+    anchors.top: parent.top
+    anchors.left: buttonF9.right
+
+  keyboardButton
+    id: buttonF11
+    text: "F11"
+    anchors.top: parent.top
+    anchors.left: buttonF10.right
+
+  keyboardButton
+    id: buttonF12
+    text: "F12"
+    anchors.top: parent.top
+    anchors.left: buttonF11.right
+
+  keyboardButton
+    id: button1
+    text: "1"
+    anchors.top: buttonF1.bottom
+    anchors.left: buttonTilde.right
+
+  keyboardButton
+    id: button2
+    text: "2"
+    anchors.top: buttonF2.bottom
+    anchors.left: button1.right
+
+  keyboardButton
+    id: button3
+    text: "3"
+    anchors.top: buttonF3.bottom
+    anchors.left: button2.right
+
+  keyboardButton
+    id: button4
+    text: "4"
+    anchors.top: buttonF4.bottom
+    anchors.left: button3.right
+
+  keyboardButton
+    id: button5
+    text: "5"
+    anchors.top: buttonF5.bottom
+    anchors.left: button4.right
+
+  keyboardButton
+    id: button6
+    text: "6"
+    anchors.top: buttonF6.bottom
+    anchors.left: button5.right
+
+  keyboardButton
+    id: button7
+    text: "7"
+    anchors.top: buttonF7.bottom
+    anchors.left: button6.right
+
+  keyboardButton
+    id: button8
+    text: "8"
+    anchors.top: buttonF8.bottom
+    anchors.left: button7.right
+
+  keyboardButton
+    id: button9
+    text: "9"
+    anchors.left: button8.right
+    anchors.top: buttonF9.bottom
+
+  keyboardButton
+    id: button0
+    text: "0"
+    anchors.top: buttonF10.bottom
+    anchors.left: button9.right
+
+  keyboardButton
+    id: buttonMinus
+    text: "-"
+    anchors.top: buttonF11.bottom
+    anchors.left: button0.right
+
+  keyboardButton
+    id: buttonEqual
+    text: "="
+    anchors.top: buttonF12.bottom
+    anchors.left: buttonMinus.right
+    
+  keyboardButton
+    id: buttonBackslash
+    text: "\"
+    anchors.top: buttonF12.bottom
+    anchors.left: buttonEqual.right
+
+  keyboardButton
+    id: buttonEsc
+    text: "Esc"
+    anchors.top: parent.top
+    anchors.left: parent.left
+
+  keyboardButton
+    id: buttonTilde
+    text: "`"
+    anchors.top: buttonF1.bottom
+    anchors.left: parent.left
+
+  keyboardButton
+    id: buttonTab
+    text: "Tab"
+    anchors.top: buttonTilde.bottom
+    anchors.left: parent.left
+
+  keyboardButton
+    id: buttonCapsLock
+    text: "Caps"
+    anchors.top: buttonTab.bottom
+    anchors.left: parent.left
+
+  keyboardButton
+    id: buttonLeftShift
+    text: "Shift"
+    anchors.top: buttonCapsLock.bottom
+    anchors.left: parent.left
+
+  keyboardButton
+    id: buttonQ
+    text: "Q"
+    anchors.top: button1.bottom
+    anchors.left: buttonTab.right
+
+  keyboardButton
+    id: buttonW
+    text: "W"
+    anchors.top: button2.bottom
+    anchors.left: buttonQ.right
+
+  keyboardButton
+    id: buttonE
+    text: "E"
+    anchors.top: button3.bottom
+    anchors.left: buttonW.right
+
+  keyboardButton
+    id: buttonR
+    text: "R"
+    anchors.top: button4.bottom
+    anchors.left: buttonE.right
+
+  keyboardButton
+    id: buttonT
+    text: "T"
+    anchors.top: button5.bottom
+    anchors.left: buttonR.right
+
+  keyboardButton
+    id: buttonY
+    text: "Y"
+    anchors.top: button6.bottom
+    anchors.left: buttonT.right
+
+  keyboardButton
+    id: buttonU
+    text: "U"
+    anchors.top: button7.bottom
+    anchors.left: buttonY.right
+
+  keyboardButton
+    id: buttonI
+    text: "I"
+    anchors.top: button8.bottom
+    anchors.left: buttonU.right
+
+  keyboardButton
+    id: buttonO
+    text: "O"
+    anchors.top: button9.bottom
+    anchors.left: buttonI.right
+
+  keyboardButton
+    id: buttonP
+    text: "P"
+    anchors.top: button0.bottom
+    anchors.left: buttonO.right
+
+  keyboardButton
+    id: buttonEnter
+    text: "     Enter"
+    size: 88 59
+    anchors.top: buttonBackspace.bottom
+    anchors.left: buttonLeftBracket.right
+
+  keyboardButton
+    id: buttonLeftBracket
+    text: "["
+    anchors.left: buttonP.right
+    anchors.top: button0.bottom
+
+  keyboardButton
+    id: buttonRightBracket
+    text: "]"
+    anchors.left: buttonLeftBracket.right
+    anchors.top: button0.bottom
+
+  keyboardButton
+    id: buttonBackspace
+    text: "<--"
+    anchors.left: buttonBackslash.right
+    anchors.top: buttonF12.bottom
+
+  keyboardButton
+    id: buttonA
+    text: "A"
+    anchors.top: buttonTab.bottom
+    anchors.left: buttonCapsLock.right
+
+  keyboardButton
+    id: buttonS
+    text: "S"
+    anchors.top: buttonTab.bottom
+    anchors.left: buttonA.right
+
+  keyboardButton
+    id: buttonD
+    text: "D"
+    anchors.top: buttonTab.bottom
+    anchors.left: buttonS.right
+
+  keyboardButton
+    id: buttonF
+    text: "F"
+    anchors.top: buttonTab.bottom
+    anchors.left: buttonD.right
+
+  keyboardButton
+    id: buttonG
+    text: "G"
+    anchors.top: buttonTab.bottom
+    anchors.left: buttonF.right
+
+  keyboardButton
+    id: buttonH
+    text: "H"
+    anchors.top: buttonTab.bottom
+    anchors.left: buttonG.right
+
+  keyboardButton
+    id: buttonJ
+    text: "J"
+    anchors.top: buttonTab.bottom
+    anchors.left: buttonH.right
+
+  keyboardButton
+    id: buttonK
+    text: "K"
+    anchors.top: buttonTab.bottom
+    anchors.left: buttonJ.right
+
+  keyboardButton
+    id: buttonL
+    text: "L"
+    anchors.top: buttonTab.bottom
+    anchors.left: buttonK.right
+
+  keyboardButton
+    id: buttonSemicolon
+    text: ";"
+    anchors.top: buttonTab.bottom
+    anchors.left: buttonL.right
+
+  keyboardButton
+    id: buttonApostrophe
+    text: "'"
+    anchors.top: buttonTab.bottom
+    anchors.left: buttonSemicolon.right
+
+  keyboardButton
+    id: buttonZ
+    text: "Z"
+    anchors.top: buttonCapsLock.bottom
+    anchors.left: buttonLeftShift.right
+
+  keyboardButton
+    id: buttonX
+    text: "X"
+    anchors.top: buttonCapsLock.bottom
+    anchors.left: buttonZ.right
+
+  keyboardButton
+    id: buttonC
+    text: "C"
+    anchors.top: buttonCapsLock.bottom
+    anchors.left: buttonX.right
+
+  keyboardButton
+    id: buttonV
+    text: "V"
+    anchors.top: buttonCapsLock.bottom
+    anchors.left: buttonC.right
+
+  keyboardButton
+    id: buttonB
+    text: "B"
+    anchors.top: buttonCapsLock.bottom
+    anchors.left: buttonV.right
+
+  keyboardButton
+    id: buttonN
+    text: "N"
+    anchors.top: buttonCapsLock.bottom
+    anchors.left: buttonB.right
+
+  keyboardButton
+    id: buttonM
+    text: "M"
+    anchors.top: buttonCapsLock.bottom
+    anchors.left: buttonN.right
+
+  keyboardButton
+    id: buttonComma
+    text: ","
+    anchors.top: buttonCapsLock.bottom
+    anchors.left: buttonM.right
+
+  keyboardButton
+    id: buttonPeriod
+    text: "."
+    anchors.top: buttonCapsLock.bottom
+    anchors.left: buttonComma.right
+
+  keyboardButton
+    id: buttonSlash
+    text: "/"
+    anchors.top: buttonCapsLock.bottom
+    anchors.left: buttonPeriod.right
+
+  keyboardButton
+    id: buttonRightShift
+    text: "Shift"
+    size: 117 30
+    anchors.top: buttonEnter.bottom
+    anchors.left: buttonSlash.right
+
+  keyboardButton
+    id: buttonCtrlLeft
+    text: "Ctrl"
+    anchors.top: buttonLeftShift.bottom
+    anchors.left: parent.left
+
+  keyboardButton
+    id: buttonWindowsLeft
+    text: "Win"
+    anchors.top: buttonLeftShift.bottom
+    anchors.left: buttonCtrlLeft.right
+
+  keyboardButton
+    id: buttonAltLeft
+    text: "Alt"
+    anchors.top: buttonLeftShift.bottom
+    anchors.left: buttonWindowsLeft.right
+
+  keyboardButton
+    id: buttonSpace
+    text: "Space"
+    size: 233 30
+    anchors.top: buttonLeftShift.bottom
+    anchors.left: buttonAltLeft.right
+
+  keyboardButton
+    id: buttonAltRight
+    text: "Alt"
+    anchors.top: buttonLeftShift.bottom
+    anchors.left: buttonSpace.right
+
+  keyboardButton
+    id: buttonWindowsRight
+    text: ""
+    anchors.top: buttonLeftShift.bottom
+    anchors.left: buttonAltRight.right
+
+  keyboardButton
+    id: buttonCtrlRight
+    text: "Ctrl"
+    anchors.top: buttonLeftShift.bottom
+    anchors.left: buttonPrint.right
+
+  keyboardButton
+    id: buttonPrint
+    text: ""
+    anchors.top: buttonLeftShift.bottom
+    anchors.left: buttonWindowsRight.right
+
+  keyboardButton
+    id: buttonPrintScreen
+    text: "PrnScn"
+    size: 40 30
+    anchors.top: parent.top
+    anchors.left: buttonF12.right
+    margin-left: 15
+
+  keyboardButton
+    id: buttonScrollLock
+    text: "Scroll"
+    size: 40 30
+    anchors.top: parent.top
+    anchors.left: buttonPrintScreen.right
+
+  keyboardButton
+    id: buttonPause
+    text: "Pause"
+    size: 40 30
+    anchors.top: parent.top
+    anchors.left: buttonScrollLock.right
+
+  keyboardButton
+    id: buttonInsert
+    margin-left: 15
+    text: "Insert"
+    size: 40 30
+    anchors.top: buttonPrintScreen.bottom
+    anchors.left: buttonBackspace.right
+
+  keyboardButton
+    id: buttonHome
+    text: "Home"
+    size: 40 30
+    anchors.top: buttonPrintScreen.bottom
+    anchors.left: buttonInsert.right
+
+  keyboardButton
+    id: buttonPageUp
+    text: "PgUp^"
+    size: 40 30
+    anchors.top: buttonPrintScreen.bottom
+    anchors.left: buttonHome.right
+
+  keyboardButton
+    id: buttonPageDown
+    text: "PgDnv"
+    size: 40 30
+    anchors.top: buttonInsert.bottom
+    anchors.left: buttonEnd.right
+
+  keyboardButton
+    id: buttonEnd
+    size: 40 30
+    text: "End"
+    anchors.top: buttonInsert.bottom
+    anchors.left: buttonDelete.right
+
+  keyboardButton
+    id: buttonDelete
+    text: "Delete"
+    size: 40 30
+    margin-left: 15
+    anchors.top: buttonInsert.bottom
+    anchors.left: buttonEnter.right
+
+  keyboardButton
+    id: buttonLeft
+    text: "<"
+    size: 40 30
+    margin-left: 15
+    anchors.top: buttonRightShift.bottom
+    anchors.left: buttonCtrlRight.right
+
+  keyboardButton
+    id: buttonUp
+    text: "^"
+    size: 40 30
+    margin-left: 54
+    anchors.top: buttonEnter.bottom
+    anchors.left: buttonRightShift.right
+
+  keyboardButton
+    id: buttonRight
+    size: 40 30
+    text: ">"
+    anchors.top: buttonRightShift.bottom
+    anchors.left: buttonDown.right
+
+  keyboardButton
+    id: buttonDown
+    text: "v"
+    size: 40 30
+    anchors.top: buttonRightShift.bottom
+    anchors.left: buttonLeft.right
+
+  keyboardButton
+    id: buttonNumpad0
+    text: "0"
+    size: 60 30
+    margin-left: 15
+    anchors.top: buttonUp.bottom
+    anchors.left: buttonRight.right
+
+  keyboardButton
+    id: buttonNumpad1
+    text: "1"
+    margin-left: 15
+    anchors.top: buttonEnter.bottom
+    anchors.left: buttonPageDown.right
+
+  keyboardButton
+    id: buttonNumpad2
+    text: "2"
+    anchors.top: buttonEnter.bottom
+    anchors.left: buttonNumpad1.right
+
+  keyboardButton
+    id: buttonNumpad3
+    text: "3"
+    anchors.top: buttonEnter.bottom
+    anchors.left: buttonNumpad2.right
+
+  keyboardButton
+    id: buttonNumpad4
+    text: "4"
+    margin-left: 15
+    anchors.top: buttonPageDown.bottom
+    anchors.left: buttonPageDown.right
+
+  keyboardButton
+    id: buttonNumpad5
+    text: "5"
+    anchors.top: buttonPageDown.bottom
+    anchors.left: buttonNumpad4.right
+
+  keyboardButton
+    id: buttonNumpad6
+    text: "6"
+    anchors.top: buttonPageDown.bottom
+    anchors.left: buttonNumpad5.right
+
+  keyboardButton
+    id: buttonNumpad7
+    text: "7"
+    margin-left: 15
+    anchors.top: buttonPageUp.bottom
+    anchors.left: buttonPageDown.right
+
+  keyboardButton
+    id: buttonNumpad8
+    text: "8"
+    anchors.top: buttonPageUp.bottom
+    anchors.left: buttonNumpad7.right
+
+  keyboardButton
+    id: buttonNumpad9
+    text: "9"
+    anchors.top: buttonPageUp.bottom
+    anchors.left: buttonNumpad8.right

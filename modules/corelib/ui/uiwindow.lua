@@ -6,6 +6,7 @@ function UIWindow.create()
     window:setTextAlign(AlignTopCenter)
     window:setDraggable(true)
     window:setAutoFocusPolicy(AutoFocusFirst)
+    window:setOpacity(0.8)
     return window
 end
 
