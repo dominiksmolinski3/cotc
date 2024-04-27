@@ -1,6 +1,0 @@
-MainWindow
-  id: questLogWindow
-  !text: tr('Quest Log')
-  size: 500 500
-  $save: position
-  @onEscape: self:destroy()

@@ -11,7 +11,7 @@ local keyboardBindings = {
     {'Left', 'Left'}, {'Down', 'Down'}, {'Up', 'Up'}, {'Right', 'Right'}, {'Delete', 'Delete'}, {'End', 'End'}, {'PageDown', 'PageDown'}, {'PageUp', 'PageUp'}, {'Home', 'Home'}, {'Insert', 'Insert'}, {'Pause', 'Pause'}, {'Scrolllock', 'ScrollLock'}, {'PrintScreen', 'PrintScreen'},
     { 'numpad0', 'Numpad0' }, { 'numpad1', 'Numpad1' }, { 'numpad2', 'Numpad2' }, { 'numpad3', 'Numpad3' }, { 'numpad4', 'Numpad4' }, { 'numpad5', 'Numpad5' }, { 'numpad6', 'Numpad6' }, { 'numpad7', 'Numpad7' }, { 'numpad8', 'Numpad8' }, { 'numpad9', 'Numpad9' }
 }
-
+local keyboardWindow
 
 -- Funkcja do obsługi wciśnięcia klawisza
 local function onKeyDown(key)
@@ -33,14 +33,13 @@ end
 function init()
     g_ui.importStyle('keyboardtracker')
 
-    if not keyboardWindow then
-        keyboardWindow = g_ui.createWidget('keyboardWindow', rootWidget)
-        print("C")
+    keyboardWindow = g_ui.createWidget('keyboardWindow', rootWidget)
+
+    if not modules.client_options.getOption('showVirtualKeyboard') then
+        keyboardWindow:hide()
     else
         keyboardWindow:show()
-        print("Z")
     end
-    print("S")
 
     for _, bind in ipairs(keyboardBindings) do
         g_keyboard.bindKeyDown(bind[1], function() onKeyDown(bind[2]) end)
@@ -59,6 +58,14 @@ function init()
         g_keyboard.bindKeyDown(key, function() onKeyDown('LeftShift'); onKeyDown('F' .. tostring(i)) end)
         g_keyboard.bindKeyUp(key, function() onKeyUp('LeftShift'); onKeyUp('F' .. tostring(i)) end)
     end
+end
+
+function hide()
+    keyboardWindow:hide()
+end
+
+function show()
+    keyboardWindow:show()
 end
 
 function terminate()

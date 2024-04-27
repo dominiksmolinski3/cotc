@@ -731,12 +731,13 @@ locale = {
 ["%%s left the channel."] = "%%s opuscil kanal.",
 ["%%s has been invited to the channel."] = "%%s zostal zaproszony do kanalu.",
 ["%%s has been removed from the channel."] = "%%s zostal usuniety z kanalu.",
-["Hide Gothania label in-game"] = "Schowaj napis Gothania w oknie gry",
+["Show Gothania label in-game"] = "Pokaz napis Gothania w oknie gry",
+["Show Virtual Keyboard"] = "Pokaz wirtualna klawiature",
 ["Dynamic Floor View Mode Hotkey:"] = "Hotkey do dynamicznej zmiany widoku podlogi:",
 ["Async texture loading"] = "Asynchroniczne ladowanie tekstur",
 ["Enable sound effects"] = "Wlacz efekty dzwiekowe",
 ["Enable ambient effects"] = "Wlacz efekty otoczenia",
-
+["Virtual Keyboard"] = "Wirtualna Klawiatura",
   }
 }
 

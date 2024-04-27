@@ -29,7 +29,6 @@ end
 -- public functions
 function init()
     background = g_ui.displayUI('background')
-    background:lower()
 
     clientVersionLabel = background:getChildById('clientVersionLabel')
     clientVersionLabel:setText(g_app.getName() .. ' ' .. g_app.getVersion() .. ' version')

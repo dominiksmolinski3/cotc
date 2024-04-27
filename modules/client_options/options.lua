@@ -15,7 +15,7 @@ local defaultOptions = {
     showLevelsInConsole = true,
     showPrivateMessagesInConsole = true,
     showPrivateMessagesOnScreen = true,
-    hideGothaniaLabelInGame = false,
+    showGothaniaLabelInGame = true,
     showLeftPanel = true,
     showRightExtraPanel = false,
     openMaximized = false,
@@ -56,12 +56,13 @@ local defaultOptions = {
     setEffectAlphaScroll = 100,
     setMissileAlphaScroll = 100,
     colorHighlights = {
-        { color = "#979797", F = 0, T = 399 },
-        { color = "#00D01C", F = 400, T = 999 },
-        { color = "#1f9ffe", F = 1000, T = 2499 },
-        { color = "#B400D0", F = 2500, T = 4999 },
-        { color = "#C9D000", F = 5000, T = 5000000 },
+        { color = "#979797", F = 0, T = 199 },
+        { color = "#00D01C", F = 200, T = 499 },
+        { color = "#1f9ffe", F = 500, T = 999 },
+        { color = "#B400D0", F = 1000, T = 1999 },
+        { color = "#C9D000", F = 2000, T = 50000 },
     },
+    showVirtualKeyboard = false
 }
 
 local previousMode = nil
@@ -417,6 +418,17 @@ function setup()
             setOption(k, g_settings.getString(k), true)
         end
     end
+
+    if not modules.client_options.getOption('showGothaniaLabelInGame') then
+        modules.client_topmenu.hideGothaniaLabel()
+    else
+        modules.client_topmenu.showGothaniaLabel()
+    end
+    if not modules.client_options.getOption('showVirtualKeyboard') then
+        modules.client_keyboardtracker.hide()
+    else
+        modules.client_keyboardtracker.show()
+    end
 end
 
 function toggle()
@@ -529,11 +541,18 @@ function setOption(key, value, force)
         modules.game_interface.getLeftPanel():setOn(value)
     elseif key == 'showRightExtraPanel' then
         modules.game_interface.getRightExtraPanel():setOn(value)
-    elseif key == 'hideGothaniaLabelInGame' then
-        if modules.client_options.getOption('hideGothaniaLabelInGame') then
-            modules.client_topmenu.showGothaniaLabel()
-        else
+    elseif key == 'showGothaniaLabelInGame' then
+        if modules.client_options.getOption('showGothaniaLabelInGame') then
             modules.client_topmenu.hideGothaniaLabel()
+        else
+            modules.client_topmenu.showGothaniaLabel()
+        end
+    elseif key == 'showVirtualKeyboard' then
+        if modules.client_options.getOption('showVirtualKeyboard') then
+            print("X")
+            modules.client_keyboardtracker.hide()
+        else
+            modules.client_keyboardtracker.show()
         end
     elseif key == 'backgroundFrameRate' then
         local text, v = value, value
