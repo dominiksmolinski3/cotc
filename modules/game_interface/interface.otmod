@@ -35,5 +35,6 @@ Module
     - game_unjustifiedpoints
     - game_stash
     - client_keyboardtracker
+    - game_shaders
   @onLoad: init()
   @onUnload: terminate()

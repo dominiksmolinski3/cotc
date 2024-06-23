@@ -19,10 +19,10 @@ local defaultOptions = {
     showLeftPanel = true,
     showRightExtraPanel = false,
     openMaximized = false,
-    backgroundFrameRate = 201,
+    backgroundFrameRate = 143,
     enableAudio = true,
     enableMusicSound = true,
-    musicSoundVolume = 75,
+    musicSoundVolume = 20,
     enableSoundEffects = true,
     soundEffectsVolume = 100,
     enableAmbientSound = true,
@@ -62,7 +62,7 @@ local defaultOptions = {
         { color = "#B400D0", F = 1000, T = 1999 },
         { color = "#C9D000", F = 2000, T = 50000 },
     },
-    showVirtualKeyboard = false
+    showVirtualKeyboard = false,
 }
 
 local previousMode = nil
@@ -549,7 +549,6 @@ function setOption(key, value, force)
         end
     elseif key == 'showVirtualKeyboard' then
         if modules.client_options.getOption('showVirtualKeyboard') then
-            print("X")
             modules.client_keyboardtracker.hide()
         else
             modules.client_keyboardtracker.show()

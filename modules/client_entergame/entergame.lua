@@ -10,7 +10,7 @@ local clientBox
 local protocolLogin
 local protocolHttp
 local motdEnabled = false
-local serverIp = "78.47.197.49"
+local serverIp = "5.75.225.164"
 local serverPort = 7171
 local serverClient = 1098
 
@@ -114,7 +114,7 @@ function EnterGame.init()
     if modules.client_options.getOption('testServer') == true then
       serverIp = "127.0.0.1"
     else
-      serverIp = "78.47.197.49"
+      serverIp = "5.75.225.164"
     end
 
     enterGameButton = modules.client_topmenu.addLeftButton('enterGameButton',
@@ -450,7 +450,7 @@ function EnterGame.doLogin()
   if modules.client_options.getOption('testServer') == true then
     serverIp = "127.0.0.1"
   else
-    serverIp = "78.47.197.49"
+    serverIp = "5.75.225.164"
   end
 
     G.account = enterGame:getChildById('accountNameTextEdit'):getText()
@@ -519,7 +519,7 @@ function EnterGame.setDefaultServer(host, port, protocol)
   if modules.client_options.getOption('testServer') == true then
     serverIp = "127.0.0.1"
   else
-    serverIp = "78.47.197.49"
+    serverIp = "5.75.225.164"
   end
 
     local hostTextEdit = serverIp -- enterGame:getChildById('serverHostTextEdit')

@@ -177,7 +177,7 @@ function UIMiniWindow:setupOnStart()
     self.miniLoaded = true
 
     if self.save then
-        if oldParent and oldParent:getClassName() == 'UIMiniWindowContainer' then
+        if oldParent and oldParent:getClassName() == 'UIMiniWindowContainer' and not self.containerWindow then
             addEvent(function()
                 oldParent:order()
             end)

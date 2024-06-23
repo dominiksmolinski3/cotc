@@ -68,7 +68,7 @@ function init()
     pingLabel = topMenu:getChildById('pingLabel')
     fpsLabel = topMenu:getChildById('fpsLabel')
     gothaniaLabel = topMenu:getChildById('clickLabel')
-    
+
     g_keyboard.bindKeyDown('Ctrl+Shift+T', toggle)
     if g_game.isOnline() then
         online()
