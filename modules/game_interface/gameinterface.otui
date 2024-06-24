@@ -108,7 +108,7 @@ UIWidget
     anchors.right: gameRightExtraPanel.left
     anchors.bottom: parent.bottom
     relative-margin: bottom
-    margin-bottom: 0
+    margin-bottom: 160
     @canUpdateMargin: function(self, newMargin) if modules.client_options.getOption('dontStretchShrink') then return self:getMarginBottom() end return math.max(math.min(newMargin, self:getParent():getHeight() - 300), 0) end
     @onGeometryChange: function(self) self:setMarginBottom(math.min(math.max(self:getParent():getHeight() - 300, 0), self:getMarginBottom())) end
 
