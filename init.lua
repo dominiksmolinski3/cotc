@@ -7,7 +7,7 @@ Services = {
 }
 
 g_app.setName("Gothania");
-g_app.setCompactName("gothania-client");
+g_app.setCompactName("gothania");
 g_app.setOrganizationName("gothania");
 
 g_app.hasUpdater = function()
@@ -55,6 +55,7 @@ g_resources.searchAndAddPackages('/', '.otpkg', true)
 g_configs.loadSettings('/config.otml')
 
 g_modules.discoverModules()
+
 
 -- libraries modules 0-99
 g_modules.autoLoadModules(99)
