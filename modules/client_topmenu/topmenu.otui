@@ -47,10 +47,8 @@ TopMenuPanel
 
   UIWidget
     id: centerLabel
-    anchors.top: parent.top
-    anchors.bottom: parent.bottom
-    anchors.left: leftGameButtonsPanel.right
-    anchors.right: rightGameButtonsPanel.left
+    anchors.left: parent.right
+    anchors.right: parent.left
 
   UIWidget
     id: clickLabel

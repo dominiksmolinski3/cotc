@@ -1,5 +1,6 @@
 questLogButton = nil
 questLineWindow = nil
+cachedQuests = {}
 
 function init()
     g_ui.importStyle('questlogwindow')
@@ -29,7 +30,6 @@ end
 
 function destroyWindows()
     if questLogWindow then questLogWindow:destroy() end
-
     if questLineWindow then questLineWindow:destroy() end
 end
 
@@ -39,7 +39,9 @@ function toggleNotDoneQuests()
     else
         showDone = nil
     end
-    g_game.requestQuestLog()
+    updateQuestList()
+    updateButtonStates()
+    --g_game.requestQuestLog()
 end
 
 
@@ -49,9 +51,36 @@ function toggleDoneQuests()
     else
         showDone = nil
     end
-    g_game.requestQuestLog()
+    updateQuestList()
+    updateButtonStates()
+    --g_game.requestQuestLog()
 end
 
+function updateQuestList()
+    if not questLogWindow then return end
+
+    local questList = questLogWindow:getChildById('questList')
+    if questList then
+        questList:destroyChildren()
+    end
+
+    -- Fetch the quests (assuming you have a cached list of quests)
+    for i, questEntry in pairs(cachedQuests) do
+        local id, name, completed = unpack(questEntry)
+
+        if showDone == nil or (showDone and completed) or (not showDone and not completed) then
+            local questLabel = g_ui.createWidget('QuestLabel', questList)
+            questLabel:setOn(completed)
+            questLabel:setText(name)
+            questLabel.onDoubleClick = function()
+                questLogWindow:hide()
+                g_game.requestQuestLine(id)
+            end
+        end
+    end
+
+    questList:focusChild(questList:getFirstChild())
+end
 
 function updateButtonStates()
     local doneButton = questLogWindow:getChildById('toggleDoneQuests')
@@ -70,38 +99,28 @@ function updateButtonStates()
 end
 
 function onGameQuestLog(quests)
--- Check if questLogWindow already exists and simply show it instead of recreating it
-if not questLogWindow then
-    questLogWindow = g_ui.createWidget('QuestLogWindow', rootWidget)
-    -- Initialization code for questLogWindow goes here
-else
-    questLogWindow:show()
-end
+    -- Check if questLogWindow already exists and simply show it instead of recreating it
+    cachedQuests = quests
 
--- Update the quest list every time without resetting the window position
-local questList = questLogWindow:getChildById('questList')
-if questList then
-    questList:destroyChildren()
-end
-
-
-for i, questEntry in pairs(quests) do
-    local id, name, completed = unpack(questEntry)
-
-    if showDone == nil or (showDone and completed) or (not showDone and not completed) then
-        local questLabel = g_ui.createWidget('QuestLabel', questList)
-        questLabel:setOn(completed)
-        questLabel:setText(name)
-        questLabel.onDoubleClick = function()
-            questLogWindow:hide()
-            g_game.requestQuestLine(id)
-        end
+    if not questLogWindow then
+        questLogWindow = g_ui.createWidget('QuestLogWindow', rootWidget)
+        -- Initialization code for questLogWindow goes here
+    else
+        questLogWindow:show()
     end
-end
 
-questLogWindow.onDestroy = function() questLogWindow = nil end
-questList:focusChild(questList:getFirstChild())
-updateButtonStates()
+    -- Update the quest list every time without resetting the window position
+    local questList = questLogWindow:getChildById('questList')
+    if questList then
+        questList:destroyChildren()
+    end
+
+
+    updateQuestList()
+    updateButtonStates()
+
+    questLogWindow.onDestroy = function() questLogWindow = nil end
+    questList:focusChild(questList:getFirstChild())
 end
 
 
