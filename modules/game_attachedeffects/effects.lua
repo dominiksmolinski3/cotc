@@ -1,13 +1,25 @@
 
-register(id, name, thingId, thingType, config)
-config = {
-    speed, disableWalkAnimation, shader, drawOnUI, opacity
-    duration, loop, transform, hideOwner, size{width, height}
-    offset{x, y, onTop}, dirOffset[dir]{x, y, onTop},
-    light { color, intensity}, drawOrder(only for tiles),
-    bounce{minHeight, height, speed}
-    onAttach, onDetach
-}
+
+--register(id, name, thingId, thingType, config)
+--config = {
+--    speed, 
+--    disableWalkAnimation, 
+--    shader, 
+--    drawOnUI, 
+--    opacity,
+--    duration, 
+--    loop, 
+--    transform, 
+--    hideOwner, 
+--        size{width, height},
+--        offset{x, y, onTop}, 
+--       dirOffset[dir]{x, y, onTop},
+ --       light{color, intensity}, 
+ --       bounce{minHeight, height, speed},
+ --       onAttach, 
+--        onDetach
+--}
+
 
 AttachedEffectManager.register(1, 'Spoke Lighting', 12, ThingCategoryEffect, {
     speed = 0.5,
@@ -88,7 +100,6 @@ AttachedEffectManager.register(6, 'Lake Monster', 34, ThingCategoryEffect, {
         oldOwner:getTile():addThing(e)
     end
 })
-
 AttachedEffectManager.register(7, 'Pentagram Aura', '/images/game/effects/pentagram', ThingExternalTexture, {
     size = { 128, 128 },
     offset = { 50, 45 }
@@ -100,7 +111,8 @@ AttachedEffectManager.register(8, 'Ki', '/images/game/effects/ki', ThingExternal
 })
 
 AttachedEffectManager.register(9, 'Thunder', '/images/game/effects/thunder', ThingExternalTexture, {
-    loop = 1,
+    loop = 0,
+    duration = 500,
     offset = { 215, 230 }
 })
 
@@ -139,3 +151,4 @@ AttachedEffectManager.register(11, 'Bat', 307, ThingCategoryCreature, {
     offset = { 0, 0 },
     bounce = { 20, 20, 2000 }
 })
+

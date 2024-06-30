@@ -17,6 +17,7 @@ GameLevelupLegacyWindow < UIWidget
     width: 580
     height: 196
     phantom: true
+    draggable: true
 
   UIWidget
     id: label
@@ -26,7 +27,6 @@ GameLevelupLegacyWindow < UIWidget
     phantom: true
     font: verdana-11px-monochrome
     text-auto-resize: true
-    text: Zdobyles Poziom!
 
   UIWidget
     id: level

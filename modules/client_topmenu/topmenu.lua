@@ -89,7 +89,7 @@ end
 
 function online()
     showGameButtons()
-    if not modules.client_options.getOption('showGothaniaLabelInGame') then
+    if modules.client_options.getOption('showGothaniaLabelInGame') then
         gothaniaLabel:show()
     end
     addEvent(function()
