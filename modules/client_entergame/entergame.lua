@@ -117,22 +117,14 @@ function EnterGame.init()
       serverIp = "5.75.225.164"
     end
 
-    enterGameButton = modules.client_topmenu.addLeftButton('enterGameButton',
-                                                           tr('Login') ..
-                                                               ' (Ctrl + G)',
-                                                           '/images/topbuttons/login',
-                                                           EnterGame.openWindow)
-    motdButton = modules.client_topmenu.addLeftButton('motdButton',
-                                                      tr('Message of the day'),
-                                                      '/images/topbuttons/motd',
-                                                      EnterGame.displayMotd)
+    enterGameButton = modules.client_topmenu.addLeftButton('enterGameButton', tr('Login') .. ' (Ctrl + G)', '/images/topbuttons/login', EnterGame.openWindow)
+    motdButton = modules.client_topmenu.addLeftButton('motdButton', tr('Message of the day'), '/images/topbuttons/motd', EnterGame.displayMotd)
 
     -- enterGameButton = modules.client_topmenu.addLeftButton('enterGameButton', tr('Login') .. ' (Ctrl + G)',
     --                                                        '/images/topbuttons/login', EnterGame.openWindow)
     -- motdButton = modules.client_topmenu.addLeftButton('motdButton', tr('Message of the day'), '/images/topbuttons/motd',
     motdButton:hide()
     g_keyboard.bindKeyDown('Ctrl+G', EnterGame.openWindow)
-
     if motdEnabled and G.motdNumber then motdButton:show() end
 
     local account = g_settings.get('account')

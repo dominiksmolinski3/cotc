@@ -36,5 +36,6 @@ Module
     - client_keyboardtracker
     - game_shaders
     - game_attachedeffects
+    - game_levelup
   @onLoad: init()
   @onUnload: terminate()

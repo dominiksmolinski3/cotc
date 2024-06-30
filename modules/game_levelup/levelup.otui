@@ -1,0 +1,48 @@
+
+  
+GameLevelupLegacyWindow < UIWidget
+  id: legacy_level_notification
+  width: 600
+  height: 200
+  phantom: true
+  visible: false
+  draggable: true
+  anchors.horizontalCenter: parent.horizontalCenter
+  margin-top: 12
+
+  UIWidget
+    id: interior
+    anchors.horizontalCenter: parent.horizontalCenter
+    image-source: /images/levelup/interior
+    width: 580
+    height: 196
+    phantom: true
+
+  UIWidget
+    id: label
+    anchors.top: prev.top
+    margin-top: 68
+    anchors.horizontalCenter: prev.horizontalCenter
+    phantom: true
+    font: verdana-11px-monochrome
+    text-auto-resize: true
+    text: Zdobyles Poziom!
+
+  UIWidget
+    id: level
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: prev.horizontalCenter
+    text-auto-resize: true
+    phantom: true
+    font: verdana-11px-monochrome
+    margin-top: 3
+
+  UIWidget
+    id: learningPoints
+    anchors.top: prev.bottom
+    anchors.horizontalCenter: prev.horizontalCenter
+    text: +5 Punktow Nauki
+    text-auto-resize: true
+    font: verdana-11px-monochrome
+    phantom: true
+    margin-top: 3
