@@ -608,8 +608,10 @@ function addText(text, speaktype, tabName, creatureName)
     if tabName == tr('Server Log') or tabName == "Log Serwera" then
       for _, msg in pairs(lootMessages) do
         if string.find(text, msg) ~= nil then
-          if lootChannel then
+          if msg == "^Loot of " then
             tab = getTab("Loot")
+          else
+            tab = getTab("Server Log")
           end
         end
       end
@@ -1292,6 +1294,45 @@ end
 function addFilter(filter) table.insert(filters, filter) end
 
 function removeFilter(filter) table.removevalue(filters, filter) end
+
+function displayEmoteBubble(text)
+    local player = g_game.getLocalPlayer()
+    if not player then
+        print("No local player found.")
+        return
+    end
+
+    print("Local player: " .. player:getName())
+
+    -- Create a widget for the emote bubble
+    local emoteBubble = g_ui.createWidget('EmoteBubble', gameRootPanel)
+    if not emoteBubble then
+        print("Failed to create EmoteBubble widget.")
+        return
+    end
+
+    emoteBubble:setImageSource('/images/emotes/diego')
+    print("EmoteBubble widget created and image source set.")
+
+    --local position = {
+       -- x = 0,
+      --  y = 0
+    --}
+    emoteBubble:setHeight(200)
+    emoteBubble:setWidth(200)
+    emoteBubble:setText("SDSDSDS")
+    --emoteBubble:setPosition(position)
+    emoteBubble:setOn(true)
+    emoteBubble:focus()
+    emoteBubble:raise()
+
+    -- Auto-destroy the emote bubble after some time
+    scheduleEvent(function() 
+        emoteBubble:destroy() 
+        print("EmoteBubble destroyed.")
+    end, 3000) -- Display for 3 seconds
+end
+
 
 function sendMessage(message, tab)
     local tab = tab or getCurrentTab()
