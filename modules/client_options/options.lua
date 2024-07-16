@@ -19,6 +19,7 @@ local defaultOptions = {
     showLeftPanel = true,
     showRightExtraPanel = false,
     openMaximized = false,
+    openMinimized = false,
     backgroundFrameRate = 143,
     enableAudio = true,
     enableMusicSound = true,

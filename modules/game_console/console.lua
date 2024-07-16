@@ -639,6 +639,7 @@ function addText(text, speaktype, tabName, creatureName)
     end
 
     if tab ~= nil then addTabText(text, speaktype, tab, creatureName) end
+    modules.game_console.toggleChat()
 end
 
 

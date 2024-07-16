@@ -139,6 +139,8 @@ function onContainerOpen(container, previousContainer)
 
         if modules.client_options.getOption('openMaximized') then
             containerWindow:setContentHeight(cellSize.height * layout:getNumLines())
+        elseif modules.client_options.getOption('openMinimized') then
+            containerWindow:setContentHeight(cellSize.height)
         else
             local filledLines = math.max(math.ceil(container:getItemsCount() / layout:getNumColumns()), 1)
             containerWindow:setContentHeight(filledLines * cellSize.height)

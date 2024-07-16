@@ -17,6 +17,10 @@ Panel
     !text: tr('Open containers maximized')
 
   OptionCheckBox
+    id: openMinimized
+    !text: tr('Open containers minimized')
+
+  OptionCheckBox
     id: displayNames
     !text: tr('Display creature names')
 
