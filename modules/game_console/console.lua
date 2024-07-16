@@ -598,50 +598,49 @@ function addPrivateText(text, speaktype, name, isPrivateCommand, creatureName)
 end
 
 function addText(text, speaktype, tabName, creatureName)
-  local tab = getTab(tabName)
+    local tab = getTab(tabName)
     if (not creatureName or creatureName == "") and text then
 
-    local lootMessages = {
-      "^Loot of ", "^You looted ", "^No Loot."
-    }
+        local lootMessages = {
+            "^Loot of ", "^You looted ", "^No Loot.", "^The following items are available in your reward chest:", "^Ponizsze przedmioty sa dostepne w twojej skrzyni nagrod:"
+        }
 
-    if tabName == tr('Server Log') or tabName == "Log Serwera" then
-      for _, msg in pairs(lootMessages) do
-        if string.find(text, msg) ~= nil then
-          if msg == "^Loot of " then
-            tab = getTab("Loot")
-          else
-            tab = getTab("Server Log")
-          end
-        end
-      end
-    end
-
-    local quickLootMessages = {
-      "Attention! All of your containers are full.", "Attention! You don't have enough capacity.",
-      "Could not find loot container. Quick Loot will use next available one.",
-      "Could not find stackable container. Quick Loot will use next available one",
-      "Could not find gold container. Quick Loot will use next available one.",
-      "Could not find any container.",
-    }
-
-    if tabName == tr("Default") then
-      for _, msg in pairs(quickLootMessages) do
-
-        if string.find(text, msg) ~= nil then
-          if lootChannel then
-            tab = getTab("Loot")
-          else
-            tab = getTab(tr("Server Log"))
-          end
+        if tabName == tr('Server Log') or tabName == "Log Serwera" then
+            for _, msg in ipairs(lootMessages) do
+                if string.find(text, msg) ~= nil then
+                    if msg == "^Loot of " or msg == "^The following items are available in your reward chest:" or msg == "^Ponizsze przedmioty sa dostepne w twojej skrzyni nagrod:" then
+                        tab = getTab("Loot")
+                    end
+                    break -- Exit the loop once a match is found
+                end
+            end
         end
 
-      end
+        local quickLootMessages = {
+            "Attention! All of your containers are full.", "Attention! You don't have enough capacity.",
+            "Could not find loot container. Quick Loot will use next available one.",
+            "Could not find stackable container. Quick Loot will use next available one",
+            "Could not find gold container. Quick Loot will use next available one.",
+            "Could not find any container.",
+        }
+
+        if tabName == tr("Default") then
+            for _, msg in ipairs(quickLootMessages) do
+                if string.find(text, msg) ~= nil then
+                    if lootChannel then
+                        tab = getTab("Loot")
+                    else
+                        tab = getTab(tr("Server Log"))
+                    end
+                    break -- Exit the loop once a match is found
+                end
+            end
+        end
     end
-  end
 
     if tab ~= nil then addTabText(text, speaktype, tab, creatureName) end
 end
+
 
 -- Contains letter width for font "verdana-11px-antialised" as console is based on it
 local letterWidth = { -- New line (10) and Space (32) have width 1 because they are printed and not replaced with spacer
