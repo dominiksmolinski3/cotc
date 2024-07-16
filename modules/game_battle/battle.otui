@@ -1,5 +1,5 @@
 BattleIcon < UICheckBox
-  size: 20 20
+  size: 18 18
   image-color: white
   image-rect: 0 0 20 20
 
@@ -36,6 +36,12 @@ BattleSkulls < BattleIcon
 BattleParty < BattleIcon
   image-source: /images/game/battle/battle_party
 
+BattleSummon < BattleIcon
+  image-source: /images/game/battle/battle_summons
+
+BattleGuild < BattleIcon
+  image-source: /images/game/battle/battle_guild
+
 MiniWindow
   id: battleWindow
   !text: tr('Battle')
@@ -57,7 +63,7 @@ MiniWindow
       anchors.top: parent.top
       anchors.horizontalCenter: parent.horizontalCenter
       height: 20
-      width: 120
+      width: 160
       layout:
         type: horizontalBox
         spacing: 5
@@ -76,6 +82,11 @@ MiniWindow
         id: hideMonsters
         !tooltip: tr('Hide monsters')
         @onCheckChange: modules.game_battle.checkCreatures()
+        
+      BattleSummon
+        id: hideSummon
+        !tooltip: tr('Hide summons')
+        @onCheckChange: modules.game_battle.checkCreatures()
 
       BattleSkulls
         id: hideSkulls
@@ -85,6 +96,11 @@ MiniWindow
       BattleParty
         id: hideParty
         !tooltip: tr('Hide party members')
+        @onCheckChange: modules.game_battle.checkCreatures()
+
+      BattleGuild
+        id: hideGuild
+        !tooltip: tr('Hide guild members')
         @onCheckChange: modules.game_battle.checkCreatures()
 
     Panel

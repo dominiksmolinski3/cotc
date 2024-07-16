@@ -6,7 +6,7 @@ local battleButtons = {} -- map of creature id
 local battleWindow, battleButton, battlePanel, mouseWidget, filterPanel, toggleFilterButton
 local lastBattleButtonSwitched, lastCreatureSelected
 
--- Hide Buttons ("hidePlayers", "hideNPCs", "hideMonsters", "hideSkulls", "hideParty")
+-- Hide Buttons ("hidePlayers", "hideNPCs", "hideMonsters", "hideSkulls", "hideParty", "hideSummon", "hideGuild")
 local hideButtons = {}
 
 local eventOnCheckCreature = nil
@@ -88,7 +88,7 @@ function init() -- Initiating the module (load)
     end
 
     -- Adding Filter options
-    local options = { 'hidePlayers', 'hideNPCs', 'hideMonsters', 'hideSkulls', 'hideParty' }
+    local options = { 'hidePlayers', 'hideNPCs', 'hideMonsters', 'hideSkulls', 'hideParty', 'hideSummon', 'hideGuild' }
     for i, v in ipairs(options) do
         hideButtons[v] = battleWindow:recursiveGetChildById(v)
     end
@@ -453,14 +453,18 @@ function doCreatureFitFilters(creature) -- Check if creature fit current applied
     end -- or not localPlayer:hasSight(pos)
     for i, v in pairs(hideButtons) do
         if v:isChecked() then
-            if (i == 'hidePlayers' and creature:isPlayer()) or (i == 'hideNPCs' and creature:isNpc()) or
-                (i == 'hideMonsters' and creature:isMonster()) or
-                (i == 'hideSkulls' and (creature:isPlayer() and creature:getSkull() == SkullNone)) or
-                (i == 'hideParty' and creature:getShield() > ShieldWhiteBlue) then
+            if (i == 'hidePlayers' and creature:isPlayer()) or 
+               (i == 'hideNPCs' and creature:isNpc()) or
+               (i == 'hideMonsters' and creature:isMonster() and creature:getType() ~= 3 and creature:getType() ~= 4) or
+               (i == 'hideSkulls' and creature:isPlayer() and creature:getSkull() == SkullNone) or
+               (i == 'hideParty' and creature:getShield() > ShieldWhiteBlue) or
+               (i == 'hideSummon' and (creature:getType() == 3 or creature:getType() == 4)) or
+               (i == 'hideGuild' and creature:isPlayer() and (creature:getEmblem() == EmblemGreen or creature:getEmblem() == EmblemMember)) then
                 return false
             end
         end
     end
+    
 
     return true
 end

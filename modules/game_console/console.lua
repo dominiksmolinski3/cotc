@@ -601,10 +601,13 @@ end
 function addText(text, speaktype, tabName, creatureName)
     local tab = getTab(tabName)
     local player = g_game.getLocalPlayer()
-
-    if creatureName == player:getName() then
+    local pattern = "^" .. player:getName() .. "%s*%[%d+%]:%s*[Hh][Ii]%s+.+"
+    
+    -- Check if the creature's name matches the player's name and text pattern
+    if creatureName == player:getName() and not text:match(pattern) and not text:match("hi") then
         toggleChat()
     end
+    
 
     if (not creatureName or creatureName == "") and text then
 
