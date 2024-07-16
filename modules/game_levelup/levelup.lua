@@ -20,6 +20,8 @@ function offline()
 	disconnect(LocalPlayer, {
         onLevelChange = onLevelChange,
     })
+    firstLogin = true
+    cacheLevel = 0
 end
 
 function terminate()
