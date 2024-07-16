@@ -322,12 +322,13 @@ function switchChatOnCall()
 
     if isChatEnabled() and consoleToggleChat:isChecked() then
        toggleChat()
-   else
+    else
        local message = consoleTextEdit:getText()
        if message == '' then
            toggleChat()
        end
     end
+
 end
 
 function disableChatOnCall()
@@ -599,6 +600,12 @@ end
 
 function addText(text, speaktype, tabName, creatureName)
     local tab = getTab(tabName)
+    local player = g_game.getLocalPlayer()
+
+    if creatureName == player:getName() then
+        toggleChat()
+    end
+
     if (not creatureName or creatureName == "") and text then
 
         local lootMessages = {
@@ -639,7 +646,6 @@ function addText(text, speaktype, tabName, creatureName)
     end
 
     if tab ~= nil then addTabText(text, speaktype, tab, creatureName) end
-    modules.game_console.toggleChat()
 end
 
 
