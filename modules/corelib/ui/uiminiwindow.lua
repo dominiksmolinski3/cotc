@@ -14,6 +14,7 @@ function UIMiniWindow:open(dontSave)
             closed = false
         })
     end
+    self:fitOnParent()
     signalcall(self.onOpen, self)
 end
 
@@ -94,13 +95,24 @@ function UIMiniWindow:setup()
             self:minimize()
         end
     end
+
+    	
+    self:getChildById('lockButton').onClick = function()
+        if self:isDraggable() then
+            self:lock()
+        else
+            self:unlock()
+        end
+    end
+    
     self:getChildById('miniwindowTopBar').onDoubleClick = function()
         if self:isOn() then
             self:maximize()
         else
             self:minimize()
         end
-    end				
+    end		
+    		
 end
 
 function UIMiniWindow:setupOnStart()
@@ -203,6 +215,8 @@ function UIMiniWindow:onDragEnter(mousePos)
     end
 
     if parent:getClassName() == 'UIMiniWindowContainer' then
+        self.oldParentDrag = parent
+        self.oldParentDragIndex = parent:getChildIndex(self)
         local containerParent = parent:getParent()
         parent:removeChild(self)
         containerParent:addChild(self)
@@ -229,7 +243,46 @@ function UIMiniWindow:onDragLeave(droppedWidget, mousePos)
     end
 
     self:saveParent(self:getParent())
+
+    if self.moveOnlyToMain or droppedWidget and droppedWidget.onlyPhantomDrop then
+        if not (droppedWidget) or (self.moveOnlyToMain and not (droppedWidget.onlyPhantomDrop)) or
+            (not (self.moveOnlyToMain) and droppedWidget.onlyPhantomDrop) then
+            local virtualParent = self:getParent()
+            virtualParent:removeChild(self)
+            self.oldParentDrag:insertChild(self.oldParentDragIndex, self)
+            self.movedWidget = nil
+        end
+    end
 end
+
+function UIMiniWindow:lock(dontSave)
+    local lockButton = self:getChildById('lockButton')
+    if lockButton then
+        lockButton:setOn(true)
+    end
+    self:setDraggable(false)
+    if not dontsave then
+        self:setSettings({
+            locked = true
+        })
+    end
+    signalcall(self.onLockChange, self)
+end
+
+function UIMiniWindow:unlock(dontSave)
+    local lockButton = self:getChildById('lockButton')
+    if lockButton then
+        lockButton:setOn(false)
+    end
+    self:setDraggable(true)
+    if not dontsave then
+        self:setSettings({
+            locked = false
+        })
+    end
+    signalcall(self.onLockChange, self)
+end
+
 
 function UIMiniWindow:onDragMove(mousePos, mouseMoved)
     local oldMousePosY = mousePos.y - mouseMoved.y
@@ -424,8 +477,35 @@ end
 
 function UIMiniWindow:fitOnParent()
     local parent = self:getParent()
-    if self:isVisible() and parent and parent:getClassName() == 'UIMiniWindowContainer' then
-        parent:fitAll(self)
+    local minContentHeight = 30
+    local gameRightExtraPanel = modules.game_interface.getRightExtraPanel()
+    local gameRightPanel = modules.game_interface.getRightPanel()
+    local gameLeftPanel = modules.game_interface.getLeftPanel()
+
+
+    if self:isVisible() then
+        if parent and parent:getClassName() == 'UIMiniWindowContainer' then
+            parent:fitAll(self)
+        else
+            local newParent
+            if not self.save then
+
+                if gameRightPanel:fits(self, minContentHeight, 30) >= 0 then
+                    newParent = gameRightPanel
+                elseif gameLeftPanel:fits(self, minContentHeight, 30) >= 0 then
+                    newParent = gameLeftPanel
+                elseif gameRightExtraPanel:fits(self, minContentHeight, 30) >= 0 then
+                    newParent = gameRightExtraPanel
+                end
+
+                if newParent then
+                    self:setParent(newParent)
+                    newParent:fitAll(self)
+                else
+                    print("No suitable parent panel found for UIMiniWindow.")
+                end
+            end
+        end
     end
 end
 
