@@ -37,6 +37,6 @@ Module
     - game_shaders
     - game_attachedeffects
     - game_levelup
-    - game_highlightdamage
+    - game_countdown
   @onLoad: init()
   @onUnload: terminate()

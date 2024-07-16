@@ -68,6 +68,8 @@ function init()
     pingLabel = topMenu:getChildById('pingLabel')
     fpsLabel = topMenu:getChildById('fpsLabel')
     gothaniaLabel = topMenu:getChildById('clickLabel')
+    countdownLabel = topMenu:getChildById('countdownLabel')
+    countdownHelpLabel = topMenu:getChildById('countdownHelpLabel')
 
     g_keyboard.bindKeyDown('Ctrl+Shift+T', toggle)
     if g_game.isOnline() then
@@ -87,8 +89,19 @@ function terminate()
     topMenu:destroy()
 end
 
+function updateCountdownLabel(time)
+    countdownLabel:setText(time)
+    if (modules.client_locales.getCurrentLocale().name == 'pl') then
+        countdownHelpLabel:setText("Czas do nowego serwera:")
+    else
+        countdownHelpLabel:setText("Time Until New Server:")
+    end
+end
+
 function online()
     showGameButtons()
+    countdownLabel:show()
+    countdownHelpLabel:show()
     if modules.client_options.getOption('showGothaniaLabelInGame') then
         gothaniaLabel:show()
     end
@@ -103,8 +116,10 @@ function online()
 end
 
 function offline()
+    countdownHelpLabel:hide()
     hideGameButtons()
     pingLabel:hide()
+    countdownLabel:hide()
     gothaniaLabel:hide()
     fpsMin = -1
 end

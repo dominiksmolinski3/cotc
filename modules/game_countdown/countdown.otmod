@@ -1,0 +1,9 @@
+Module
+  name: game_countdown
+  description: Countdown till next game world start.
+  author: cynio
+  website: https://github.com/dominiksmolinski3
+  sandboxed: true
+  scripts: [ countdown ]
+  @onLoad: init()
+  @onUnload: terminate()

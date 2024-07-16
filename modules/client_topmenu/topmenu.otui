@@ -62,3 +62,31 @@ TopMenuPanel
     shader: Map - Party
     !tooltip: tr('Odwiedz strone Gothanii!')
     @onClick: modules.client_background.gothaniaLabelClick()
+  
+  UIWidget
+    id: countdownLabel
+    anchors.left: leftButtonsPanel.right
+    anchors.right: clickLabel.left
+    anchors.bottom: parent.bottom
+    text-align: center
+    text-auto-resize: true
+    margin-left: 30
+    text: 
+    font: poppins
+    font-scale: 1
+    color: #C8A862
+    shader: Map - Bloom
+
+  UIWidget
+    id: countdownHelpLabel
+    text-align: center
+    text-auto-resize: true
+    font: poppins
+    font-scale: 1
+    margin-top: 2
+    color: #C8A862
+    shader: Map - Bloom
+    text: Time Until New Server:
+    anchors.top: parent.top
+    anchors.left: leftButtonsPanel.right
+    anchors.right: clickLabel.left
