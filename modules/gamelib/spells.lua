@@ -1255,7 +1255,7 @@ SpellInfo = {
         },
         ['Blood Rage'] = {
             id = 133,
-            words = 'Blood Rage',
+            words = 'blood rage',
             exhaustion = 2000,
             premium = true,
             type = 'Instant',
@@ -2248,15 +2248,20 @@ function Spells.getSpellByName(name)
 end
 
 function Spells.getSpellByWords(words)
-    local words = words:lower():trim()
+    if not words then
+        return nil, nil, nil
+    end
+
+    local normalizedWords = words:trim():lower()
+
     for profile, data in pairs(SpellInfo) do
-        for k, spell in pairs(data) do
-            if spell.words == words then
-                return spell, profile, k
+        for spellName, spellData in pairs(data) do
+            if spellData.words:lower() == normalizedWords then
+                return spellData, profile, spellName
             end
         end
     end
-    return nil
+    return nil, nil, nil
 end
 
 function Spells.getSpellByIcon(iconId)

@@ -3911,7 +3911,6 @@ function determineColor(price)
 
   for _, colorHighlight in ipairs(colorHighlights) do
     if price > colorHighlight.F and price <= colorHighlight.T then
-      print("item price: " .. price .. ", color: " .. colorHighlight.color)
       return colorHighlight.color
     end
   end
@@ -3928,7 +3927,6 @@ function determineCategory(price)
 
   for _, colorHighlight in ipairs(colorHighlights) do
     if price > colorHighlight.F and price <= colorHighlight.T then
-      print("item price: " .. price .. ", category: " .. _)
       return _
     end
   end

@@ -85,12 +85,17 @@ local quickLootHotkeyCombobox
 local dynamicFloorViewModeHotkeyCombobox
 local antialiasingModeCombobox
 local floorViewModeCombobox
+local chatEnabled
+local controlCache
 
 
 
-function qezcControl(bool)
+function qezcControl(bool, chatEnabled)
     local gameInterface = modules.game_interface
-    if bool then
+    if chatEnabled ~= nil then
+        chatEnabledCache = chatEnabled
+    end
+    if bool and chatEnabledCache == false and controlCache == true then
         gameInterface.bindWalkKey('E', NorthEast)
         gameInterface.bindWalkKey('Q', NorthWest)
         gameInterface.bindWalkKey('C', SouthEast)
@@ -101,7 +106,7 @@ function qezcControl(bool)
         gameInterface.unbindWalkKey('C')
         gameInterface.unbindWalkKey('Z')
     end
-
+    controlCache = bool
 end
 
 function loadHighlightingSettings()

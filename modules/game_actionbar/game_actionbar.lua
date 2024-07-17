@@ -626,13 +626,12 @@ end
 function setupHotkeys()
     unbindHotkeys()
     for v, slot in pairs(actionBarPanel:getChildren()) do
-
-        slot.onMouseRelease = function()
+        local function executeSlotAction()
             if g_clock.millis() - lastHotkeyTime < modules.client_options.getOption('hotkeyDelay') then
                 return
             end
 
-            if not modules.game_hotkeys.canPerformKeyCombo(slot.hotkey) then
+            if slot.hotkey and not modules.game_hotkeys.canPerformKeyCombo(slot.hotkey) then
                 return
             end
 
@@ -670,54 +669,20 @@ function setupHotkeys()
             end
         end
 
+        slot.onMouseRelease = executeSlotAction
+
         if slot.hotkey and slot.hotkey ~= '' then
             g_keyboard.bindKeyPress(slot.hotkey, function()
                 if not modules.game_hotkeys.canPerformKeyCombo(slot.hotkey) then
                     return
                 end
-
-                if g_clock.millis() - lastHotkeyTime < modules.client_options.getOption('hotkeyDelay') then
-                    return
-                end
-
-                lastHotkeyTime = g_clock.millis()
-                if slot.itemId and slot.useType then
-                    if slot.useType == 'use' then
-                        modules.game_hotkeys.executeHotkeyItem(HOTKEY_USE, slot.itemId, slot.subType)
-                    elseif slot.useType == 'useOnTarget' then
-                        modules.game_hotkeys.executeHotkeyItem(HOTKEY_USEONTARGET, slot.itemId, slot.subType)
-                    elseif slot.useType == 'useWith' then
-                        modules.game_hotkeys.executeHotkeyItem(HOTKEY_USEWITH, slot.itemId, slot.subType)
-                    elseif slot.useType == 'useOnSelf' then
-                        modules.game_hotkeys.executeHotkeyItem(HOTKEY_USEONSELF, slot.itemId, slot.subType)
-                    elseif slot.useType == 'equip' then
-                        local item = g_game.findPlayerItem(slot.itemId, -1)
-                        if item then
-                            g_game.equipItem(item)
-                        end
-                    end
-                elseif slot.words then
-                    if slot.parameter and slot.parameter ~= '' then
-                        g_game.talk(slot.words .. ' "' .. slot.parameter)
-                    else
-                        g_game.talk(slot.words)
-                    end
-                elseif slot.text then
-                    if slot.autoSend then
-                        modules.game_console.sendMessage(slot.text)
-                    else
-                        scheduleEvent(function()
-                            if not modules.game_console.isChatEnabled() then
-                                modules.game_console.switchChatOnCall()
-                            end
-                            modules.game_console.setTextEditText(slot.text)
-                        end, 1)
-                    end
-                end
+                executeSlotAction()
             end)
         end
     end
 end
+
+
 
 function checkHotkey(hotkey)
     for v, k in pairs(actionBarPanel:getChildren()) do
@@ -854,8 +819,8 @@ function loadActionBar()
         hotkeys = hotkeys[g_game.getCharacterName()]
     end
     if hotkeys then
-        for slot, setting in pairs(hotkeys) do
-            slot = actionBarPanel:getChildById(slot)
+        for slotId, setting in pairs(hotkeys) do
+            local slot = actionBarPanel:getChildById(slotId)
             if slot then
                 slot.itemId = setting.itemId
                 slot:setItemId(setting.itemId)

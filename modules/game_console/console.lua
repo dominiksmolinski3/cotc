@@ -333,9 +333,11 @@ function switchChat(enabled)
 
     if enabled then
         unbindMovingKeys()
+        modules.client_options.qezcControl(false, true)
         consoleToggleChat:setTooltip(tr('Disable chat mode, allow to walk using WASD'))
     else
         bindMovingKeys()
+        modules.client_options.qezcControl(true, false)
         consoleToggleChat:setTooltip(tr('Enable chat mode'))
     end
 end
@@ -623,7 +625,7 @@ end
 
 function matchesHiPattern(text)
     local player = g_game.getLocalPlayer()
-    return text:match("^" .. player:getName() .. "%s*%[%d+%]:%s*[Hh][Ii]%s+.+") or text:match("hi") or text:match("Hi") or text:match("HI") or text:match("hI")
+    return text:match("^" .. player:getName() .. "%s*%[%d+%]:%s*[Hh][Ii]%s+.+") or text:match("hi") or text:match("Hi") or text:match("HI") or text:match("Stoj") or text:match("Ej, ty!") or text:match("Chwila.")
 end
 
 function addText(text, speaktype, tabName, creatureName)
@@ -634,10 +636,7 @@ function addText(text, speaktype, tabName, creatureName)
         toggleChat()
     end
 
-    local shouldToggleChat = false
-
     if creatureName == player:getName() then
-        print("Creature name matches player name")
     
 
         if not matchesHiPattern(text) then
@@ -646,7 +645,6 @@ function addText(text, speaktype, tabName, creatureName)
             for _, spellName in ipairs(spellTable) do
                 if text:match(spellName) then
                     matchesSpell = true
-                    print("Text matches spell name: " .. spellName)
                     break
                 end
             end
@@ -659,10 +657,6 @@ function addText(text, speaktype, tabName, creatureName)
     else
     end
 
--- Toggle chat if the conditions are met
-    if shouldToggleChat then
-        toggleChat()
-    end
 
 
     
@@ -1778,12 +1772,15 @@ function onChannelList(channelList)
         local channelName = v[2]
 
         if #channelName > 0 then
-            local label = g_ui.createWidget('ChannelListLabel', channelListPanel)
-            label.channelId = channelId
-            label:setText(channelName)
+                local label = g_ui.createWidget('ChannelListLabel', channelListPanel)
+                label.channelId = channelId
+                label:setText(channelName)
+                if label.channelId == 4 or label.channelId == 5 or label.channelId == 6 or label.channelId == 7 then
+                    label:hide()
+                end
 
-            label:setPhantom(false)
-            label.onDoubleClick = doChannelListSubmit
+                label:setPhantom(false)
+                label.onDoubleClick = doChannelListSubmit
         end
     end
 end
