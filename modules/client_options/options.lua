@@ -85,28 +85,13 @@ local quickLootHotkeyCombobox
 local dynamicFloorViewModeHotkeyCombobox
 local antialiasingModeCombobox
 local floorViewModeCombobox
-local chatEnabled
-local controlCache
 
-
-
-function qezcControl(bool, chatEnabled)
-    local gameInterface = modules.game_interface
-    if chatEnabled ~= nil then
-        chatEnabledCache = chatEnabled
-    end
-    if bool and chatEnabledCache == false and controlCache == true then
-        gameInterface.bindWalkKey('E', NorthEast)
-        gameInterface.bindWalkKey('Q', NorthWest)
-        gameInterface.bindWalkKey('C', SouthEast)
-        gameInterface.bindWalkKey('Z', SouthWest)
+function diagonalCheck()
+    if controlPanel:getChildById('qezcControl'):isChecked() then
+        modules.game_console.updateDiagonalKeys(true)
     else
-        gameInterface.unbindWalkKey('E')
-        gameInterface.unbindWalkKey('Q')
-        gameInterface.unbindWalkKey('C')
-        gameInterface.unbindWalkKey('Z')
+        modules.game_console.updateDiagonalKeys(false)
     end
-    controlCache = bool
 end
 
 function loadHighlightingSettings()
@@ -658,12 +643,10 @@ function setOption(key, value, force)
     elseif key == 'testserver' then
         modules.client_options.setOption('testServer', value)
     elseif key == 'qezcControl' then
-        if value then
-            qezcControl(true)
-            modules.client_options.setOption('qezcControl', false)
+        if controlPanel:getChildById('qezcControl'):isChecked() then
+            modules.game_console.updateDiagonalKeys(true)
         else
-            qezcControl(false)
-            modules.client_options.setOption('qezcControl', true)
+            modules.game_console.updateDiagonalKeys(false)
         end
     elseif key == 'dynamicFloorViewModeHotkey' then
         dynamicFloorViewModeHotkeyCombobox:setCurrentOptionByData(value, true)

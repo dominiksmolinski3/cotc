@@ -293,10 +293,10 @@ end
 
 function toggleChat() consoleToggleChat:setChecked(not consoleToggleChat:isChecked()) end
 
--- id of object first and then action
 function updateChatMode() switchChat(not consoleToggleChat:isChecked()) end
 
-local function unbindMovingKeys()
+-- Local function to unbind movement keys
+function unbindMovingKeys()
     local gameInterface = modules.game_interface
     gameInterface.unbindWalkKey('W')
     gameInterface.unbindWalkKey('D')
@@ -307,9 +307,18 @@ local function unbindMovingKeys()
     gameInterface.unbindTurnKey('Ctrl+D')
     gameInterface.unbindTurnKey('Ctrl+S')
     gameInterface.unbindTurnKey('Ctrl+A')
+
+    -- Unbind diagonal keys
+    gameInterface.unbindWalkKey('E')
+    gameInterface.unbindWalkKey('Q')
+    gameInterface.unbindWalkKey('C')
+    gameInterface.unbindWalkKey('Z')
+    
+    print("unbindMovingKeys")
 end
 
-local function bindMovingKeys()
+-- Local function to bind movement keys
+function bindMovingKeys()
     local gameInterface = modules.game_interface
     gameInterface.bindWalkKey('W', North)
     gameInterface.bindWalkKey('D', East)
@@ -323,21 +332,35 @@ local function bindMovingKeys()
 
 end
 
+function updateDiagonalKeys(check)
+    local gameInterface = modules.game_interface
+    if check == true and not consoleTextEdit:isVisible() then
+        gameInterface.bindWalkKey('E', NorthEast)
+        gameInterface.bindWalkKey('Q', NorthWest)
+        gameInterface.bindWalkKey('C', SouthEast)
+        gameInterface.bindWalkKey('Z', SouthWest)
+    else
+        gameInterface.unbindWalkKey('E')
+        gameInterface.unbindWalkKey('Q')
+        gameInterface.unbindWalkKey('C')
+        gameInterface.unbindWalkKey('Z')
+    end
+end
+
 function switchChat(enabled)
-    -- enabled should be true if we enabling the chat and false if disabling it
-    -- consoleToggleChat:setChecked(not consoleToggleChat:isChecked())
-    if not (enabled and consoleTextEdit:isVisible()) then
+    if consoleTextEdit:isVisible() ~= enabled then
         consoleTextEdit:setVisible(enabled)
         consoleTextEdit:setText('')
     end
 
     if enabled then
         unbindMovingKeys()
-        modules.client_options.qezcControl(false, true)
         consoleToggleChat:setTooltip(tr('Disable chat mode, allow to walk using WASD'))
     else
         bindMovingKeys()
-        modules.client_options.qezcControl(true, false)
+        if modules.client_options.diagonalCheck() then
+            updateDiagonalKeys(true)
+        end
         consoleToggleChat:setTooltip(tr('Enable chat mode'))
     end
 end
@@ -625,7 +648,7 @@ end
 
 function matchesHiPattern(text)
     local player = g_game.getLocalPlayer()
-    return text:match("^" .. player:getName() .. "%s*%[%d+%]:%s*[Hh][Ii]%s+.+") or text:match("hi") or text:match("Hi") or text:match("HI") or text:match("Stoj") or text:match("Ej, ty!") or text:match("Chwila.")
+    return text:match("^" .. player:getName() .. "%s*%[%d+%]:%s*[Hh][Ii]%s+.+") or text:match("hi") or text:match("Hi") or text:match("HI") or text:match("Stoj") or text:match("Ej, ty!") or text:match("Chwila.") or text:match("Ej,")
 end
 
 function addText(text, speaktype, tabName, creatureName)
