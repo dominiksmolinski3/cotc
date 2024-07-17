@@ -23,7 +23,7 @@ SpellListLabel < Label
     color: #ffffff
 
 MainWindow
-  text: Assign Spell
+  !text: tr('Assign Spell')
   size: 280 480
   @onEscape: modules.game_actionbar.closeSpellAssignWindow()
   @onEnter: modules.game_actionbar.spellAssignAccept()
@@ -107,11 +107,11 @@ MainWindow
     id: applyButton
     anchors.bottom: parent.bottom
     anchors.left: parent.left
-    text: Apply
+    !text: tr('Apply')
     @onClick: modules.game_actionbar.spellAssignAccept()
   Button
     id: cancelButton
     anchors.bottom: parent.bottom
     anchors.right: parent.right
-    text: Cancel
+    !text: tr('Cancel')
     @onClick: modules.game_actionbar.closeSpellAssignWindow()

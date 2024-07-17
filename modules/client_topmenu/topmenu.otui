@@ -70,7 +70,7 @@ TopMenuPanel
     anchors.bottom: parent.bottom
     text-align: center
     text-auto-resize: true
-    margin-left: 30
+    margin-left: 60
     text: 
     font: poppins
     font-scale: 1
@@ -84,6 +84,7 @@ TopMenuPanel
     font: poppins
     font-scale: 1
     margin-top: 2
+    margin-left: 60
     color: #C8A862
     shader: Map - Bloom
     text: Time Until New Server:

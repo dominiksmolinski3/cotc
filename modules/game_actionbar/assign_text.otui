@@ -1,5 +1,5 @@
 MainWindow
-  text: Assign Text
+  !text: tr('Assign Text')
   size: 250 165
   @onEscape: modules.game_actionbar.closeTextAssignWindow()
   @onEnter: modules.game_actionbar.textAssignAccept()
@@ -39,13 +39,13 @@ MainWindow
     margin-top: 10
   Button
     id: applyButton
-    text: Apply
+    !text: tr('Apply')
     anchors.bottom: parent.bottom
     anchors.left: parent.left
     @onClick: modules.game_actionbar.textAssignAccept()
   Button
     id: cancelButton
-    text: Cancel
+    !text: tr('Cancel')
     anchors.bottom: parent.bottom
     anchors.right: parent.right
     @onClick: modules.game_actionbar.closeTextAssignWindow()

@@ -22,6 +22,11 @@ Panel
     !tooltip: tr('You will have more precision over the character walking,\nbut it can feel more abrupt or unnatural')
     @onCheckChange: g_game.setScheduleLastWalk(not self:isChecked())
 
+  OptionCheckBox
+    id: qezcControl
+    !text: tr('Enable QEZC walking keys')
+    !tooltip: tr('You will be able to make slants with your QEZC buttons while chat mode is off')
+
   Label
     id: turnDelayLabel
     !text: tr('Turn delay: %sms', 30)

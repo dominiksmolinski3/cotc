@@ -90,6 +90,7 @@ locale = {
     ["Buy"] = "Kup",
     ["Buyer Name"] = false,
     ["Cancel"] = "Anuluj",
+    ["Apply"] = "Zatwierdz",
     ["Cannot login while already in game."] = "Nie mozna zalogowac gdy juz w grze",
     ["Cap"] = "Ladown.",
     ["Capacity"] = "Ladownosc",
@@ -689,8 +690,17 @@ locale = {
       ["White"] = "Bialy",
       ["Yellow"] = "Zolty",
       ["Orange"] = "Pomaranczowy",
+      ["Assign Text"] = "Przypisz tekst",
+      ["Assign Spell"] = "Przypisz zaklecie",
+      ["Assign Object"] = "Przypisz obiekt",
+      ["Edit Hotkey"] = "Edytuj hotkey",
+      ["Clear Slot"] = "Wyczysc slot",
       ["Brown"] = "Brazowy",
+      ["Hide guild members"] = "Ukryj graczy gildii",
       ["Add Highlight"] = "Dodaj",
+      ["Open containers minimized"] = "Otworz kontenery zminimalizowane.",
+      ["Enable QEZC walking keys"] = "Wlacz klawisze chodu QEZC",
+      ["You will be able to make slants with your QEZC buttons while chat mode is off"] = "Bedziesz mogl wykonywac skosy za pomoca przyciskow QEZC, gdy tryb czatu jest wylaczony",
 
       
 ["Loot"] = false,
@@ -718,7 +728,6 @@ locale = {
 ["Disabled"] = "Wylaczony",
 ['Default'] = "Domyslny",
 ["Full"] = "Kwadratowy",
-
 ["All"] = "Wszystko",
 ["Armors"] = "Zbroje",
 ["Balance"] = "Stan konta",

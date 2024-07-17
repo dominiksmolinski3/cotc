@@ -7,7 +7,7 @@ PreviewItem < UIItem
 MainWindow
   id: assignWindow
   size: 260 208
-  text: Assign Object
+  !text: tr('Assign Object')
   @onEnter: modules.game_actionbar.objectAssignAccept()
   PreviewItem
     id: previewItem
@@ -79,12 +79,12 @@ MainWindow
     id: applyButton
     anchors.left: parent.left
     anchors.bottom: parent.bottom
-    text: Apply
+    !text: tr('Apply')
     @onClick: modules.game_actionbar.objectAssignAccept()
 
   Button
     id: cancelButton
     anchors.right: parent.right
     anchors.bottom: parent.bottom
-    text: Cancel
+    !text: tr('Cancel')
     @onClick: modules.game_actionbar.closeObjectAssignWindow()

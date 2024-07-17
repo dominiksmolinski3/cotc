@@ -83,6 +83,38 @@ SpeakTypesSettings = {
     }
 }
 
+spellTable = {
+    'jump up',
+    'jump down',
+    'Annihilation',
+    'Brutal Strike',
+    'Whirlwind Throw',
+    'Blood Rage',
+    'Berserk',
+    'Front Sweep',
+    'Challenge',
+    'Fierce Berserk',
+    'Ethereal Shot',
+    'Strong Ethereal Shot',
+    'Ricochet',
+    'Protector',
+    'Sharpshooter',
+    'Rykoszet',
+    'skok gora',
+    'skok dol',
+    'protekcja',
+    'Zabojczy Cios',
+    'Wirujacy Rzut',
+    'Ostrze wiru',
+    'Szeroki cios',
+    'Okrutne Ostrze wiru',
+    'Unicestwienie',
+    'Eteryjny strzal',
+    'Potezny eteryjny strzal',
+    'Wyzwanie',
+    'Krwara furia',
+}
+
 SpeakTypes = {
     [MessageModes.Say] = SpeakTypesSettings.say,
     [MessageModes.Whisper] = SpeakTypesSettings.whisper,
@@ -271,11 +303,6 @@ local function unbindMovingKeys()
     gameInterface.unbindWalkKey('S')
     gameInterface.unbindWalkKey('A')
 
-    gameInterface.unbindWalkKey('E')
-    gameInterface.unbindWalkKey('Q')
-    gameInterface.unbindWalkKey('C')
-    gameInterface.unbindWalkKey('Z')
-
     gameInterface.unbindTurnKey('Ctrl+W')
     gameInterface.unbindTurnKey('Ctrl+D')
     gameInterface.unbindTurnKey('Ctrl+S')
@@ -289,15 +316,11 @@ local function bindMovingKeys()
     gameInterface.bindWalkKey('S', South)
     gameInterface.bindWalkKey('A', West)
 
-    gameInterface.bindWalkKey('E', NorthEast)
-    gameInterface.bindWalkKey('Q', NorthWest)
-    gameInterface.bindWalkKey('C', SouthEast)
-    gameInterface.bindWalkKey('Z', SouthWest)
-
     gameInterface.bindTurnKey('Ctrl+W', North)
     gameInterface.bindTurnKey('Ctrl+D', East)
     gameInterface.bindTurnKey('Ctrl+S', South)
     gameInterface.bindTurnKey('Ctrl+A', West)
+
 end
 
 function switchChat(enabled)
@@ -598,15 +621,50 @@ function addPrivateText(text, speaktype, name, isPrivateCommand, creatureName)
     addTabText(text, speaktype, privateTab, creatureName)
 end
 
+function matchesHiPattern(text)
+    local player = g_game.getLocalPlayer()
+    return text:match("^" .. player:getName() .. "%s*%[%d+%]:%s*[Hh][Ii]%s+.+") or text:match("hi") or text:match("Hi") or text:match("HI") or text:match("hI")
+end
+
 function addText(text, speaktype, tabName, creatureName)
     local tab = getTab(tabName)
     local player = g_game.getLocalPlayer()
-    local pattern = "^" .. player:getName() .. "%s*%[%d+%]:%s*[Hh][Ii]%s+.+"
-    
-    -- Check if the creature's name matches the player's name and text pattern
-    if creatureName == player:getName() and not text:match(pattern) and not text:match("hi") then
+
+    if text == "" then
         toggleChat()
     end
+
+    local shouldToggleChat = false
+
+    if creatureName == player:getName() then
+        print("Creature name matches player name")
+    
+
+        if not matchesHiPattern(text) then
+        
+            local matchesSpell = false
+            for _, spellName in ipairs(spellTable) do
+                if text:match(spellName) then
+                    matchesSpell = true
+                    print("Text matches spell name: " .. spellName)
+                    break
+                end
+            end
+
+            if not matchesSpell then
+                toggleChat()
+            end
+        else
+        end
+    else
+    end
+
+-- Toggle chat if the conditions are met
+    if shouldToggleChat then
+        toggleChat()
+    end
+
+
     
 
     if (not creatureName or creatureName == "") and text then

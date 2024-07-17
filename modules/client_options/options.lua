@@ -27,6 +27,7 @@ local defaultOptions = {
     enableSoundEffects = true,
     soundEffectsVolume = 100,
     enableAmbientSound = true,
+    qezcControl = true,
     ambientSoundVolume = 100,
     enableLights = true,
     limitVisibleDimension = false,
@@ -84,6 +85,24 @@ local quickLootHotkeyCombobox
 local dynamicFloorViewModeHotkeyCombobox
 local antialiasingModeCombobox
 local floorViewModeCombobox
+
+
+
+function qezcControl(bool)
+    local gameInterface = modules.game_interface
+    if bool then
+        gameInterface.bindWalkKey('E', NorthEast)
+        gameInterface.bindWalkKey('Q', NorthWest)
+        gameInterface.bindWalkKey('C', SouthEast)
+        gameInterface.bindWalkKey('Z', SouthWest)
+    else
+        gameInterface.unbindWalkKey('E')
+        gameInterface.unbindWalkKey('Q')
+        gameInterface.unbindWalkKey('C')
+        gameInterface.unbindWalkKey('Z')
+    end
+
+end
 
 function loadHighlightingSettings()
     colorHighlights = deserializeColorHighlights(g_settings.get('colorHighlights', colorHighlights))
@@ -296,10 +315,8 @@ function init()
         g_settings.setDefault(k, v)
         options[k] = v
     end
-
     optionsWindow = g_ui.displayUI('options')
     optionsWindow:hide()
-
     optionsTabBar = optionsWindow:getChildById('optionsTabBar')
     optionsTabBar:setContentWidget(optionsWindow:getChildById('optionsTabContent'))
 
@@ -333,7 +350,7 @@ function init()
     -- custom loot
     lootPanel = g_ui.loadUI('loot')
     optionsTabBar:addTab(tr('null'), lootPanel, '/images/optionstab/loot')
-
+    
     addEvent(function()
         setup()
     end)
@@ -635,6 +652,14 @@ function setOption(key, value, force)
       generalPanel:getChildById('setMissileAlphaLabel'):setText(tr('Opacity Missile: %s%%', value))
     elseif key == 'testserver' then
         modules.client_options.setOption('testServer', value)
+    elseif key == 'qezcControl' then
+        if value then
+            qezcControl(true)
+            modules.client_options.setOption('qezcControl', false)
+        else
+            qezcControl(false)
+            modules.client_options.setOption('qezcControl', true)
+        end
     elseif key == 'dynamicFloorViewModeHotkey' then
         dynamicFloorViewModeHotkeyCombobox:setCurrentOptionByData(value, true)
         if dynamicFloorViewModeHotkey then

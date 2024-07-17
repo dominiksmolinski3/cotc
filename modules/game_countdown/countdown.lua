@@ -46,7 +46,6 @@ local countdownEvent
 function startCountdown()
     countdownEvent = scheduleEvent(function()
         local time = updateCountdown()
-        print(time)
         modules.client_topmenu.updateCountdownLabel(time)
         startCountdown()
     end, 1000)
@@ -59,25 +58,10 @@ function stopCountdown()
     end
 end
 
-function online()
+function init()
     startCountdown()
 end
 
-function offline()
-    stopCountdown()
-end
-
-function init()
-    connect(g_game, {
-        onGameStart = online,
-        onGameEnd = offline,
-    })
-end
-
 function terminate()
-    disconnect(g_game, {
-        onGameStart = online,
-        onGameEnd = offline,
-    })
     stopCountdown()
 end
