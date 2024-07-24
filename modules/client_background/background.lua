@@ -32,10 +32,24 @@ function init()
 
     clientVersionLabel = background:getChildById('clientVersionLabel')
     clientVersionLabel:setText(g_app.getName() .. ' ' .. g_app.getVersion() .. ' version')
+    discordHyperLink = background:getChildById('discordHyperLink')
+    gothaniaLabel = background:getChildById('gothaniaLabel')
 
     if not g_game.isOnline() then
         addEvent(function()
-            g_effects.fadeIn(clientVersionLabel, 1500)
+            g_effects.fadeIn(gothaniaLabel, 2500)
+        end)
+    end
+
+    if not g_game.isOnline() then
+        addEvent(function()
+            g_effects.fadeIn(clientVersionLabel, 2500)
+        end)
+    end
+
+    if not g_game.isOnline() then
+        addEvent(function()
+            g_effects.fadeIn(discordHyperLink, 2500)
         end)
     end
 

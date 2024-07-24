@@ -60,7 +60,6 @@ function init()
     })
 
     topMenu = g_ui.displayUI('topmenu')
-
     leftButtonsPanel = topMenu:getChildById('leftButtonsPanel')
     rightButtonsPanel = topMenu:getChildById('rightButtonsPanel')
     leftGameButtonsPanel = topMenu:getChildById('leftGameButtonsPanel')
@@ -70,7 +69,20 @@ function init()
     gothaniaLabel = topMenu:getChildById('clickLabel')
     countdownLabel = topMenu:getChildById('countdownLabel')
     countdownHelpLabel = topMenu:getChildById('countdownHelpLabel')
+    addEvent(function()
+        g_effects.fadeIn(countdownLabel, 5000)
+    end)
 
+    if (modules.client_locales.getCurrentLocale().name == 'pl') then
+        countdownHelpLabel:setText("Czas do nowego serwera:")
+    else
+        countdownHelpLabel:setText("Time Until New Server:")
+    end
+
+    addEvent(function()
+        g_effects.fadeIn(countdownHelpLabel, 5000)
+    end)
+    
     g_keyboard.bindKeyDown('Ctrl+Shift+T', toggle)
     if g_game.isOnline() then
         online()
@@ -91,17 +103,14 @@ end
 
 function updateCountdownLabel(time)
     countdownLabel:setText(time)
-    if (modules.client_locales.getCurrentLocale().name == 'pl') then
-        countdownHelpLabel:setText("Czas do nowego serwera:")
-    else
-        countdownHelpLabel:setText("Time Until New Server:")
+    if time == "Nowy serwer jest dostepny!" or time == "New server is available!" then
+        countdownHelpLabel:setText("")
     end
 end
 
 function online()
     showGameButtons()
-    countdownLabel:show()
-    countdownHelpLabel:show()
+
     if modules.client_options.getOption('showGothaniaLabelInGame') then
         gothaniaLabel:show()
     end

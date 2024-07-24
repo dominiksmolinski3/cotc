@@ -697,5 +697,7 @@ function canPerformKeyCombo(keyCombo)
     return disableHotkeysCount == 0 and
            (not modules.game_console:isChatEnabled() or string.match(keyCombo, 'F%d%d?') or
                string.match(keyCombo, 'Ctrl%+') or string.match(keyCombo, 'Shift%+..+') or
-               string.match(keyCombo, 'Alt%+'))
+               string.match(keyCombo, 'Alt%+') or string.match(keyCombo, 'Delete') or string.match(keyCombo, 'End') or string.match(keyCombo, 'PageDown')
+               or string.match(keyCombo, 'PageUp') or string.match(keyCombo, 'Home') or string.match(keyCombo, 'Insert') or string.match(keyCombo, 'Pause')
+            or string.match(keyCombo, 'ScrollLock'))
 end

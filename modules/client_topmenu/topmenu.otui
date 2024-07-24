@@ -57,9 +57,7 @@ TopMenuPanel
     text-auto-resize: true
     color: #C8A862
     text: GOTHANIA
-    font: verdana-11px-rounded
-    font-scale: 2.1
-    shader: Map - Party
+    font: poppins
     !tooltip: tr('Odwiedz strone Gothanii!')
     @onClick: modules.client_background.gothaniaLabelClick()
   

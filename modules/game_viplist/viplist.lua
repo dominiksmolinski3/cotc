@@ -335,16 +335,22 @@ function onAddVip(id, name, state, description, iconId, notify)
 
     if state == VipState.Online then
         label:setColor('#60F860')
+        label:setTooltip('Gracz jest online!.')
     elseif state == VipState.Pending then
         label:setColor('#FF9854') -- xlog
+        label:setTooltip('Gracz jest w trakcie logowania.')
     elseif state == VipState.RecentlyLogged then
         label:setColor('#F7F7F7') -- xlog
+        label:setTooltip('Gracz niedawno zalogowal.')
     elseif state == VipState.Training then
         label:setColor('#9966CC') -- training (yellow)
+        label:setTooltip('Gracz trenuje.')
     elseif state == VipState.OfflineTraining then
         label:setColor('#7339ac') -- offline training (orange)
+        label:setTooltip('Gracz trenuje oraz jest offline.')
     else
         label:setColor('#F86060') -- offline
+        label:setTooltip('Gracz jest offline.')
     end
 
     label.vipState = state

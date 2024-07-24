@@ -616,7 +616,7 @@ function closeEditHotkeyWindow()
 end
 
 function unbindHotkeys()
-    for v, slot in pairs(actionBarPanel:getChildren()) do
+    for _, slot in pairs(actionBarPanel:getChildren()) do
         if slot.hotkey and slot.hotkey ~= '' then
             g_keyboard.unbindKeyPress(slot.hotkey)
         end
@@ -625,7 +625,7 @@ end
 
 function setupHotkeys()
     unbindHotkeys()
-    for v, slot in pairs(actionBarPanel:getChildren()) do
+    for _, slot in pairs(actionBarPanel:getChildren()) do
         local function executeSlotAction()
             if g_clock.millis() - lastHotkeyTime < modules.client_options.getOption('hotkeyDelay') then
                 return
@@ -778,22 +778,27 @@ end
 
 function loadSpell(slot)
     local spell, profile, spellName = Spells.getSpellByWords(slot.words)
-    iconId = tonumber(Spells.getClientId(spellName))
-    slot:setImageSource(Spells.getIconFileByProfile(profile))
-    slot:setImageClip(Spells.getImageClip(iconId, profile))
-    slot:getChildById('text'):setText('')
-    slot:setBorderWidth(0)
+    if spell then
+        local iconId = tonumber(Spells.getClientId(spellName))
+        slot:setImageSource(Spells.getIconFileByProfile(profile))
+        slot:setImageClip(Spells.getImageClip(iconId, profile))
+        slot:getChildById('text'):setText('')
+        slot:setBorderWidth(0)
+    end
     setupHotkeys()
 end
 
 function loadObject(slot)
-    slot:setItemId(slot.itemId)
-    slot:setImageSource('/images/game/actionbar/item-background')
-    slot:setImageClip('0 0 0 0')
-    slot:getChildById('text'):setText('')
-    slot:setBorderWidth(0)
+    if slot.itemId then
+        slot:setItemId(slot.itemId)
+        slot:setImageSource('/images/game/actionbar/item-background')
+        slot:setImageClip('0 0 0 0')
+        slot:getChildById('text'):setText('')
+        slot:setBorderWidth(0)
+    end
     setupHotkeys()
 end
+
 
 function loadText(slot)
     slot:getChildById('text'):setText(slot.text)
@@ -860,7 +865,7 @@ end
 
 function updateCooldown(progressRect, duration, spellId, count)
     progressRect:setPercent(progressRect:getPercent() + 10000 / duration)
-    local cd = round(duration - (progressRect:getPercent() * duration / 100)) / 1000
+    local cd = math.round(duration - (progressRect:getPercent() * duration / 100)) / 1000
     if cd > 0 then
         progressRect:setText(cd .. 's')
     end
@@ -879,7 +884,7 @@ end
 
 function updateGroupCooldown(progressRect, duration, groupId)
     progressRect:setPercent(progressRect:getPercent() + 10000 / duration)
-    local cd = round(duration - (progressRect:getPercent() * duration / 100)) / 1000
+    local cd = math.round(duration - (progressRect:getPercent() * duration / 100)) / 1000
     if cd > 0 then
         progressRect:setText(cd .. 's')
     end
@@ -895,18 +900,18 @@ function updateGroupCooldown(progressRect, duration, groupId)
     end
 end
 
+
 function onSpellCooldown(spellId, duration)
-    local slot
-    for v, k in pairs(actionBarPanel:getChildren()) do
+    for _, slot in pairs(actionBarPanel:getChildren()) do
         local spell, profile, spellName = Spells.getSpellByIcon(spellId)
         
         if not spell then
-           print('[WARNING] Can not set cooldown on spell with id: ' .. spellId)
-           return true
-       end
+            print('[WARNING] Cannot set cooldown on spell with id: ' .. spellId)
+            return true
+        end
 
-        if k.words == spell.words or spell.clientId and spell.clientId == k.itemId then
-            slot = k
+        -- Handle spell cooldowns
+        if slot.words == spell.words or (spell.clientId and spell.clientId == slot.itemId) then
             local progressRect = slot:recursiveGetChildById('progress' .. spell.id)
             if not progressRect then
                 progressRect = g_ui.createWidget('SpellProgressRect', slot)
@@ -925,6 +930,7 @@ function onSpellCooldown(spellId, duration)
                 cooldown[spell.id] = nil
                 progressRect:hide()
             end
+
             progressRect:setPercent(0)
             updateFunc()
             cooldown[spell.id] = duration
@@ -933,58 +939,57 @@ function onSpellCooldown(spellId, duration)
 end
 
 function onSpellGroupCooldown(groupId, duration)
-    local slot
-    local spellGroup = 0
-    for v, k in pairs(actionBarPanel:getChildren()) do
+    for _, slot in pairs(actionBarPanel:getChildren()) do
         local spell, profile, spellName
-        if k.words then
-            spell, profile, spellName = Spells.getSpellByWords(k.words)
+        if slot.words then
+            spell, profile, spellName = Spells.getSpellByWords(slot.words)
         else
-            if k.itemId and k.itemId > 0 then
-                spell, profile, spellName = Spells.getSpellByClientId(k.itemId)
+            if slot.itemId and slot.itemId > 0 then
+                spell, profile, spellName = Spells.getSpellByClientId(slot.itemId)
+                print("ITEMID")
             end
         end
-        if spell then
-            if table.contains(spell.group, groupId) then
-                local continue = false
-                if not cooldown[spell.id] or cooldown[spell.id] and cooldown[spell.id] < duration then
-                    local oldProgressBar = k:recursiveGetChildById('progress' .. spell.id)
-                    if oldProgressBar then
-                        cooldown[spell.id] = nil
-                        oldProgressBar:hide()
-                    end
-                    continue = true
-                elseif cooldown[spell.id] and cooldown[spell.id] >= duration then
-                    continue = false
+        if spell and table.contains(spell.group, groupId) then
+            local continue = false
+            if not cooldown[spell.id] or (cooldown[spell.id] and cooldown[spell.id] < duration) then
+                local oldProgressBar = slot:recursiveGetChildById('progress' .. spell.id)
+                if oldProgressBar then
+                    cooldown[spell.id] = nil
+                    oldProgressBar:hide()
                 end
-                if continue then
-                    slot = k
-                    local progressRect = slot:recursiveGetChildById('progress' .. groupId)
-                    if not progressRect then
-                        progressRect = g_ui.createWidget('SpellProgressRect', slot)
-                        progressRect:setId('progress' .. groupId)
-                        progressRect.item = slot
-                        progressRect:fill('parent')
-                        progressRect:setFont('verdana-11px-rounded')
-                    else
-                        progressRect:setPercent(0)
-                    end
-
-                    local updateFunc = function()
-                        updateGroupCooldown(progressRect, duration, groupId)
-                    end
-                    local finishFunc = function()
-                        groupCooldown[groupId] = false
-                        progressRect:hide()
-                    end
+                continue = true
+            elseif cooldown[spell.id] and cooldown[spell.id] >= duration then
+                continue = false
+            end
+            if continue then
+                local progressRect = slot:recursiveGetChildById('progress' .. groupId)
+                if not progressRect then
+                    print("Creating cd widget")
+                    progressRect = g_ui.createWidget('SpellProgressRect', slot)
+                    progressRect:setId('progress' .. groupId)
+                    progressRect.item = slot
+                    progressRect:fill('parent')
+                    progressRect:setFont('verdana-11px-rounded')
+                else
                     progressRect:setPercent(0)
-                    updateFunc()
-                    groupCooldown[groupId] = true
                 end
+
+                local updateFunc = function()
+                    updateGroupCooldown(progressRect, duration, groupId)
+                end
+                local finishFunc = function()
+                    groupCooldown[groupId] = false
+                    progressRect:hide()
+                end
+                progressRect:setPercent(0)
+                updateFunc()
+                groupCooldown[groupId] = true
             end
         end
     end
 end
+
+
 
 function filterSpells(text)
     if #text > 0 then

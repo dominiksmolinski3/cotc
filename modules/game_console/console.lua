@@ -295,7 +295,6 @@ function toggleChat() consoleToggleChat:setChecked(not consoleToggleChat:isCheck
 
 function updateChatMode() switchChat(not consoleToggleChat:isChecked()) end
 
--- Local function to unbind movement keys
 function unbindMovingKeys()
     local gameInterface = modules.game_interface
     gameInterface.unbindWalkKey('W')
@@ -314,10 +313,8 @@ function unbindMovingKeys()
     gameInterface.unbindWalkKey('C')
     gameInterface.unbindWalkKey('Z')
     
-    print("unbindMovingKeys")
 end
 
--- Local function to bind movement keys
 function bindMovingKeys()
     local gameInterface = modules.game_interface
     gameInterface.bindWalkKey('W', North)
@@ -367,7 +364,6 @@ end
 
 function switchChatOnCall()
     if not g_game.isOnline() or modules.game_hotkeys.areHotkeysDisabled() or g_game.isModalDialog() then return end
-
     if isChatEnabled() and consoleToggleChat:isChecked() then
        toggleChat()
     else
@@ -445,6 +441,7 @@ function load()
     if settings then
         messageHistory = settings.messageHistory or {}
         consoleToggleChat:setChecked(settings.wasdMode or false)
+        consoleTextEdit:setVisible(not consoleToggleChat:isChecked())
     end
     loadCommunicationSettings()
 end
@@ -1378,45 +1375,6 @@ end
 function addFilter(filter) table.insert(filters, filter) end
 
 function removeFilter(filter) table.removevalue(filters, filter) end
-
-function displayEmoteBubble(text)
-    local player = g_game.getLocalPlayer()
-    if not player then
-        print("No local player found.")
-        return
-    end
-
-    print("Local player: " .. player:getName())
-
-    -- Create a widget for the emote bubble
-    local emoteBubble = g_ui.createWidget('EmoteBubble', gameRootPanel)
-    if not emoteBubble then
-        print("Failed to create EmoteBubble widget.")
-        return
-    end
-
-    emoteBubble:setImageSource('/images/emotes/diego')
-    print("EmoteBubble widget created and image source set.")
-
-    --local position = {
-       -- x = 0,
-      --  y = 0
-    --}
-    emoteBubble:setHeight(200)
-    emoteBubble:setWidth(200)
-    emoteBubble:setText("SDSDSDS")
-    --emoteBubble:setPosition(position)
-    emoteBubble:setOn(true)
-    emoteBubble:focus()
-    emoteBubble:raise()
-
-    -- Auto-destroy the emote bubble after some time
-    scheduleEvent(function() 
-        emoteBubble:destroy() 
-        print("EmoteBubble destroyed.")
-    end, 3000) -- Display for 3 seconds
-end
-
 
 function sendMessage(message, tab)
     local tab = tab or getCurrentTab()

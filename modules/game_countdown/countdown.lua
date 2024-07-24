@@ -1,6 +1,6 @@
 -- Get the current time
 local currentTime
-
+local countdownEvent
 -- Get the target time
 local targetTime = os.time({
     year = 2024,
@@ -41,13 +41,15 @@ function updateCountdown()
     end
 end
 
-local countdownEvent
-
 function startCountdown()
     countdownEvent = scheduleEvent(function()
         local time = updateCountdown()
         modules.client_topmenu.updateCountdownLabel(time)
-        startCountdown()
+        if time == "Nowy serwer jest dostepny!" or time == "New server is available!" then
+            stopCountdown()
+        else
+            startCountdown()
+        end
     end, 1000)
 end
 
