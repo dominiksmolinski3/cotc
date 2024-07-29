@@ -103,7 +103,7 @@ end
 
 function updateCountdownLabel(time)
     countdownLabel:setText(time)
-    if time == "Nowy serwer jest dostepny!" or time == "New server is available!" then
+    if time == "" then
         countdownHelpLabel:setText("")
     end
 end
@@ -125,10 +125,8 @@ function online()
 end
 
 function offline()
-    countdownHelpLabel:hide()
     hideGameButtons()
     pingLabel:hide()
-    countdownLabel:hide()
     gothaniaLabel:hide()
     fpsMin = -1
 end

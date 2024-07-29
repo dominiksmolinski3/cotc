@@ -547,7 +547,6 @@ locale = {
       ["Alchemy"] = "Alchemia",
       ["Forge Weapons"] = "Kowalstwo",
       ["Take Trophies"] = "Zbieranie trofeow",
-
       ["basic"] = "podstawa",
       ["bonuses"] = "bonusy",
       ["equipment"] = "ekwipunek",
@@ -580,6 +579,7 @@ locale = {
 
       ["Old Camp"] = "Stary Oboz",
       ["New Camp"] = "Nowy Oboz",
+      ["Swamp Camp"] = "Oboz na bagnach",
 
       ["1st magic circle"] = "1 krag magii",
       ["2nd magic circle"] = "2 krag magii",
@@ -714,13 +714,13 @@ locale = {
 ["Your current XP gain rate amounts to "] = "Twoj aktualny przelicznik XP wynosi ",
 ["Your XP Gain rate is calculated as follows:"] = "Twoj przelicznik XP jest obliczany w ponizszy sposob:",
 ["Base XP gain rate: 100%%"] = "Bazowy przelicznik: 100%%",
-["XP Boost: +50%% ("] = "XP Boost: +50%% (",
-["Innos Prey XP Boost: +12%% ("] = "Dar Innosa: +12%% (",
+["XP Boost: +20%% ("] = "XP Boost: +20%% (",
+["Innos Prey XP Boost: +6%% ("] = "Dar Innosa: +6%% (",
 ["Stage XP Gain Rate: x0."] = "XP Stage: x0.",
-["Low Stamina penatly: x0.5 (below 14 hours)"] = "Kara za niska wytrzymalosc: x0.5 (ponizej 14 godzin)",
+["Low Stamina penalty: x0.5 (below 14 hours)"] = "Kara za niska wytrzymalosc: x0.5 (ponizej 14 godzin)",
 ["Bonus Stamina: x1.5 ("] = "Bonusowa wytrzymalosc: x1.5 (",
 [" remaining)"] = " do konca)",
-[" (+7.5%% chapter bonus)"] = " (+7.5%% bonus za rozdzial)",
+[" +5%% chapter bonus"] = " +5%% bonus za rozdzial",
 ["Mining"] = "Gornictwo",
 ['Talk'] = 'Rozmowa',
 ['Opacity Effect: %s%%'] = 'Przezroczystosc efektow: %s%%',

@@ -437,6 +437,7 @@ function setup()
     else
         modules.client_keyboardtracker.show()
     end
+    diagonalCheck()
 end
 
 function toggle()

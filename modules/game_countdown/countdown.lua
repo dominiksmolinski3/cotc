@@ -1,7 +1,7 @@
--- Get the current time
+
 local currentTime
 local countdownEvent
--- Get the target time
+
 local targetTime = os.time({
     year = 2024,
     month = 7,
@@ -11,7 +11,6 @@ local targetTime = os.time({
     sec = 0
 })
 
--- Function to format time difference
 function formatTime(diff)
     local days = math.floor(diff / (24 * 3600))
     diff = diff % (24 * 3600)
@@ -26,18 +25,13 @@ function formatTime(diff)
     end
 end
 
--- Function to update the countdown
 function updateCountdown()
     currentTime = os.time()
     local diff = os.difftime(targetTime, currentTime)
     if diff > 0 then
         return formatTime(diff)
     else
-        if (modules.client_locales.getCurrentLocale().name == 'pl') then
-            return "Nowy serwer jest dostepny!"
-        else
-            return "New server is available!"
-        end
+        return ""
     end
 end
 
@@ -45,7 +39,7 @@ function startCountdown()
     countdownEvent = scheduleEvent(function()
         local time = updateCountdown()
         modules.client_topmenu.updateCountdownLabel(time)
-        if time == "Nowy serwer jest dostepny!" or time == "New server is available!" then
+        if time == "" then
             stopCountdown()
         else
             startCountdown()

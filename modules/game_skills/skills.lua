@@ -12,7 +12,6 @@ function init()
         onSoulChange = onSoulChange,
         onLearningPointsChange = onLearningPointsChange,
         onMagCircleChange = onMagCircleChange,
-        onKarmaChange = onKarmaChange,
         onSneakChange = onSneakChange,
         onPickLocksChange = onPickLocksChange,
         onPickpocketChange = onPickpocketChange,
@@ -92,7 +91,6 @@ function terminate()
         onSoulChange = onSoulChange,
         onLearningPointsChange = onLearningPointsChange,
         onMagCircleChange = onMagCircleChange,
-        onKarmaChange = onKarmaChange,
         onSneakChange = onSneakChange,
         onPickLocksChange = onPickLocksChange,
         onPickpocketChange = onPickpocketChange,
@@ -450,7 +448,6 @@ function refresh()
     onSoulChange(player, player:getSoul())
     onLearningPointsChange(player, player:getLearningPoints())
     onMagCircleChange(player, player:getMagCircle())
-    onKarmaChange(player, player:getKarma())
     onSneakChange(player, player:getSneak())
     onPickLocksChange(player, player:getPickLocks())
     onPickpocketChange(player, player:getPickpocket())
@@ -671,21 +668,6 @@ function onMagCircleChange(localPlayer, magCircle)
   setSkillValue('magCircle',  magCircle)
 end
 
-function onKarmaChange(localPlayer, karma)
-  setSkillValue('karma',  karma .. "%")
-  local karmaWidget = skillsWindow:recursiveGetChildById("karma")
-
-  if karma == 100 then
-    setSkillColor('karma', '#008b00')
-  else
-    setSkillColor('karma', '#bbbbbb')
-  end
-
-  if karmaWidget then
-    karmaWidget:setTooltip(tr("100%% karma protects you by a special blessing in the event of death caused by another player,\n provided that you are not aggressive towards others."))
-  end
-end
-
 function onSneakChange(localPlayer, value)
 setSkillValue('sneak',  specialSkillValue(value))
 end
@@ -835,13 +817,17 @@ function onXpBoostChange(localPlayer, xpBoost, baseXpGainRate, xpBoostInMinutes,
   tooltip = tooltip ..  "\n" .. tr("Your XP Gain rate is calculated as follows:")
   tooltip = tooltip ..  "\n" .. tr("Base XP gain rate: 100%%")
 
+  if exp == 107 then
+    tooltip = tooltip .. "\n" .. tr(" +5%% chapter bonus")
+  end
+
   if xpBoostInMinutes and xpBoostInMinutes > 0 then
-    tooltip = tooltip ..  "\n" .. tr("XP Boost: +50%% (") .. formatMinutesToHours(xpBoostInMinutes) ..  tr(" remaining)")
+    tooltip = tooltip ..  "\n" .. tr("XP Boost: +20%% (") .. formatMinutesToHours(xpBoostInMinutes) ..  tr(" remaining)")
   end
 
 
   if preyBoostInMinutes and preyBoostInMinutes > 0 then
-    tooltip = tooltip ..  "\n" .. tr("Innos Prey XP Boost: +12%% (") .. formatMinutesToHours(preyBoostInMinutes) ..  tr(" remaining)")
+    tooltip = tooltip ..  "\n" .. tr("Innos Prey XP Boost: +6%% (") .. formatMinutesToHours(preyBoostInMinutes) ..  tr(" remaining)")
   end
 
   if baseXpGainRate and baseXpGainRate < 100 then -- below 14h
